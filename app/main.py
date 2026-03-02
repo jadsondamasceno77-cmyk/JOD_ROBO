@@ -2,6 +2,8 @@ import os
 import json
 from datetime import datetime
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import redis
 
@@ -49,3 +51,10 @@ def home():
         "google_dir_found": os.path.exists(GOOGLE_DIR),
         "google_files": sorted(os.listdir(GOOGLE_DIR)) if os.path.exists(GOOGLE_DIR) else []
     }
+
+# UI (estilo chat)
+app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
+
+@app.get("/")
+def root_ui():
+    return FileResponse("/app/ui/index.html")
