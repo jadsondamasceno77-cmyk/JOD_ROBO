@@ -5,3 +5,10 @@ __pycache__/
 credentials.json
 
 *.save
+
+_pycache_/
+*.pyc
+*.save
+.env
+.token.json
+credentials.json
