@@ -1,4 +1,4 @@
-fastapi==0.110.0
-uvicorn[standard]==0.27.1
-redis==5.0.1
-pydantic==2.6.4
+fastapi
+uvicorn[standard]
+redis
+pydantic
