@@ -9,7 +9,7 @@ import redis
 
 app = FastAPI(title="JOD Robo MVP")
 
-REDIS_URL = os.getenv("URL_REDIS") or os.getenv("URL_REDIS") or os.getenv("REDIS_URL")
+REDIS_URL = os.getenv("URL_REDIS") or os.getenv("REDIS_URL")
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
 GOOGLE_DIR = os.getenv("GOOGLE_DIR", "/google")
