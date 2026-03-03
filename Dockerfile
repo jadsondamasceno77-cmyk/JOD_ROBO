@@ -1,27 +1,45 @@
+# =========================
+# JOD_ROBO - Dockerfile
+# =========================
+
+# Base image
 FROM python:3.11-slim
 
-WORKDIR /workspace
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Work directory
+WORKDIR /app
 
-# copia tudo (inclui ./aplicativo)
-COPY . /workspace
+# Environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
 
-# instala dependências (prioriza requirements dentro de /workspace/aplicativo)
-RUN pip install --no-cache-dir -U pip && \
-    if [ -f /workspace/aplicativo/requirements.txt ]; then \
-        pip install --no-cache-dir -r /workspace/aplicativo/requirements.txt; \
-    elif [ -f /workspace/requirements.txt ]; then \
-        pip install --no-cache-dir -r /workspace/requirements.txt; \
-    elif [ -f /workspace/aplicativo/pyproject.toml ]; then \
-        pip install --no-cache-dir -e /workspace/aplicativo; \
-    else \
-        echo "ERRO: Não encontrei requirements.txt nem pyproject.toml"; \
-        echo "Conteúdo /workspace:"; ls -la /workspace; \
-        echo "Conteúdo /workspace/aplicativo:"; ls -la /workspace/aplicativo || true; \
-        exit 1; \
-    fi
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements first (for better caching)
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application code
+COPY app/ ./app/
+COPY kb/ ./kb/ 2>/dev/null || true
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash appuser && \
+    chown -R appuser:appuser /app
+USER appuser
+
+# Expose port
 EXPOSE 8000
 
-CMD ["sh", "/workspace/start.sh"]
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import httpx; httpx.get('http://localhost:8000/healthz')" || exit 1
+
+# Start command
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
