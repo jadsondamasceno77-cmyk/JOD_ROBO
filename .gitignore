@@ -18,3 +18,5 @@ app/*.bak_*.py
 *_bak_*.py
 _bak_*/
 app/*.bak_*
+*.bak_*
+_bak_fix_routes_20260304_014830/
