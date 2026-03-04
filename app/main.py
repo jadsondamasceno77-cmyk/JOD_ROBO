@@ -94,3 +94,34 @@ async def post_intent(
     x_idempotency_key: str = Header(..., alias="x-idempotency-key"),
 ):
     return IntentOut(idempotency_key=x_idempotency_key)
+
+
+# =============================
+# PATCH JOD_ROBO: /healthz e /intent
+# (injetado no MESMO app que já tem /health)
+# =============================
+
+from typing import Any, Literal
+from fastapi import Header
+from pydantic import BaseModel, Field, ConfigDict
+
+class JODIntentIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    intent: str = Field(..., min_length=1, max_length=4000)
+    context: dict[str, Any] = Field(default_factory=dict)
+
+class JODIntentOut(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    status: Literal["queued"] = "queued"
+    idempotency_key: str
+
+@app.get("/healthz")
+async def healthz():
+    return "OK"
+
+@app.post("/intent", response_model=JODIntentOut)
+async def intent(
+    body: JODIntentIn,
+    x_idempotency_key: str = Header(..., alias="x-idempotency-key"),
+):
+    return JODIntentOut(idempotency_key=x_idempotency_key)
