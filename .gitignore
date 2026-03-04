@@ -12,3 +12,5 @@ _pycache_/
 .env
 .token.json
 credentials.json
+.venv/
+app/*.bak_*.py

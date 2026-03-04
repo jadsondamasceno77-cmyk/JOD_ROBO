@@ -60,3 +60,37 @@ app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
 @app.get("/")
 def root_ui():
     return FileResponse("/app/ui/index.html")
+
+
+# =============================
+# PATCH: rotas públicas básicas
+# =============================
+from typing import Any, Literal
+from fastapi import Header
+from pydantic import BaseModel, Field, ConfigDict
+
+class IntentIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    intent: str = Field(..., min_length=1, max_length=4000)
+    context: dict[str, Any] = Field(default_factory=dict)
+
+class IntentOut(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    status: Literal["queued"] = "queued"
+    idempotency_key: str
+
+# alias de health (k8s-style)
+try:
+    @app.get("/healthz")
+    async def healthz():
+        return "OK"
+except Exception:
+    pass
+
+# endpoint principal (agora existe)
+@app.post("/intent", response_model=IntentOut)
+async def post_intent(
+    body: IntentIn,
+    x_idempotency_key: str = Header(..., alias="x-idempotency-key"),
+):
+    return IntentOut(idempotency_key=x_idempotency_key)
