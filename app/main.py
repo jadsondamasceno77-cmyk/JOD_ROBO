@@ -5,7 +5,7 @@ app = FastAPI()
 @app.get("/health")
 @app.get("/healthz")
 async def health():
-    return {"status": "ok", "msg": "JOD_ROBO VIVO"}
+    return "OK"
 
 @app.post("/intent")
 @app.get("/intent")
