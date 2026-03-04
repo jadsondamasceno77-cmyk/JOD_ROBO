@@ -15,3 +15,5 @@ credentials.json
 .venv/
 app/*.bak_*.py
 *.bak_*.py
+*_bak_*.py
+_bak_*/

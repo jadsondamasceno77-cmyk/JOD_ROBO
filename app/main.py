@@ -1,73 +1,11 @@
-import os
-import json
-from datetime import datetime
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
-from pydantic import BaseModel
-import redis
+from __future__ import annotations
 
-app = FastAPI(title="JOD Robo MVP")
-
-REDIS_URL = os.getenv("URL_REDIS") or os.getenv("URL_REDIS") or os.getenv("REDIS_URL")
-REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
-GOOGLE_DIR = os.getenv("GOOGLE_DIR", "/google")
-
-r = (redis.Redis.from_url(REDIS_URL, decode_responses=True)
-     if REDIS_URL else redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True))
-
-class Command(BaseModel):
-    user_id: str = "jadson"
-    command: str
-
-@app.get("/health")
-def health():
-    try:
-        r.ping()
-        return {"ok": True, "redis": "up", "ts": datetime.utcnow().isoformat()}
-    except Exception as e:
-        return {"ok": False, "redis": "down", "error": str(e)}
-
-@app.post("/command")
-def command(payload: Command):
-    # MVP: registra comando e deixa pronto para “executor” evoluir
-    item = {
-        "user_id": payload.user_id,
-        "command": payload.command,
-        "ts": datetime.utcnow().isoformat()
-    }
-    r.lpush(f"jod:commands:{payload.user_id}", json.dumps(item))
-    return {"accepted": True, "queued": True, "item": item}
-
-@app.get("/status/{user_id}")
-def status(user_id: str):
-    items = r.lrange(f"jod:commands:{user_id}", 0, 20)
-    return {"user_id": user_id, "last_20": [json.loads(x) for x in items]}
-
-@app.get("/")
-def home():
-    return {
-        "name": "JOD Robo MVP",
-        "endpoints": ["/health", "/command", "/status/{user_id}"],
-        "google_dir_found": os.path.exists(GOOGLE_DIR),
-        "google_files": sorted(os.listdir(GOOGLE_DIR)) if os.path.exists(GOOGLE_DIR) else []
-    }
-
-# UI (estilo chat)
-app.mount("/ui", StaticFiles(directory="ui", html=True), name="ui")
-
-@app.get("/")
-def root_ui():
-    return FileResponse("/app/ui/index.html")
-
-
-# =============================
-# PATCH: rotas públicas básicas
-# =============================
 from typing import Any, Literal
-from fastapi import Header
-from pydantic import BaseModel, Field, ConfigDict
+
+from fastapi import FastAPI, Header, Response
+from pydantic import BaseModel, ConfigDict, Field
+
+app = FastAPI(title="JOD_ROBO")
 
 class IntentIn(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
@@ -76,52 +14,27 @@ class IntentIn(BaseModel):
 
 class IntentOut(BaseModel):
     model_config = ConfigDict(extra="forbid", strict=True)
-    status: Literal["queued"] = "queued"
+    status: Literal["ok"] = "ok"
     idempotency_key: str
+    received_intent: str
+    received_context: dict[str, Any]
 
-# alias de health (k8s-style)
-try:
-    @app.get("/healthz")
-    async def healthz():
-        return "OK"
-except Exception:
-    pass
+@app.get("/health", include_in_schema=False)
+async def health() -> Response:
+    return Response("OK", media_type="text/plain")
 
-# endpoint principal (agora existe)
+@app.get("/healthz", include_in_schema=False)
+async def healthz() -> Response:
+    return Response("OK", media_type="text/plain")
+
 @app.post("/intent", response_model=IntentOut)
 async def post_intent(
     body: IntentIn,
     x_idempotency_key: str = Header(..., alias="x-idempotency-key"),
-):
-    return IntentOut(idempotency_key=x_idempotency_key)
-
-
-# =============================
-# PATCH JOD_ROBO: /healthz e /intent
-# (injetado no MESMO app que já tem /health)
-# =============================
-
-from typing import Any, Literal
-from fastapi import Header
-from pydantic import BaseModel, Field, ConfigDict
-
-class JODIntentIn(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    intent: str = Field(..., min_length=1, max_length=4000)
-    context: dict[str, Any] = Field(default_factory=dict)
-
-class JODIntentOut(BaseModel):
-    model_config = ConfigDict(extra="forbid", strict=True)
-    status: Literal["queued"] = "queued"
-    idempotency_key: str
-
-@app.get("/healthz")
-async def healthz():
-    return "OK"
-
-@app.post("/intent", response_model=JODIntentOut)
-async def intent(
-    body: JODIntentIn,
-    x_idempotency_key: str = Header(..., alias="x-idempotency-key"),
-):
-    return JODIntentOut(idempotency_key=x_idempotency_key)
+) -> IntentOut:
+    return IntentOut(
+        status="ok",
+        idempotency_key=x_idempotency_key,
+        received_intent=body.intent,
+        received_context=body.context,
+    )
