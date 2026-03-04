@@ -1,13 +1,10 @@
 from fastapi import FastAPI
 app = FastAPI()
 
-@app.get("/")
-@app.get("/health")
 @app.get("/healthz")
-async def health():
+async def healthz():
     return "OK"
 
-@app.post("/intent")
-@app.get("/intent")
-async def intent(data: dict = None):
-    return {"status": "received", "data": data}
+@app.get("/")
+async def root():
+    return {"message": "JOD_ROBO VIVO"}
