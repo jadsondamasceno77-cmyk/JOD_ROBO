@@ -1,8 +1,9 @@
 from fastapi import FastAPI
 app = FastAPI()
 
+@app.get("/health")
 @app.get("/healthz")
-async def healthz():
+async def health():
     return "OK"
 
 @app.get("/")
