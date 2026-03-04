@@ -2,14 +2,15 @@
 set -eu
 
 PORT="${PORT:-8000}"
+
 echo "[JOD_ROBO] Iniciando API em 0.0.0.0:${PORT}"
 
-# NÃO entra em /workspace/aplicativo no chute.
-# Procura onde realmente existe app/main.py ou main.py:
+# Procura o app no lugar certo:
+# tenta /workspace e /workspace/aplicativo (Railway pode montar assim)
 FOUND_DIR=""
 TARGET=""
 
-for d in "/workspace" "/workspace/aplicativo" "$(pwd)" "./aplicativo"; do
+for d in "/workspace" "/workspace/aplicativo" "." "./aplicativo"; do
   [ -d "$d" ] || continue
 
   if [ -f "$d/app/main.py" ]; then
@@ -28,9 +29,12 @@ done
 if [ -z "$TARGET" ]; then
   echo "[ERRO] Não encontrei app/main.py nem main.py nos diretórios conhecidos."
   echo "[DEBUG] pwd=$(pwd)"
-  echo "[DEBUG] ls -la:"; ls -la || true
-  echo "[DEBUG] ls -la app:"; ls -la app 2>/dev/null || true
-  echo "[DEBUG] ls -la aplicativo:"; ls -la aplicativo 2>/dev/null || true
+  echo "[DEBUG] ls -la:"
+  ls -la || true
+  echo "[DEBUG] ls -la app:"
+  ls -la app 2>/dev/null || true
+  echo "[DEBUG] ls -la aplicativo:"
+  ls -la aplicativo 2>/dev/null || true
   exit 1
 fi
 
