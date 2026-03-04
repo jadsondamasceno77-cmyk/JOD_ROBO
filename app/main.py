@@ -10,3 +10,4 @@ async def health():
 async def root():
     return {"message": "JOD_ROBO VIVO"}
  
+ 
