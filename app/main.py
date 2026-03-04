@@ -1,18 +1,13 @@
-# Versao: Forcando Inicializacao
 from fastapi import FastAPI
-from pydantic import BaseModel
-
 app = FastAPI()
 
+@app.get("/")
 @app.get("/health")
 @app.get("/healthz")
 async def health():
-    return {"status": "ok"}
+    return {"status": "ok", "msg": "JOD_ROBO VIVO"}
 
 @app.post("/intent")
-async def intent(data: dict):
+@app.get("/intent")
+async def intent(data: dict = None):
     return {"status": "received", "data": data}
-
-@app.get("/")
-async def root():
-    return {"message": "JOD_ROBO Online"}
