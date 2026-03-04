@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 from typing import Any, Dict, Optional
 
 app = FastAPI(title="JOD_ROBO")
-
+/healthz
 @app.get("/health")
 async def health():
     return "OK"
@@ -24,3 +24,7 @@ async def intent(body: IntentIn, x_idempotency_key: Optional[str] = Header(defau
         "intent": body.intent,
         "context": body.context,
     }
+
+@app.get("/healthz")
+async def healthz():
+    return {"status": "ok"}
