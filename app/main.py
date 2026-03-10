@@ -24,6 +24,10 @@ async def health():
 async def version():
     return {"version": "2.0.0", "uptime_seconds": round(time.time() - START_TIME, 2)}
 
+@app.get("/ping")
+async def ping():
+    return {"ping": "pong", "timestamp": round(time.time(), 2)}
+
 @app.post("/chat")
 async def chat(request: Request):
     try:
