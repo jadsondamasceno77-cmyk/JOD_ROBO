@@ -1,8 +1,7 @@
 import os, asyncio, logging, subprocess, tempfile
 from typing import Optional
 from groq import AsyncGroq
-
-logger = logging.getLogger(__name__)
+from app.logging import logger
 
 class JODAgent:
     def __init__(self):
@@ -18,6 +17,7 @@ class JODAgent:
         if context: msgs.append({"role":"system","content":f"Contexto: {context}"})
         for m in self.memory[-10:]: msgs.append(m)
         msgs.append({"role":"user","content":text})
+        logger.info(f"Thinking: {text}")
         r = await self.client.chat.completions.create(model=self.model,messages=msgs,max_tokens=2048)
         reply = r.choices[0].message.content
         self.memory.append({"role":"user","content":text})
@@ -25,21 +25,25 @@ class JODAgent:
         return reply
 
     async def execute_python(self, code: str) -> dict:
+        logger.info(f"Executing Python Code: {code}")
         with tempfile.NamedTemporaryFile(mode='w',suffix='.py',delete=False) as f:
             f.write(code); tmp=f.name
         try:
             r = subprocess.run(["python3",tmp],capture_output=True,text=True,timeout=30)
             return {"stdout":r.stdout,"stderr":r.stderr,"success":r.returncode==0}
         except Exception as e:
+            logger.error(f"Error executing Python Code: {str(e)}")
             return {"error":str(e),"success":False}
         finally:
             os.unlink(tmp)
 
     async def analyze_site(self, url: str) -> str:
+        logger.info(f"Analyzing Site: {url}")
         prompt = f"Faça uma análise completa do site {url}: pontos fortes, fracos, gargalos, score 0-10 e plano para torná-lo obsoleto."
         return await self.think(prompt)
 
-    def clone(self, name: str, role: str, prompt: str) -> "JODAgent":
+    def clone(self, name: str, role: str, prompt: str) -> 'JODAgent':
+        logger.info(f"Cloning Agent: {name}")
         c = JODAgent()
         c.name=name; c.role=role; c.system=prompt; c.client=self.client
         return c
