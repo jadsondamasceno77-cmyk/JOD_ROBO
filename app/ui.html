@@ -2,40 +2,47 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#0a0a0a;color:#00ff41;font-family:monospace;padding:2rem}
-h1{color:#c5a059;margin-bottom:1rem}
-p{color:#666;font-size:12px;margin-bottom:1rem}
-input{background:#111;color:#00ff41;border:1px solid #333;padding:1rem;width:100%;font-family:monospace;font-size:15px;display:block}
-button{background:#c5a059;color:#000;border:none;padding:.8rem 2.5rem;cursor:pointer;font-weight:bold;font-size:15px;margin-top:.8rem}
-#out{background:#111;border:1px solid #222;padding:1rem;min-height:300px;white-space:pre-wrap;margin-top:1rem;font-size:13px;overflow-y:auto;max-height:60vh}
-#st{color:#888;font-size:12px;margin-top:.4rem}
+h1{color:#c5a059;margin-bottom:.5rem;font-size:1.5rem}
+p{color:#555;font-size:11px;margin-bottom:1rem}
+input{background:#111;color:#00ff41;border:1px solid #444;padding:.8rem;width:100%;font-family:monospace;font-size:14px;display:block;outline:none}
+input:focus{border-color:#c5a059}
+button{background:#c5a059;color:#000;border:none;padding:.7rem 2rem;cursor:pointer;font-weight:bold;font-size:14px;margin-top:.5rem;display:block}
+button:disabled{background:#555;cursor:not-allowed}
+#out{background:#111;border:1px solid #222;padding:1rem;min-height:200px;white-space:pre-wrap;margin-top:1rem;font-size:12px;overflow-y:auto;max-height:55vh;color:#00ff41}
+.ok{color:#00ff41}.err{color:#ff4444}.wait{color:#c5a059}
 </style></head><body>
 <h1>⚡ JOD EXECUTOR</h1>
-<p>Digite um comando tecnico. Ex: "cria agents/vendas.py com classe de pitch de vendas"</p>
-<input id="t" placeholder="Comando...">
+<p>Comandos: "cria agents/nome.py com..." | "gera scripts/nome.py que..."</p>
+<input id="t" placeholder="Digite o comando e pressione Enter..." autofocus>
 <button id="btn" onclick="run()">▶ EXECUTAR</button>
-<div id="st"></div>
-<div id="out">Aguardando comando...</div>
+<div id="out" class="wait">Pronto. Aguardando comando...</div>
 <script>
-var running = false;
+var running=false;
 function run(){
-  if(running) return;
+  if(running)return;
   var t=document.getElementById("t").value.trim();
-  if(!t) return;
-  running = true;
-  document.getElementById("btn").textContent="⏳ Executando...";
-  document.getElementById("out").textContent="Executando: "+t;
-  document.getElementById("st").textContent="";
+  if(!t)return;
+  running=true;
+  var btn=document.getElementById("btn");
+  var out=document.getElementById("out");
+  btn.disabled=true;
+  btn.textContent="⏳ Executando...";
+  out.className="wait";
+  out.textContent="▶ Executando: "+t+"\n\nAguarde...";
   fetch("/execute",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task:t})})
   .then(function(r){return r.json();})
   .then(function(d){
-    document.getElementById("out").textContent=d.output||d.error||"Sem resposta";
-    document.getElementById("st").textContent="Concluido";
-    document.getElementById("btn").textContent="▶ EXECUTAR";
+    out.textContent=d.output||d.error||"Sem resposta";
+    out.className=d.output&&d.output.includes("Concluído")?"ok":"err";
+    btn.disabled=false;
+    btn.textContent="▶ EXECUTAR";
     running=false;
   })
   .catch(function(e){
-    document.getElementById("out").textContent="Erro: "+e;
-    document.getElementById("btn").textContent="▶ EXECUTAR";
+    out.textContent="Erro de conexão: "+e;
+    out.className="err";
+    btn.disabled=false;
+    btn.textContent="▶ EXECUTAR";
     running=false;
   });
 }
