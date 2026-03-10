@@ -1,1 +1,1 @@
-atualizacao das dependencias do projeto
+Atualizacao das dependencias do projeto
