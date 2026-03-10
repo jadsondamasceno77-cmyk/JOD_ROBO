@@ -2,13 +2,14 @@ import time
 import logging
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, HTMLResponse
-from app.agent import agent
+from app.agent import agent, CEOAgent
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s %(levelname)s %(message)s')
 logger = logging.getLogger("jod_robo")
 
 app = FastAPI(title="JOD_ROBO", version="2.0.0")
 START_TIME = time.time()
+ceo = CEOAgent()
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
@@ -26,7 +27,7 @@ async def version():
 
 @app.get("/ping")
 async def ping():
-    return {"ping": "pong", "timestamp": round(time.time(), 2)}
+    return {"ping": "pong", "timestamp": time.time()}
 
 @app.post("/chat")
 async def chat(request: Request):
@@ -55,12 +56,21 @@ async def analyze(request: Request):
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
+@app.post("/eli/ceo")
+async def eli_ceo(request: Request):
+    try:
+        body = await request.json()
+        reply = await ceo.think(body.get("text", ""))
+        return {"agent": "CEO", "reply": reply}
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 @app.get("/", response_class=HTMLResponse)
 async def ui():
     return """<!DOCTYPE html><html><head><title>JOD_ROBO</title>
     <style>body{background:#0d0d0d;color:#fff;font-family:monospace;padding:2rem}
-    input,textarea{background:#1a1a1a;color:#fff;border:1px solid #333;padding:.5rem;width:100%;margin:.5rem 0}
-    button{background:#c5a059;color:#000;border:none;padding:.5rem 1rem;cursor:pointer}
+    input{background:#1a1a1a;color:#fff;border:1px solid #333;padding:.5rem;width:80%;margin:.5rem 0}
+    button{background:#c5a059;color:#000;border:none;padding:.5rem 1rem;cursor:pointer;margin-left:.5rem}
     #out{background:#1a1a1a;padding:1rem;min-height:200px;white-space:pre-wrap;margin-top:1rem}</style>
     </head><body>
     <h2>⚡ JOD_ROBO v2</h2>
