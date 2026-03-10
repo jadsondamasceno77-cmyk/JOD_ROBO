@@ -1,1 +1,1 @@
-Configuracao de logging
+Configuração de logging para registrar eventos de análise de finanças

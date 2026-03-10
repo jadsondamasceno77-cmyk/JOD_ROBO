@@ -1,1 +1,1 @@
-Atualizacao das dependencias do projeto
+Atualização das dependências do projeto para incluir bibliotecas necessárias para análise de finanças

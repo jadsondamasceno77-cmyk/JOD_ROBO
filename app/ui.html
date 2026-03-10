@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><title>JOD EXECUTOR</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a0a0a;color:#00ff41;font-family:monospace;padding:2rem}
+h1{color:#c5a059;margin-bottom:1rem}
+p{color:#666;font-size:12px;margin-bottom:1rem}
+input{background:#111;color:#00ff41;border:1px solid #333;padding:1rem;width:100%;font-family:monospace;font-size:15px;display:block}
+button{background:#c5a059;color:#000;border:none;padding:.8rem 2.5rem;cursor:pointer;font-weight:bold;font-size:15px;margin-top:.8rem}
+#out{background:#111;border:1px solid #222;padding:1rem;min-height:300px;white-space:pre-wrap;margin-top:1rem;font-size:13px;overflow-y:auto;max-height:60vh}
+#st{color:#888;font-size:12px;margin-top:.4rem}
+</style></head><body>
+<h1>⚡ JOD EXECUTOR</h1>
+<p>Digite um comando tecnico. Ex: "cria agents/vendas.py com classe de pitch de vendas"</p>
+<input id="t" placeholder="Comando...">
+<button id="btn" onclick="run()">▶ EXECUTAR</button>
+<div id="st"></div>
+<div id="out">Aguardando comando...</div>
+<script>
+var running = false;
+function run(){
+  if(running) return;
+  var t=document.getElementById("t").value.trim();
+  if(!t) return;
+  running = true;
+  document.getElementById("btn").textContent="⏳ Executando...";
+  document.getElementById("out").textContent="Executando: "+t;
+  document.getElementById("st").textContent="";
+  fetch("/execute",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task:t})})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    document.getElementById("out").textContent=d.output||d.error||"Sem resposta";
+    document.getElementById("st").textContent="Concluido";
+    document.getElementById("btn").textContent="▶ EXECUTAR";
+    running=false;
+  })
+  .catch(function(e){
+    document.getElementById("out").textContent="Erro: "+e;
+    document.getElementById("btn").textContent="▶ EXECUTAR";
+    running=false;
+  });
+}
+document.getElementById("t").onkeydown=function(e){
+  if(e.key==="Enter"){e.preventDefault();run();}
+};
+</script></body></html>
