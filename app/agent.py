@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 class JODAgent:
     def __init__(self):
-        self.client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY","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"))
+        self.client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY",""))
         self.model = "meta-llama/llama-4-scout-17b-16e-instruct"
         self.name = os.getenv("AGENT_NAME","JOD_ROBO")
         self.role = os.getenv("AGENT_ROLE","executor")
