@@ -1,4 +1,4 @@
-"""JOD_ROBO Brain v3 — Fluxo com aprovação humana antes de executar."""
+"""JOD_ROBO Brain v3 — Fluxo com aprovação humana + loop autônomo."""
 import sys, os, subprocess, time, logging
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
@@ -45,9 +45,8 @@ def get_tree(cwd: str) -> str:
         return ""
 
 def pedir_aprovacao(plano) -> bool:
-    """Mostra plano ao usuário e aguarda aprovação explícita."""
     print("\n" + "="*60)
-    print("📋 PLANO DO ARQUITETO")
+    print("📋 PLANO DO ARQUITETO (JOD)")
     print("="*60)
     print(f"Resumo  : {plano.summary}")
     print(f"Tipo    : {plano.tipo}")
@@ -61,17 +60,91 @@ def pedir_aprovacao(plano) -> bool:
         resp = input("\n✅ Aprovar e executar? [sim/nao]: ").strip().lower()
         if resp in ("sim", "s", "yes", "y"):
             return True
-        if resp in ("nao", "nao", "n", "no"):
+        if resp in ("nao", "n", "no"):
             return False
-        print("Digite 'sim' ou 'nao'")
+        print("Digite sim ou nao")
+
+def executar(task: str, cwd: str, config: Config, memory: dict,
+             memory_file: str, correlation_id: str, auto_apply: bool) -> list:
+    """Executa o fluxo completo: arquiteto → aprovação → executor → revisor → git."""
+    plano = arquiteto(task, memory, cwd, config)
+    if not plano:
+        print("❌ Arquiteto falhou")
+        return []
+
+    if not auto_apply:
+        aprovado = pedir_aprovacao(plano)
+        if not aprovado:
+            print("\n⛔ Cancelado.")
+            return []
+
+    print("\n⚡ Executor criando arquivos...")
+    tree = get_tree(cwd)
+    resultado = executor(task, plano.subtarefas, memory, cwd, tree, config)
+    if not resultado:
+        print("❌ Executor falhou")
+        return []
+
+    arquivos_criados = []
+    for c in resultado.changes:
+        ok = write_file(cwd, c.file, c.content)
+        status = "✓" if ok else "✗ bloqueado:"
+        print(f"  {status} {c.file}")
+        if ok:
+            arquivos_criados.append(c.file)
+
+    print("\n🔍 Revisor verificando...")
+    rev = revisor(plano, arquivos_criados, config)
+    if not rev.aprovado and rev.correcoes:
+        print("🔧 Aplicando correções...")
+        for c in rev.correcoes:
+            ok = write_file(cwd, c.file, c.content)
+            if ok:
+                print(f"  ✓ corrigido: {c.file}")
+                arquivos_criados.append(c.file)
+
+    memory = mem.record(memory, correlation_id, task,
+                        resultado.summary, arquivos_criados,
+                        plano.tipo, plano.aprendizado or "")
+    mem.save(memory_file, memory)
+
+    try:
+        pushed = git_commit_push(cwd, resultado.summary)
+        if pushed:
+            print("\n📤 Push feito!")
+    except Exception as e:
+        logger.error(f"Git falhou: {e}")
+
+    print("\n" + "="*60)
+    print("✅ CONCLUÍDO")
+    print("="*60)
+    print(f"ID      : {correlation_id}")
+    print(f"Resumo  : {resultado.summary}")
+    print(f"Arquivos: {arquivos_criados}")
+    print(f"Memória : {len(memory['execucoes'])} execuções")
+    print("="*60)
+    return arquivos_criados
+
+def autonomous_loop(cwd: str, config: Config, memory_file: str, interval: int = 300) -> None:
+    """Loop autônomo: roda a cada X segundos sem precisar de comando."""
+    logger.info(f"🔄 Loop autônomo iniciado — intervalo: {interval}s")
+    print(f"\n🔄 JOD rodando em modo autônomo (a cada {interval//60}min)")
+    print("Ctrl+C para parar\n")
+    while True:
+        try:
+            correlation_id = f"jod_{int(time.time())}_{os.urandom(3).hex()}"
+            memory = mem.load(memory_file)
+            task = "verifique tarefas pendentes na memoria, identifique melhorias no projeto e aja se necessario"
+            logger.info(f"Loop ID={correlation_id}")
+            executar(task, cwd, config, memory, memory_file, correlation_id, auto_apply=True)
+        except KeyboardInterrupt:
+            print("\n⛔ Loop autônomo encerrado.")
+            break
+        except Exception as e:
+            logger.error(f"Erro no loop: {e}", exc_info=True)
+        time.sleep(interval)
 
 def main() -> None:
-    if len(sys.argv) < 2:
-        print("Uso: python jod_brain_main.py \"sua tarefa aqui\"")
-        print("Exemplo: python jod_brain_main.py \"cria agente de monitoramento de precos\"")
-        sys.exit(1)
-
-    task = sys.argv[1]
     cwd = os.getcwd()
     api_key = os.environ.get("GROQ_API_KEY", "")
     memory_file = os.path.join(cwd, ".jod_memory.json")
@@ -87,80 +160,34 @@ def main() -> None:
         ollama_host=os.environ.get("OLLAMA_HOST", "http://127.0.0.1:11434"),
         ollama_model=os.environ.get("OLLAMA_MODEL", "llama3.2:1b")
     )
+
+    # Modo loop autônomo
+    if "--loop" in sys.argv:
+        interval = 300
+        if "--interval" in sys.argv:
+            idx = sys.argv.index("--interval")
+            if idx + 1 < len(sys.argv):
+                interval = int(sys.argv[idx + 1])
+        autonomous_loop(cwd, config, memory_file, interval)
+        return
+
+    # Modo normal: precisa de tarefa
+    if len(sys.argv) < 2:
+        print("Uso:")
+        print("  python jod_brain_main.py \"sua tarefa\"          # com aprovação")
+        print("  python jod_brain_main.py \"sua tarefa\" --apply  # sem aprovação")
+        print("  python jod_brain_main.py --loop                 # autônomo (5min)")
+        print("  python jod_brain_main.py --loop --interval 600  # autônomo (10min)")
+        sys.exit(1)
+
+    task = sys.argv[1]
+    auto_apply = "--apply" in sys.argv
     correlation_id = f"jod_{int(time.time())}_{os.urandom(3).hex()}"
     logger.info(f"ID={correlation_id} task={task[:80]}")
     memory = mem.load(memory_file)
 
-    # FASE 1 — ARQUITETO PLANEJA
-    print("\n🧠 Arquiteto analisando tarefa...")
-    plano = arquiteto(task, memory, cwd, config)
-    if not plano:
-        print("❌ Arquiteto falhou — verifique GROQ_API_KEY e conexão")
-        sys.exit(1)
-
-    # FASE 2 — VOCÊ APROVA OU REJEITA
-    aprovado = pedir_aprovacao(plano)
-    if not aprovado:
-        print("\n⛔ Execução cancelada por você.")
-        logger.info(f"Cancelado pelo usuario ID={correlation_id}")
-        sys.exit(0)
-
-    # FASE 3 — EXECUTOR AGE SOZINHO
-    print("\n⚡ Executor criando arquivos...")
-    tree = get_tree(cwd)
-    resultado = executor(task, plano.subtarefas, memory, cwd, tree, config)
-    if not resultado:
-        print("❌ Executor falhou")
-        sys.exit(1)
-
-    arquivos_criados = []
-    for c in resultado.changes:
-        ok = write_file(cwd, c.file, c.content)
-        if ok:
-            print(f"  ✓ {c.file}")
-            arquivos_criados.append(c.file)
-        else:
-            print(f"  ✗ bloqueado: {c.file}")
-
-    # FASE 4 — REVISOR VERIFICA
-    print("\n🔍 Revisor verificando qualidade...")
-    rev = revisor(plano, arquivos_criados, config)
-    if not rev.aprovado and rev.correcoes:
-        print("🔧 Revisor aplicando correções automáticas...")
-        for c in rev.correcoes:
-            ok = write_file(cwd, c.file, c.content)
-            if ok:
-                print(f"  ✓ corrigido: {c.file}")
-                arquivos_criados.append(c.file)
-    if rev.problemas:
-        print(f"⚠️  Problemas detectados: {rev.problemas}")
-
-    # FASE 5 — MEMÓRIA APRENDE
-    memory = mem.record(
-        memory, correlation_id, task,
-        resultado.summary, arquivos_criados,
-        plano.tipo, plano.aprendizado or ""
-    )
-    mem.save(memory_file, memory)
-    logger.info(f"Memoria atualizada — total execucoes: {len(memory['execucoes'])}")
-
-    # FASE 6 — GIT PUSH AUTOMÁTICO
-    try:
-        pushed = git_commit_push(cwd, resultado.summary)
-        if pushed:
-            print("\n📤 Push feito no GitHub!")
-    except Exception as e:
-        logger.error(f"Git falhou: {e}")
-
-    # RESULTADO FINAL
-    print("\n" + "="*60)
-    print("✅ CONCLUÍDO")
-    print("="*60)
-    print(f"ID        : {correlation_id}")
-    print(f"Resumo    : {resultado.summary}")
-    print(f"Arquivos  : {arquivos_criados}")
-    print(f"Memória   : {len(memory['execucoes'])} execuções registradas")
-    print("="*60)
+    print("\n🧠 JOD analisando tarefa...")
+    executar(task, cwd, config, memory, memory_file, correlation_id, auto_apply)
 
 if __name__ == "__main__":
     main()

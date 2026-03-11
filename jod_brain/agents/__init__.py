@@ -38,7 +38,7 @@ class Revisao(BaseModel):
     problemas: list[str] = []
     correcoes: list[Change] = []
 
-SYSTEM_ARQUITETO = """Voce e o Agente Arquiteto do JOD_ROBO. Analisa a tarefa e cria plano de execucao.
+SYSTEM_ARQUITETO = """{PERSONALITY}\n\nVoce e o Agente Arquiteto do JOD_ROBO. Analisa a tarefa e cria plano de execucao.
 Retorne APENAS JSON valido sem markdown:
 {"summary":"descricao","subtarefas":["sub1","sub2"],"tipo":"agente|site|app|automacao|script","aprendizado":"licao"}"""
 
