@@ -31,7 +31,7 @@ async def execute(request: Request):
         body = await request.json()
         task = body.get("task", "")
         proc = await asyncio.create_subprocess_shell(
-            "cd /home/wsl/JOD_ROBO && python3 /usr/local/bin/jod_brain.py \"" + task + "\" --apply",
+            "cd /home/wsl/JOD_ROBO && python3 /home/wsl/JOD_ROBO/jod_brain_main.py \"" + task + "\" --apply",
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.STDOUT,
             env={**os.environ, "GROQ_API_KEY": os.environ.get("GROQ_API_KEY","")}
