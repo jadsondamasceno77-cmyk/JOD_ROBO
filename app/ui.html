@@ -1,52 +1,87 @@
-<!DOCTYPE html><html><head><title>JOD EXECUTOR</title>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>JOD EXECUTOR</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0a0a;color:#00ff41;font-family:monospace;padding:2rem}
-h1{color:#c5a059;margin-bottom:.5rem;font-size:1.5rem}
-p{color:#555;font-size:11px;margin-bottom:1rem}
-input{background:#111;color:#00ff41;border:1px solid #444;padding:.8rem;width:100%;font-family:monospace;font-size:14px;display:block;outline:none}
-input:focus{border-color:#c5a059}
-button{background:#c5a059;color:#000;border:none;padding:.7rem 2rem;cursor:pointer;font-weight:bold;font-size:14px;margin-top:.5rem;display:block}
-button:disabled{background:#555;cursor:not-allowed}
-#out{background:#111;border:1px solid #222;padding:1rem;min-height:200px;white-space:pre-wrap;margin-top:1rem;font-size:12px;overflow-y:auto;max-height:55vh;color:#00ff41}
-.ok{color:#00ff41}.err{color:#ff4444}.wait{color:#c5a059}
-</style></head><body>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #0a0a0a; color: #00ff41; font-family: "Courier New", monospace; padding: 40px; }
+h1 { color: #c5a059; font-size: 2rem; margin-bottom: 8px; }
+.sub { color: #555; font-size: 0.85rem; margin-bottom: 30px; }
+textarea { width: 100%; background: #0f0f0f; color: #00ff41; border: 1px solid #00ff41;
+  padding: 16px; font-family: "Courier New", monospace; font-size: 1rem;
+  resize: vertical; min-height: 80px; outline: none; border-radius: 4px; }
+button { margin-top: 16px; background: #c5a059; color: #000; border: none;
+  padding: 14px 32px; font-size: 1rem; font-weight: bold; cursor: pointer;
+  font-family: "Courier New", monospace; border-radius: 4px; }
+button:hover { background: #e6b86a; }
+button:disabled { background: #555; cursor: not-allowed; }
+#output { margin-top: 24px; background: #0f0f0f; border: 1px solid #1a1a1a;
+  padding: 20px; min-height: 100px; white-space: pre-wrap; line-height: 1.6;
+  border-radius: 4px; font-size: 0.9rem; }
+.line-ok { color: #00ff41; }
+.line-err { color: #ff4444; }
+.line-info { color: #c5a059; }
+.line-dim { color: #444; }
+#status { margin-top: 12px; font-size: 0.85rem; color: #555; }
+</style>
+</head>
+<body>
 <h1>⚡ JOD EXECUTOR</h1>
-<p>Comandos: "cria agents/nome.py com..." | "gera scripts/nome.py que..."</p>
-<input id="t" placeholder="Digite o comando e pressione Enter..." autofocus>
-<button id="btn" onclick="run()">▶ EXECUTAR</button>
-<div id="out" class="wait">Pronto. Aguardando comando...</div>
+<p class="sub">Comandos: "cria agents/nome.py com..." | "gera scripts/nome.py que..."</p>
+<textarea id="task" placeholder="Digite sua tarefa..."></textarea>
+<br>
+<button id="btn" onclick="executar()">▶ EXECUTAR</button>
+<div id="status"></div>
+<div id="output"></div>
+
 <script>
-var running=false;
-function run(){
-  if(running)return;
-  var t=document.getElementById("t").value.trim();
-  if(!t)return;
-  running=true;
-  var btn=document.getElementById("btn");
-  var out=document.getElementById("out");
-  btn.disabled=true;
-  btn.textContent="⏳ Executando...";
-  out.className="wait";
-  out.textContent="▶ Executando: "+t+"\n\nAguarde...";
-  fetch("/execute",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task:t})})
-  .then(function(r){return r.json();})
-  .then(function(d){
-    out.textContent=d.output||d.error||"Sem resposta";
-    out.className=d.output&&d.output.includes("Concluído")?"ok":"err";
-    btn.disabled=false;
-    btn.textContent="▶ EXECUTAR";
-    running=false;
-  })
-  .catch(function(e){
-    out.textContent="Erro de conexão: "+e;
-    out.className="err";
-    btn.disabled=false;
-    btn.textContent="▶ EXECUTAR";
-    running=false;
-  });
+async function executar() {
+  const task = document.getElementById("task").value.trim();
+  if (!task) return;
+  const btn = document.getElementById("btn");
+  const output = document.getElementById("output");
+  const status = document.getElementById("status");
+  btn.disabled = true;
+  btn.textContent = "⏳ EXECUTANDO...";
+  output.innerHTML = "";
+  status.textContent = "Aguarde...";
+
+  try {
+    const res = await fetch("/execute", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({task})
+    });
+    const data = await res.json();
+    const raw = data.output || data.error || "Sem resposta";
+
+    // Filtra linhas — remove JSON de log
+    const lines = raw.split("\n");
+    let html = "";
+    for (const line of lines) {
+      const t = line.trim();
+      if (!t) continue;
+      if (t.startsWith("{") && t.includes('"level"')) continue; // remove logs JSON
+      if (t.startsWith("✓")) html += `<div class="line-ok">${t}</div>`;
+      else if (t.startsWith("✗") || t.startsWith("❌")) html += `<div class="line-err">${t}</div>`;
+      else if (t.startsWith("===") || t.startsWith("✅")) html += `<div class="line-info">${t}</div>`;
+      else html += `<div class="line-dim">${t}</div>`;
+    }
+    output.innerHTML = html || "Concluído.";
+    status.textContent = "Pronto.";
+  } catch(e) {
+    output.innerHTML = `<div class="line-err">Erro: ${e.message}</div>`;
+    status.textContent = "Erro.";
+  }
+
+  btn.disabled = false;
+  btn.textContent = "▶ EXECUTAR";
 }
-document.getElementById("t").onkeydown=function(e){
-  if(e.key==="Enter"){e.preventDefault();run();}
-};
-</script></body></html>
+
+document.getElementById("task").addEventListener("keydown", e => {
+  if (e.ctrlKey && e.key === "Enter") executar();
+});
+</script>
+</body>
+</html>
