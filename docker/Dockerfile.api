@@ -1,0 +1,46 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+# === DEPENDÊNCIAS DO SISTEMA (Playwright + Git) ===
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    gnupg \
+    ca-certificates \
+    libnss3 \
+    libgconf-2-4 \
+    libxtst6 \
+    libxrandr2 \
+    libasound2 \
+    libpangocairo-1.0-0 \
+    libatk1.0-0 \
+    libgtk-3-0 \
+    libxss1 \
+    libgbm1 \
+    libxkbcommon0 \
+    && rm -rf /var/lib/apt/lists/*
+
+# === INSTALA DEPENDÊNCIAS PYTHON ===
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# === PLAYWRIGHT (CRÍTICO PARA WEB NAVIGATION) ===
+RUN playwright install chromium --with-deps
+
+# === COPIA CÓDIGO ===
+COPY app/ ./app/
+COPY jod_brain/ ./jod_brain/
+COPY jod_brain_main.py .
+COPY .jod_memory.json . 2>/dev/null || true
+
+# === CONFIGURA GIT (PARA PUSH AUTOMÁTICO) ===
+RUN git config --global user.email "jod_robo@local" && \
+    git config --global user.name "JOD_ROBO" && \
+    git config --global init.defaultBranch main
+
+# === EXPOE PORTA ===
+EXPOSE 37777
+
+# === COMANDO DE INICIALIZAÇÃO ===
+CMD ["python3", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "37777"]

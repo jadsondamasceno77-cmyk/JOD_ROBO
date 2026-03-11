@@ -72,7 +72,7 @@ def executar(task: str, cwd: str, config: Config, memory: dict,
         print("❌ Arquiteto falhou")
         return []
 
-    if not auto_apply:
+    if not auto_apply and not os.environ.get("JOD_API_MODE"):
         aprovado = pedir_aprovacao(plano)
         if not aprovado:
             print("\n⛔ Cancelado.")
