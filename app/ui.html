@@ -5,31 +5,33 @@
 <title>JOD EXECUTOR</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0a0a0a; color: #00ff41; font-family: "Courier New", monospace; padding: 40px; }
-h1 { color: #c5a059; font-size: 2rem; margin-bottom: 8px; }
-.sub { color: #555; font-size: 0.85rem; margin-bottom: 30px; }
-textarea { width: 100%; background: #0f0f0f; color: #00ff41; border: 1px solid #00ff41;
-  padding: 16px; font-family: "Courier New", monospace; font-size: 1rem;
+body { background: #000000; color: #00ff41; font-family: "Courier New", monospace; padding: 40px; }
+h1 { color: #ffd700; font-size: 2rem; margin-bottom: 8px; letter-spacing: 3px; }
+.sub { color: #888; font-size: 0.85rem; margin-bottom: 30px; }
+textarea { width: 100%; background: #000; color: #ffffff; border: 2px solid #00ff41;
+  padding: 16px; font-family: "Courier New", monospace; font-size: 1.1rem;
   resize: vertical; min-height: 80px; outline: none; border-radius: 4px; }
-button { margin-top: 16px; background: #c5a059; color: #000; border: none;
-  padding: 14px 32px; font-size: 1rem; font-weight: bold; cursor: pointer;
-  font-family: "Courier New", monospace; border-radius: 4px; }
-button:hover { background: #e6b86a; }
-button:disabled { background: #555; cursor: not-allowed; }
-#output { margin-top: 24px; background: #0f0f0f; border: 1px solid #1a1a1a;
-  padding: 20px; min-height: 100px; white-space: pre-wrap; line-height: 1.6;
-  border-radius: 4px; font-size: 0.9rem; }
-.line-ok { color: #00ff41; }
-.line-err { color: #ff4444; }
-.line-info { color: #c5a059; }
-.line-dim { color: #444; }
-#status { margin-top: 12px; font-size: 0.85rem; color: #555; }
+textarea::placeholder { color: #555; }
+button { margin-top: 16px; background: #ffd700; color: #000000; border: none;
+  padding: 14px 36px; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+  font-family: "Courier New", monospace; border-radius: 4px; letter-spacing: 2px; }
+button:hover { background: #ffffff; }
+button:disabled { background: #333; color: #666; cursor: not-allowed; }
+#output { margin-top: 24px; background: #000; border: 2px solid #333;
+  padding: 24px; min-height: 120px; white-space: pre-wrap; line-height: 1.8;
+  border-radius: 4px; font-size: 1rem; }
+.line-ok   { color: #00ff41; font-weight: bold; }
+.line-err  { color: #ff3333; font-weight: bold; }
+.line-info { color: #ffd700; font-weight: bold; }
+.line-text { color: #ffffff; }
+.line-dim  { color: #aaaaaa; }
+#status { margin-top: 10px; font-size: 0.85rem; color: #666; }
 </style>
 </head>
 <body>
 <h1>⚡ JOD EXECUTOR</h1>
-<p class="sub">Comandos: "cria agents/nome.py com..." | "gera scripts/nome.py que..."</p>
-<textarea id="task" placeholder="Digite sua tarefa..."></textarea>
+<p class="sub">Comandos: "cria agents/nome.py com..." | "oi" | "explique X" | "gera scripts/nome.py que..."</p>
+<textarea id="task" placeholder="Digite sua tarefa ou pergunta..."></textarea>
 <br>
 <button id="btn" onclick="executar()">▶ EXECUTAR</button>
 <div id="status"></div>
@@ -44,8 +46,8 @@ async function executar() {
   const status = document.getElementById("status");
   btn.disabled = true;
   btn.textContent = "⏳ EXECUTANDO...";
-  output.innerHTML = "";
-  status.textContent = "Aguarde...";
+  output.innerHTML = "<div class='line-dim'>Aguardando JOD...</div>";
+  status.textContent = "";
 
   try {
     const res = await fetch("/execute", {
@@ -55,24 +57,27 @@ async function executar() {
     });
     const data = await res.json();
     const raw = data.output || data.error || "Sem resposta";
+    const mode = data.mode || "conversa";
 
-    // Filtra linhas — remove JSON de log
-    const lines = raw.split("\n");
-    let html = "";
-    for (const line of lines) {
-      const t = line.trim();
-      if (!t) continue;
-      if (t.startsWith("{") && t.includes('"level"')) continue; // remove logs JSON
-      if (t.startsWith("✓")) html += `<div class="line-ok">${t}</div>`;
-      else if (t.startsWith("✗") || t.startsWith("❌")) html += `<div class="line-err">${t}</div>`;
-      else if (t.startsWith("===") || t.startsWith("✅")) html += `<div class="line-info">${t}</div>`;
-      else html += `<div class="line-dim">${t}</div>`;
+    if (mode === "conversa") {
+      output.innerHTML = `<div class="line-text">${raw.replace(/\n/g, "<br>")}</div>`;
+    } else {
+      const lines = raw.split("\n");
+      let html = "";
+      for (const line of lines) {
+        const t = line.trim();
+        if (!t) continue;
+        if (t.startsWith("{") && t.includes('"level"')) continue;
+        if (t.startsWith("✓") || t.startsWith("✅")) html += `<div class="line-ok">${t}</div>`;
+        else if (t.startsWith("✗") || t.startsWith("❌")) html += `<div class="line-err">${t}</div>`;
+        else if (t.startsWith("===") || t.startsWith("📋") || t.startsWith("📤")) html += `<div class="line-info">${t}</div>`;
+        else html += `<div class="line-dim">${t}</div>`;
+      }
+      output.innerHTML = html || "Concluído.";
     }
-    output.innerHTML = html || "Concluído.";
     status.textContent = "Pronto.";
   } catch(e) {
     output.innerHTML = `<div class="line-err">Erro: ${e.message}</div>`;
-    status.textContent = "Erro.";
   }
 
   btn.disabled = false;
