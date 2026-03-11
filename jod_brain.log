@@ -1,0 +1,8 @@
+{"time":"2026-03-10 21:37:40,436","level":"INFO","service":"jod_brain","msg":"ID=jod_1773189460_0e3bef task=teste"}
+{"time":"2026-03-10 21:37:41,227","level":"INFO","service":"jod_brain","msg":"Groq respondeu com sucesso"}
+{"time":"2026-03-10 21:41:47,775","level":"INFO","service":"jod_brain","msg":"ID=jod_1773189707_65a550 task=cria um agente simples que monitora uso de CPU e salva log em scripts/cpu_monito"}
+{"time":"2026-03-10 21:41:48,588","level":"INFO","service":"jod_brain","msg":"Groq respondeu com sucesso"}
+{"time":"2026-03-10 21:41:56,445","level":"INFO","service":"jod_brain","msg":"Groq respondeu com sucesso"}
+{"time":"2026-03-10 21:41:56,448","level":"INFO","service":"jod_brain","msg":"Arquivo escrito: scripts/cpu_monitor.py"}
+{"time":"2026-03-10 21:41:57,145","level":"INFO","service":"jod_brain","msg":"Groq respondeu com sucesso"}
+{"time":"2026-03-10 21:41:57,147","level":"INFO","service":"jod_brain","msg":"Memoria atualizada — total execucoes: 1"}
