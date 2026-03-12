@@ -1,6 +1,7 @@
 import datetime
-def mostra_data_atual():
-    data_atual = datetime.date.today()
-    return data_atual
 
-print(mostra_data_atual())
+data_atual = datetime.datetime.now()
+
+data_formatada = data_atual.strftime('%d de %B de %Y')
+
+print(f'Data atual: {data_formatada}')

@@ -1,19 +1,16 @@
 version: "3.9"
-
 networks:
   jod-net:
     driver: bridge
-
 volumes:
-  redis-
+  redis-data:
   ollama-data:
-
 services:
   redis:
     image: redis:7-alpine
     command: redis-server --requirepass jodrobo2026 --appendonly yes
     volumes:
-      - redis-/data
+      - redis-data:/data
     networks:
       - jod-net
     restart: unless-stopped
@@ -22,11 +19,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
   ollama:
     image: ollama/ollama:latest
     volumes:
-      - ollama-/root/.ollama
+      - ollama-data:/root/.ollama
     networks:
       - jod-net
     restart: unless-stopped
@@ -35,7 +31,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-
   api:
     build:
       context: .
@@ -47,14 +42,11 @@ services:
       - REDIS_URL=redis://:jodrobo2026@redis:6379
       - OLLAMA_HOST=http://ollama:11434
       - GROQ_API_KEY=${GROQ_API_KEY}
-      - JOD_API_MODE=1
     volumes:
-      - ./jod_brain:/app/jod_brain
       - ./scripts:/app/scripts
       - ./agents:/app/agents
       - ./.jod_memory.json:/app/.jod_memory.json
       - ~/.ssh:/root/.ssh:ro
-      - ~/.gitconfig:/root/.gitconfig:ro
     depends_on:
       redis:
         condition: service_healthy
