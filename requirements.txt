@@ -17,3 +17,7 @@ Pillow==10.1.0
 
 # Git (já vem com Python, mas garante)
 gitpython==3.1.40
+# Testes
+pytest==8.0.0
+anyio==4.2.0
+httpx==0.26.0
