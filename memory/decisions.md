@@ -132,3 +132,35 @@ Toda nova entrada deve incluir data e motivo.
 - **Data:** 2026-03-17
 - **Decisão:** o bloco B1.2 está definitivamente encerrado. Não reabrir sem bug confirmado e instrução explícita.
 - **Motivo:** blocked → 403, needs_approval → 403, approved → 200 + io_committed=1; cross-trail consistente; sem shadow órfão; regressão 44/44 intacta.
+
+## D-025 — Serialização por target_path
+- **Data:** 2026-03-17
+- **Decisão:** `asyncio.Lock` keyed por `target_path` via `_get_path_lock()` e `_path_locks_mutex`
+- **Motivo:** impedir race condition destrutiva quando dois requests disputam o mesmo arquivo
+- **Evidência:** test_b2_serialization_and_logs.py — 3 passed em runtime
+
+## D-026 — Logs estruturados JSON com correlation_id
+- **Data:** 2026-03-17
+- **Decisão:** `_JsonFormatter` + `_setup_logging()` + `_CorrelationMiddleware` + `ContextVar`
+- **Motivo:** rastreabilidade ponta a ponta — cada request tem correlation_id propagado em todos os logs e na trilha de auditoria
+- **Evidência:** test_b2_serialization_and_logs.py — 3 passed, header X-Correlation-Id presente em todas as respostas
+
+## D-027 — CI/CD GitHub Actions
+- **Data:** 2026-03-17
+- **Decisão:** `.github/workflows/ci.yml` — push/PR dispara lint + 59 testes + upload de artefatos
+- **Motivo:** impedir regressão silenciosa — nenhum merge sem pipeline verde
+- **Evidência:** simulação local — 59 passed em 6.75s, test-results.xml gerado
+
+## D-028 — Robô-mãe: zero input() síncrono
+- **Data:** 2026-03-17
+- **Decisão:** o Robô-mãe não pode conter `input()` ou qualquer bloqueio síncrono aguardando aprovação humana durante a execução
+- **Motivo:** `input()` no meio do fluxo = human-in-the-loop = Nível 1-2, não Nível 5
+- **Regra:** humano dispara → sistema executa → humano audita (Log Humano). Guardião decide autonomamente.
+- **Referência:** CERT-001 — aprovação síncrona humana em runtime invalida certificação de autonomia total real
+
+## D-029 — CERT-001 incorporado ao projeto
+- **Data:** 2026-03-17
+- **Decisão:** autonomia total real e Nível 5 operacional só podem ser declarados após Log Humano válido + CERT-001
+- **Motivo:** implementação e testes verdes são condição necessária, não suficiente
+- **Estados certificáveis antes do Log Humano:** engenharia da base 10/10, segurança/auditoria 10/10, prontidão sistêmica 10/10
+- **Estados não certificáveis antes do Log Humano:** autonomia total real, Nível 5 operacional
