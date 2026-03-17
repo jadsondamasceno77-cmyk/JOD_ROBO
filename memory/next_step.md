@@ -1,45 +1,34 @@
 # Próxima Etapa Oficial — JOD_ROBO
 **Atualizado em:** 2026-03-17
 
-## Etapas concluídas
+## Fases encerradas com evidência real
 - Finalizador — 10/10, runtime validado (D-016)
 - Guardião — 10/10, runtime validado (D-019)
-- Integração B1 — stale attestation — 10/10, runtime validado (D-022)
-- B1.2 — veto E2E real — 10/10, runtime validado (D-024)
-- B2 — serialização por target_path — 10/10, runtime validado (D-025)
-- B2 — logs JSON + correlation_id — 10/10, runtime validado (D-026)
-- CI/CD — GitHub Actions pipeline — 10/10, 59 passed (D-027)
+- B1 stale attestation — 10/10, runtime validado (D-022)
+- B1.2 veto E2E real — 10/10, runtime validado (D-024)
+- P1 serialização por target_path — aprovado, runtime validado (D-025)
 
----
+## Fases com ressalva — ainda não certificadas 10/10
+- P2 logs JSON + correlation_id — ressalva: ts com "%f" literal (D-026)
+- P3 CI/CD — ressalva: sem evidência remota do GitHub Actions (D-027)
 
-## Etapa atual: Revisão geral da base antes do Robô-mãe
+## Etapa atual: saneamento da memória + correção da base
 
-### Regra operacional
-O Robô-mãe só se inicia após a revisão geral da base estar fechada com evidência limpa.
+### Ordem obrigatória antes do Robô-mãe
+1. ✅ Corrigir arquivos de memória (esta etapa)
+2. Corrigir campo `ts` do `_JsonFormatter` — microsegundos reais
+3. Validar P2 sem ressalva — 6 passed + ts correto
+4. Validar P3 com evidência remota — push + GitHub Actions verde
+5. Revisão geral final da base
+6. **Só então iniciar o Robô-mãe**
 
-### Checklist de revisão
-- [x] F1 — B1.2 runtime confirmado
-- [x] F2 — serialização por target_path
-- [x] F3 — logs JSON + correlation_id
-- [x] F4 — CI/CD pipeline
-- [x] memory/ atualizada com estado real
-- [ ] push para origin com todos os arquivos
-- [ ] Railway health check estável
-
----
-
-## Próxima etapa após revisão: Robô-mãe
-
-### Regras obrigatórias do Robô-mãe
+## Regras obrigatórias do Robô-mãe (para referência futura)
 - zero `input()` no meio do fluxo
-- humano dispara a execução — sistema executa sozinho
+- humano dispara → sistema executa → humano audita (Log Humano)
 - Guardião decide autonomamente — sem aprovação síncrona humana
-- Log Humano ocorre depois, como auditoria, não como destravamento
 - classificação: human-on-the-loop, não human-in-the-loop
+- referência: D-028, D-029, CERT-001
 
-### Ordem das fases restantes
-1. Robô-mãe — núcleo de orquestração
-2. Fábrica de agentes ELI (21 agentes)
-3. Observabilidade + self-healing
-4. Pré-certificação operacional (24h sem intervenção)
-5. CERT-001 — Log Humano — Nível 5
+## CERT-001
+- Autonomia Total Real: só certificável após Log Humano válido
+- Nível 5 operacional: só certificável após Log Humano válido

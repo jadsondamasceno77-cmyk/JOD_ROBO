@@ -2,6 +2,7 @@
 **Atualizado em:** 2026-03-17
 
 ## Arquivos principais
+
 | Arquivo | Papel |
 |---|---|
 | `main_fase2.py` | Core da API — FastAPI + SQLAlchemy + fila assíncrona |
@@ -11,35 +12,51 @@
 | `templates/finalizer_manifest.json` | Manifesto padrão do Finalizador |
 | `templates/guardian_agent.json` | Template do Agente Guardião |
 
-## Contagem de linhas
-| Arquivo | Linhas |
-|---|---|
-| `main_fase2.py` | ~1750 |
+## Fases fechadas com evidência runtime real
 
-## Fases concluídas com evidência runtime
+| Fase | Testes | Status |
+|------|--------|--------|
+| Finalizador — Agente 2 | 16 passed | 10/10 fechado (D-016) |
+| Guardião — Agente 3 | 15 passed | 10/10 fechado (D-019) |
+| B1 — stale attestation | 5 passed | 10/10 fechado (D-022) |
+| B1.2 — veto E2E real do Guardião | 4 passed | 10/10 fechado (D-024) |
+| P1 — serialização por target_path | 3 passed | aprovado (D-025) |
 
-| Fase | Descrição | Testes | Status |
-|------|-----------|--------|--------|
-| Finalizador | Agente 2 — ciclo de vida completo | 16 passed | ✅ 10/10 |
-| Guardião | Agente 3 — ciclo de vida completo | 15 passed | ✅ 10/10 |
-| Integração B1 | Stale attestation fix — io_committed, io_failure_reason, io_finalized_at | 5 passed | ✅ 10/10 |
-| B1.2 | Veto E2E real do Guardião — blocked e needs_approval em runtime | 4 passed | ✅ 10/10 |
-| B2 Serialização | asyncio.Lock por target_path — sem race condition | 3 passed | ✅ 10/10 |
-| B2 Logs JSON | correlation_id propagado, _JsonFormatter, _CorrelationMiddleware | 3 passed | ✅ 10/10 |
-| CI/CD | GitHub Actions — 59 testes em pipeline automático | 59 passed | ✅ 10/10 |
+## Regressão ampliada confirmada localmente
+- 59 passed, 0 failed — última execução: 2026-03-17
 
-## Total de testes em runtime
-**59 passed, 0 failed** — última execução: 2026-03-17
+## Estado de P2 e P3 — com ressalva
 
-## O que NÃO está concluído
-- Robô-mãe / orquestração central — não iniciado
-- Observabilidade + self-healing — não iniciado
-- Pré-certificação operacional — não iniciado
-- CERT-001 / Log Humano — não iniciado
+### P2 — Logs JSON + correlation_id
+- header X-Correlation-Id: passou
+- correlation_id propagado: passou
+- logs em JSON: passou
+- **RESSALVA:** campo `ts` apareceu com `"%f"` literal em vez de microsegundos reais
+- **Status: NÃO CERTIFICADO 10/10** — requer correção do timestamp antes de fechar
 
-## Certificação de autonomia
-- Engenharia da base: 10/10 — certificada
-- Segurança e auditoria: 10/10 — certificada
-- Prontidão sistêmica: 10/10 — certificada
-- Autonomia Total Real: NÃO CERTIFICADA — requer Log Humano (CERT-001)
-- Nível 5 operacional: NÃO CERTIFICADO — requer Log Humano (CERT-001)
+### P3 — CI/CD GitHub Actions
+- workflow `.github/workflows/ci.yml` criado
+- simulação local: 59 passed em 6.75s
+- **RESSALVA:** sem evidência remota de GitHub Actions executando no repositório
+- **Status: NÃO CERTIFICADO 10/10** — requer push + execução remota confirmada
+
+## Robô-mãe
+- **NÃO INICIADO**
+- só inicia após P2 e P3 certificados limpos + revisão geral final da base
+
+## Certificação de autonomia — CERT-001
+- Engenharia da base: em progresso — P2 e P3 com ressalva
+- Autonomia Total Real: **NÃO CERTIFICADA** — requer Log Humano válido
+- Nível 5 operacional: **NÃO CERTIFICADO** — requer Log Humano válido
+
+## Banco de dados
+- SQLite em `jod_robo.db`
+- Tabelas: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`
+- `integration_audit` colunas B1: `io_committed`, `io_failure_reason`, `io_finalized_at`
+
+## Porta local
+- `main_fase2.py`: `127.0.0.1:37777`
+
+## Git
+- Branch: `padrão`
+- Último commit: `f34d839`

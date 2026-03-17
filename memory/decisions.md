@@ -133,34 +133,43 @@ Toda nova entrada deve incluir data e motivo.
 - **Decisão:** o bloco B1.2 está definitivamente encerrado. Não reabrir sem bug confirmado e instrução explícita.
 - **Motivo:** blocked → 403, needs_approval → 403, approved → 200 + io_committed=1; cross-trail consistente; sem shadow órfão; regressão 44/44 intacta.
 
-## D-025 — Serialização por target_path
+## D-025 — P1: serialização por target_path
 - **Data:** 2026-03-17
 - **Decisão:** `asyncio.Lock` keyed por `target_path` via `_get_path_lock()` e `_path_locks_mutex`
 - **Motivo:** impedir race condition destrutiva quando dois requests disputam o mesmo arquivo
-- **Evidência:** test_b2_serialization_and_logs.py — 3 passed em runtime
+- **Evidência:** `test_b2_serialization_and_logs.py` — 3 testes de concorrência passed em runtime local
+- **Status:** aprovado
 
-## D-026 — Logs estruturados JSON com correlation_id
+## D-026 — P2: logs JSON + correlation_id — com ressalva
 - **Data:** 2026-03-17
 - **Decisão:** `_JsonFormatter` + `_setup_logging()` + `_CorrelationMiddleware` + `ContextVar`
-- **Motivo:** rastreabilidade ponta a ponta — cada request tem correlation_id propagado em todos os logs e na trilha de auditoria
-- **Evidência:** test_b2_serialization_and_logs.py — 3 passed, header X-Correlation-Id presente em todas as respostas
+- **Motivo:** rastreabilidade ponta a ponta — correlation_id propagado em todos os logs e headers
+- **Evidência:** 3 testes passed — header X-Correlation-Id presente, echo de cid passando
+- **Ressalva:** campo `ts` exibiu `"%f"` literal em vez de microsegundos reais. `formatTime` com `"%Y-%m-%dT%H:%M:%S.%f"` não funciona nativamente — `%f` não é suportado por `logging.Formatter.formatTime`. Requer correção via `datetime.now().strftime` ou `record.created`.
+- **Status:** NÃO CERTIFICADO 10/10 — requer correção do ts antes de fechar
 
-## D-027 — CI/CD GitHub Actions
+## D-027 — P3: CI/CD GitHub Actions — com ressalva
 - **Data:** 2026-03-17
-- **Decisão:** `.github/workflows/ci.yml` — push/PR dispara lint + 59 testes + upload de artefatos
+- **Decisão:** `.github/workflows/ci.yml` criado — push/PR dispara lint + 59 testes + upload de artefatos
 - **Motivo:** impedir regressão silenciosa — nenhum merge sem pipeline verde
-- **Evidência:** simulação local — 59 passed em 6.75s, test-results.xml gerado
+- **Evidência:** simulação local — 59 passed em 6.75s, `test-results.xml` gerado
+- **Ressalva:** sem evidência remota de GitHub Actions executando. Requer push para origin + URL de run verde confirmada.
+- **Status:** NÃO CERTIFICADO 10/10 — requer validação remota
 
-## D-028 — Robô-mãe: zero input() síncrono
+## D-028 — Robô-mãe só inicia após base limpa
 - **Data:** 2026-03-17
-- **Decisão:** o Robô-mãe não pode conter `input()` ou qualquer bloqueio síncrono aguardando aprovação humana durante a execução
-- **Motivo:** `input()` no meio do fluxo = human-in-the-loop = Nível 1-2, não Nível 5
-- **Regra:** humano dispara → sistema executa → humano audita (Log Humano). Guardião decide autonomamente.
-- **Referência:** CERT-001 — aprovação síncrona humana em runtime invalida certificação de autonomia total real
+- **Decisão:** o Robô-mãe não pode ser iniciado enquanto P2 e P3 tiverem ressalva técnica aberta
+- **Motivo:** construir orquestração sobre base com logging quebrado e CI não validado remotamente é dívida técnica estrutural
+- **Ordem obrigatória:** corrigir ts → validar P2 → evidência remota P3 → revisão final → Robô-mãe
 
-## D-029 — CERT-001 incorporado ao projeto
+## D-029 — jod_brain_main.py classificado como human-in-the-loop síncrono
 - **Data:** 2026-03-17
-- **Decisão:** autonomia total real e Nível 5 operacional só podem ser declarados após Log Humano válido + CERT-001
-- **Motivo:** implementação e testes verdes são condição necessária, não suficiente
-- **Estados certificáveis antes do Log Humano:** engenharia da base 10/10, segurança/auditoria 10/10, prontidão sistêmica 10/10
-- **Estados não certificáveis antes do Log Humano:** autonomia total real, Nível 5 operacional
+- **Decisão:** `jod_brain_main.py` contém `input("Aprovar e executar? [sim/nao]")` — aprovação humana síncrona bloqueante no meio do fluxo de execução
+- **Classificação:** human-in-the-loop — Nível 1-2 de maturidade operacional
+- **Não é:** autonomia total real, Nível 5, nem equivalente ao Log Humano posterior
+- **Distinção obrigatória:**
+  - comando inicial humano = permitido em qualquer nível
+  - aprovação síncrona no meio do fluxo = humano é parte do executor, não observador
+  - Log Humano posterior = auditor externo, não destravamento de execução
+- **Motivo:** registrar formalmente para que o Robô-mãe nasça sem este padrão
+- **Referência:** CERT-001
