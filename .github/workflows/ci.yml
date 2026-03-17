@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "master", "develop"]
+  pull_request:
+    branches: ["main", "master"]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Lint
+        run: |
+          pip install ruff --quiet
+          ruff check main_fase2.py --select E,F,W --ignore E501,W503 || true
+
+      - name: Start server
+        run: |
+          JOD_ENV=test python3 main_fase2.py &
+          echo $! > /tmp/server.pid
+          sleep 4
+          curl -sf http://127.0.0.1:37777/agents/finalizer \
+            -H "Authorization: Bearer dev-token" \
+            -H "Content-Type: application/json" \
+            -d '{}' > /dev/null || true
+        env:
+          JOD_ENV: test
+
+      - name: Run all tests
+        run: |
+          JOD_ENV=test python3 -m pytest \
+            tests/test_finalizer.py \
+            tests/test_guardian.py \
+            tests/test_integration.py \
+            tests/test_b1_stale_attestation.py \
+            tests/test_b1_2_guardian_veto_e2e.py \
+            tests/test_b2_serialization_and_logs.py \
+            -v --tb=short --junit-xml=test-results.xml
+        env:
+          JOD_ENV: test
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f /tmp/server.pid ]; then
+            kill $(cat /tmp/server.pid) 2>/dev/null || true
+          fi
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results.xml
+          retention-days: 30
