@@ -44,8 +44,9 @@ _correlation_id: ContextVar[str] = ContextVar("correlation_id", default="")
 
 class _JsonFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
+        from datetime import datetime, timezone
         payload = {
-            "ts":             self.formatTime(record, "%Y-%m-%dT%H:%M:%S.%f"),
+            "ts":             datetime.fromtimestamp(record.created, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + f"{int(record.created % 1 * 1e6):06d}",
             "level":          record.levelname,
             "event":          record.getMessage(),
             "logger":         record.name,
