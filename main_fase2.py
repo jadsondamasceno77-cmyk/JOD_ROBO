@@ -274,6 +274,65 @@ def _migrate_mission_control(engine) -> None:
             conn.commit()
 
 
+def _migrate_macrobloco_a(engine) -> None:
+    """
+    Cria tabelas e colunas do MACROBLOCO A. Idempotente.
+    - approval_requests: nova tabela (UNIQUE por mission_id+step_index)
+    - circuit_breaker: nova tabela (PK por provider_id+operation)
+    - mission_control: colunas max_retries, retry_delay_secs, retry_count, next_retry_at
+    - mission_log: coluna retry_count
+    """
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS approval_requests (
+                id               INTEGER PRIMARY KEY AUTOINCREMENT,
+                mission_id       TEXT    NOT NULL,
+                step_index       INTEGER NOT NULL,
+                context_snapshot TEXT    NOT NULL,
+                status           TEXT    NOT NULL DEFAULT 'PENDING',
+                decided_by       TEXT,
+                notes            TEXT,
+                decided_at       TEXT,
+                expires_at       TEXT    NOT NULL,
+                created_at       TEXT    NOT NULL,
+                UNIQUE(mission_id, step_index)
+            )
+        """))
+        conn.commit()
+
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS circuit_breaker (
+                provider_id  TEXT    NOT NULL,
+                operation    TEXT    NOT NULL,
+                state        TEXT    NOT NULL DEFAULT 'CLOSED',
+                failures     INTEGER NOT NULL DEFAULT 0,
+                opened_at    TEXT,
+                PRIMARY KEY (provider_id, operation)
+            )
+        """))
+        conn.commit()
+
+        mc_existing = {row[1] for row in conn.execute(
+            text("PRAGMA table_info(mission_control)")
+        ).fetchall()}
+        for col, defn in {
+            "max_retries":      "INTEGER DEFAULT 3",
+            "retry_delay_secs": "REAL DEFAULT 2.0",
+            "retry_count":      "INTEGER DEFAULT 0",
+            "next_retry_at":    "TEXT",
+        }.items():
+            if col not in mc_existing:
+                conn.execute(text(f"ALTER TABLE mission_control ADD COLUMN {col} {defn}"))
+                conn.commit()
+
+        ml_existing = {row[1] for row in conn.execute(
+            text("PRAGMA table_info(mission_log)")
+        ).fetchall()}
+        if "retry_count" not in ml_existing:
+            conn.execute(text("ALTER TABLE mission_log ADD COLUMN retry_count INTEGER DEFAULT 0"))
+            conn.commit()
+
+
 def _migrate_integration_audit(engine) -> None:
     """
     Adiciona colunas B1 em integration_audit se ainda não existirem.
@@ -336,6 +395,7 @@ async def lifespan(app: FastAPI):
     _migrate_integration_audit(engine)
     _migrate_mission_log(engine)
     _migrate_mission_control(engine)
+    _migrate_macrobloco_a(engine)
 
     # Startup sweep: remove shadow files (.*.jod_tmp) deixados por crashes anteriores
     for _tmp in BASE_DIR.rglob(".*.jod_tmp"):
@@ -465,10 +525,19 @@ class StepSpecIn(BaseModel):
 
 class RunMissionRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    mission_id:   str             = Field(..., min_length=1)
-    finalizer_id: str             = Field(..., min_length=1)
-    guardian_id:  Optional[str]   = None
-    steps:        list[StepSpecIn] = Field(..., min_length=1)
+    mission_id:        str             = Field(..., min_length=1)
+    finalizer_id:      str             = Field(..., min_length=1)
+    guardian_id:       Optional[str]   = None
+    steps:             list[StepSpecIn] = Field(..., min_length=1)
+    max_retries:       int             = Field(3, ge=0, le=10)
+    retry_delay_secs:  float           = Field(2.0, ge=0.0, le=300.0)
+    approval_ttl_secs: int             = Field(86400, ge=60)
+
+
+class ApprovalDecisionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    decided_by: str           = Field(..., min_length=1)
+    notes:      Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
@@ -1928,10 +1997,11 @@ async def list_guardian_audit(agent_id: str,
 # ---------------------------------------------------------------------------
 # Robô-mãe — MVP
 # ---------------------------------------------------------------------------
-from robo_mae.context  import MissionContext, StepSpec
-from robo_mae.executor import MissionExecutor
-from robo_mae.registry import AgentRegistry
-from robo_mae.reporter import get_mission_summary
+from robo_mae.context         import MissionContext, StepSpec
+from robo_mae.executor        import MissionExecutor
+from robo_mae.mission_control import MissionControl as _MissionControl
+from robo_mae.registry        import AgentRegistry
+from robo_mae.reporter        import get_mission_summary
 
 
 @app.post("/missions/run", tags=["missions"])
@@ -1942,10 +2012,13 @@ async def run_mission(
     verify_token(authorization)
 
     ctx = MissionContext(
-        mission_id   = req.mission_id,
-        finalizer_id = req.finalizer_id,
-        guardian_id  = req.guardian_id,
-        steps        = [
+        mission_id        = req.mission_id,
+        finalizer_id      = req.finalizer_id,
+        guardian_id       = req.guardian_id,
+        max_retries       = req.max_retries,
+        retry_delay_secs  = req.retry_delay_secs,
+        approval_ttl_secs = req.approval_ttl_secs,
+        steps             = [
             StepSpec(
                 action      = s.action,
                 target_path = s.target_path,
@@ -1967,6 +2040,113 @@ async def run_mission(
 
     summary = get_mission_summary(Session, req.mission_id)
     return {"mission_id": req.mission_id, "summary": summary}
+
+
+# ---------------------------------------------------------------------------
+# Robô-mãe — Approval endpoints
+# ---------------------------------------------------------------------------
+
+@app.get("/missions/{mission_id}/approval", tags=["missions"])
+async def get_mission_approval(
+    mission_id: str,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    with Session() as s:
+        row = s.execute(
+            text("""
+                SELECT id, step_index, status, decided_by, notes,
+                       decided_at, expires_at, created_at, context_snapshot
+                FROM approval_requests
+                WHERE mission_id=:mid ORDER BY id DESC LIMIT 1
+            """),
+            {"mid": mission_id},
+        ).fetchone()
+    if row is None:
+        raise HTTPException(status_code=404, detail="Nenhum approval request encontrado")
+    return {
+        "mission_id":       mission_id,
+        "approval_id":      row[0],
+        "step_index":       row[1],
+        "status":           row[2],
+        "decided_by":       row[3],
+        "notes":            row[4],
+        "decided_at":       row[5],
+        "expires_at":       row[6],
+        "created_at":       row[7],
+        "context_snapshot": json.loads(row[8]) if row[8] else None,
+    }
+
+
+@app.post("/missions/{mission_id}/approve", tags=["missions"])
+async def approve_mission(
+    mission_id: str,
+    body: ApprovalDecisionRequest,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    with Session() as s:
+        ar = s.execute(
+            text("""
+                SELECT step_index, status, expires_at FROM approval_requests
+                WHERE mission_id=:mid ORDER BY id DESC LIMIT 1
+            """),
+            {"mid": mission_id},
+        ).fetchone()
+    if ar is None:
+        raise HTTPException(status_code=404, detail="Nenhum approval request encontrado")
+    step_index, ar_status, expires_at = ar
+    if ar_status == "approved":
+        return {"ok": True, "status": "approved", "idempotent": True}
+    if ar_status == "denied":
+        raise HTTPException(status_code=409, detail="Approval já negado — não pode aprovar")
+    if ar_status == "expired" or (ar_status == "PENDING" and _now_iso_main() > expires_at):
+        raise HTTPException(status_code=410, detail="Approval expirado")
+    with Session() as s:
+        ok = _MissionControl.resume_approval(
+            s, mission_id, step_index, "approved", body.decided_by, body.notes
+        )
+    if not ok:
+        raise HTTPException(status_code=409, detail="Não foi possível aprovar (request expirado ou já decidido)")
+    return {"ok": True, "status": "approved", "mission_id": mission_id}
+
+
+@app.post("/missions/{mission_id}/deny", tags=["missions"])
+async def deny_mission(
+    mission_id: str,
+    body: ApprovalDecisionRequest,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    with Session() as s:
+        ar = s.execute(
+            text("""
+                SELECT step_index, status, expires_at FROM approval_requests
+                WHERE mission_id=:mid ORDER BY id DESC LIMIT 1
+            """),
+            {"mid": mission_id},
+        ).fetchone()
+    if ar is None:
+        raise HTTPException(status_code=404, detail="Nenhum approval request encontrado")
+    step_index, ar_status, expires_at = ar
+    if ar_status == "denied":
+        return {"ok": True, "status": "denied", "idempotent": True}
+    if ar_status == "approved":
+        raise HTTPException(status_code=409, detail="Approval já aprovado — não pode negar")
+    if ar_status == "expired" or (ar_status == "PENDING" and _now_iso_main() > expires_at):
+        raise HTTPException(status_code=410, detail="Approval expirado")
+    with Session() as s:
+        ok = _MissionControl.resume_approval(
+            s, mission_id, step_index, "denied", body.decided_by, body.notes
+        )
+    if not ok:
+        raise HTTPException(status_code=409, detail="Não foi possível negar (request expirado ou já decidido)")
+    return {"ok": True, "status": "denied", "mission_id": mission_id}
+
+
+def _now_iso_main() -> str:
+    """UTC naive ISO — helper local para comparação nos endpoints de approval."""
+    return datetime.utcnow().isoformat()
 
 
 if os.environ.get("JOD_ENV") == "test":

@@ -1,12 +1,19 @@
 import asyncio
 import uuid
+from datetime import datetime, timedelta
 
 import httpx
 from sqlalchemy import text
 
 from .context import MissionContext, StepResult, StepSpec
 from .log import begin_step, finish_step
-from .mission_control import FencingError, MissionControl, run_heartbeat
+from .mission_control import (
+    CircuitBreaker,
+    FencingError,
+    MissionControl,
+    _now_iso,
+    run_heartbeat,
+)
 from .registry import AgentRegistry
 
 # Per-path lock registry — serializa missões concorrentes no mesmo target_path
@@ -53,6 +60,12 @@ class MissionExecutor:
                 f"missão {ctx.mission_id}: {decision.reason}"
             )
 
+        if decision.action == "FAIL":
+            # mission_control.status já é FAILED — persistido pelo reconcile()
+            raise RuntimeError(
+                f"missão {ctx.mission_id}: {decision.reason}"
+            )
+
         if decision.action == "QUARANTINE":
             with self._sf() as s:
                 MissionControl.quarantine(s, ctx.mission_id, decision.reason)
@@ -60,27 +73,31 @@ class MissionExecutor:
                 f"missão {ctx.mission_id} quarentenada: {decision.reason}"
             )
 
-        # decision.action == "RESUME" — resume_from_step é a autoridade do reconcile
+        # decision.action == "RESUME"
         resume_from = decision.resume_from_step  # type: ignore[assignment]
 
-        # ── Fase B: aquisição atômica ────────────────────────────────────────
-        # claim: PENDING → RUNNING (primeira execução)
-        # takeover: RUNNING+stale → RUNNING (recovery)
+        # ── Fase B: aquisição atômica (três caminhos sem sobreposição) ───────
+        # resume_from_approval: WAITING_APPROVAL → RUNNING
+        # claim:                PENDING           → RUNNING
+        # takeover:             RUNNING+stale     → RUNNING
         owner_id = str(uuid.uuid4())
 
-        with self._sf() as s:
-            lock_version = MissionControl.claim(s, ctx.mission_id, owner_id)
-        if lock_version is None:
+        if decision.mission_status == "WAITING_APPROVAL":
             with self._sf() as s:
-                lock_version = MissionControl.takeover(s, ctx.mission_id, owner_id)
+                lock_version = MissionControl.resume_from_approval(s, ctx.mission_id, owner_id)
+        else:
+            with self._sf() as s:
+                lock_version = MissionControl.claim(s, ctx.mission_id, owner_id)
+            if lock_version is None:
+                with self._sf() as s:
+                    lock_version = MissionControl.takeover(s, ctx.mission_id, owner_id)
+
         if lock_version is None:
             raise RuntimeError(
                 f"ownership não adquirida para {ctx.mission_id}: race condition"
             )
 
         # ── Fase C: repair pré-execução ──────────────────────────────────────
-        # Se houve crash entre begin_step e finish_step com io_committed=1
-        # confirmado pelo reconcile, reparar a entrada RUNNING para 'applied'.
         if resume_from > 0:
             with self._sf() as s:
                 s.execute(
@@ -123,6 +140,20 @@ class MissionExecutor:
                         s, ctx.mission_id, owner_id, lock_version, step_index
                     )
 
+                # Ler estado atual de retry do banco
+                with self._sf() as s:
+                    mc_row = s.execute(
+                        text("""
+                            SELECT retry_count, max_retries, retry_delay_secs
+                            FROM mission_control WHERE mission_id=:mid
+                        """),
+                        {"mid": ctx.mission_id},
+                    ).fetchone()
+
+                current_rc = (mc_row[0] or 0) if mc_row else 0
+                max_r      = (mc_row[1] if mc_row[1] is not None else ctx.max_retries) if mc_row else ctx.max_retries
+                delay_s    = (mc_row[2] if mc_row[2] is not None else ctx.retry_delay_secs) if mc_row else ctx.retry_delay_secs
+
                 log_rowid = begin_step(
                     self._sf,
                     ctx.mission_id,
@@ -131,17 +162,91 @@ class MissionExecutor:
                     ctx.guardian_id,
                     step,
                     step_index,
+                    retry_count=current_rc,
                 )
-                result = await self._execute_step(step)
+
+                # Circuit breaker pre-check (keyed por provider_id + operation)
+                cb_blocked = False
+                if step.target_path:
+                    with self._sf() as s:
+                        cb_state = CircuitBreaker.check(
+                            s, self._ctx.finalizer_id, step.action
+                        )
+                    if cb_state == "OPEN":
+                        result = StepResult(
+                            step=step, status="error",
+                            raw={"error": "circuit_open"},
+                        )
+                        cb_blocked = True
+
+                if not cb_blocked:
+                    result = await self._execute_step(step)
+                    if step.target_path:
+                        with self._sf() as s:
+                            if result.status in ("applied", "dry_run_ok"):
+                                CircuitBreaker.record_success(
+                                    s, self._ctx.finalizer_id, step.action
+                                )
+                            elif result.status == "error":
+                                CircuitBreaker.record_failure(
+                                    s, self._ctx.finalizer_id, step.action
+                                )
+
                 finish_step(self._sf, log_rowid, result)
                 results.append(result)
 
-                if result.status in ("io_failed", "error", "vetoed"):
-                    mission_success = False
-                if result.status in ("io_failed", "error"):
-                    break  # abort-on-first-error
+                # ── Tratamento pós-step ──────────────────────────────────────
 
-            completed_normally = True
+                if result.status == "pending_approval":
+                    # Pausa formal — nenhum complete() é chamado
+                    with self._sf() as s:
+                        MissionControl.set_waiting_approval(
+                            s, ctx.mission_id, owner_id, lock_version,
+                            step_index=step_index,
+                            context_snapshot={
+                                "mission_id":   ctx.mission_id,
+                                "step_index":   step_index,
+                                "action":       step.action,
+                                "target_path":  step.target_path,
+                                "payload":      step.payload,
+                                "guardian_id":  ctx.guardian_id,
+                                "finalizer_id": ctx.finalizer_id,
+                            },
+                            approval_ttl_secs=ctx.approval_ttl_secs,
+                        )
+                    completed_normally = False
+                    break
+
+                # vetoed: mission_success=False, loop continua (não aborta)
+                if result.status == "vetoed":
+                    mission_success = False
+                    continue
+
+                if result.status == "io_failed":
+                    mission_success = False
+                    break  # terminal — não retryável
+
+                if result.status == "error":
+                    mission_success = False
+                    if current_rc >= max_r:
+                        # Retries esgotados em execução ativa → complete() chamado → FAILED
+                        completed_normally = True
+                    else:
+                        # Agendar retry — heartbeat vai esfriar; reconcile retoma quando vencer
+                        next_ts = (
+                            datetime.utcnow()
+                            + timedelta(seconds=delay_s * (2 ** current_rc))
+                        ).isoformat()
+                        with self._sf() as s:
+                            MissionControl.schedule_retry(
+                                s, ctx.mission_id, owner_id, lock_version, next_ts
+                            )
+                        completed_normally = False
+                    break
+
+            else:
+                # Loop completou sem break
+                completed_normally = True
 
         except FencingError:
             completed_normally = False
@@ -230,8 +335,22 @@ class MissionExecutor:
             return StepResult(step=step, status="error", http_status=200, raw=raw)
 
         if r.status_code == 403:
+            # guardian_status é o campo real (não "reason") — está dentro de detail
             detail = raw.get("detail", {})
-            tid = detail.get("guardian_transaction_id") if isinstance(detail, dict) else None
+            if isinstance(detail, dict):
+                guardian_status = detail.get("guardian_status", "")
+                tid             = detail.get("guardian_transaction_id")
+            else:
+                guardian_status = ""
+                tid             = None
+
+            if guardian_status == "needs_approval":
+                return StepResult(
+                    step=step, status="pending_approval",
+                    http_status=403, raw=raw,
+                )
+
+            # guardian_status == "blocked" ou qualquer outro 403
             return StepResult(
                 step=step, status="vetoed",
                 transaction_id=tid,

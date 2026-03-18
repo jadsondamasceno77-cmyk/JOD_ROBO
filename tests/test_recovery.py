@@ -52,14 +52,18 @@ def _create_tables(engine) -> None:
     with engine.connect() as conn:
         conn.execute(text("""
             CREATE TABLE IF NOT EXISTS mission_control (
-                mission_id   TEXT    PRIMARY KEY,
-                status       TEXT    NOT NULL DEFAULT 'PENDING',
-                owner_id     TEXT,
-                lock_version INTEGER NOT NULL DEFAULT 0,
-                heartbeat_at TEXT,
-                claimed_at   TEXT,
-                current_step INTEGER NOT NULL DEFAULT 0,
-                created_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+                mission_id        TEXT    PRIMARY KEY,
+                status            TEXT    NOT NULL DEFAULT 'PENDING',
+                owner_id          TEXT,
+                lock_version      INTEGER NOT NULL DEFAULT 0,
+                heartbeat_at      TEXT,
+                claimed_at        TEXT,
+                current_step      INTEGER NOT NULL DEFAULT 0,
+                created_at        TEXT    NOT NULL DEFAULT (datetime('now')),
+                max_retries       INTEGER DEFAULT 3,
+                retry_delay_secs  REAL    DEFAULT 2.0,
+                retry_count       INTEGER DEFAULT 0,
+                next_retry_at     TEXT
             )
         """))
         conn.execute(text("""

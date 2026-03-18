@@ -48,17 +48,42 @@ def begin_step(
     guardian_id,
     step,
     step_index:     int,
+    retry_count:    int = 0,
 ) -> int:
-    """INSERT step com status='RUNNING'. Retorna rowid para finish_step."""
+    """
+    Retorna rowid para finish_step.
+
+    Se já existe linha 'pending_approval' para (mission_id, step_index):
+        UPDATE para 'RUNNING' e retorna o rowid existente (resume após approval).
+    Caso contrário: INSERT nova linha (primeira execução ou retry — trilha separada).
+    """
     with session_factory() as s:
+        existing = s.execute(
+            text("""
+                SELECT id FROM mission_log
+                WHERE mission_id=:mid AND step_index=:idx
+                  AND status='pending_approval'
+                LIMIT 1
+            """),
+            {"mid": mission_id, "idx": step_index},
+        ).fetchone()
+
+        if existing:
+            s.execute(
+                text("UPDATE mission_log SET status='RUNNING' WHERE id=:id"),
+                {"id": existing[0]},
+            )
+            s.commit()
+            return existing[0]
+
         result = s.execute(
             text("""
                 INSERT INTO mission_log
                     (mission_id, correlation_id, finalizer_id, guardian_id,
-                     action, target_path, status, step_index)
+                     action, target_path, status, step_index, retry_count)
                 VALUES
                     (:mission_id, :correlation_id, :finalizer_id, :guardian_id,
-                     :action, :target_path, 'RUNNING', :step_index)
+                     :action, :target_path, 'RUNNING', :step_index, :retry_count)
             """),
             {
                 "mission_id":     mission_id,
@@ -68,6 +93,7 @@ def begin_step(
                 "action":         step.action,
                 "target_path":    step.target_path,
                 "step_index":     step_index,
+                "retry_count":    retry_count,
             },
         )
         rowid = result.lastrowid
