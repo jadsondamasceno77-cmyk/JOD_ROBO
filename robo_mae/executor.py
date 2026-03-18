@@ -1,9 +1,23 @@
+import asyncio
+
 import httpx
 from sqlalchemy import text
 
 from .context import MissionContext, StepResult, StepSpec
 from .log import record_step
 from .registry import AgentRegistry
+
+# Per-path lock registry, compartilhado entre todas as instâncias de MissionExecutor.
+# Serializa missões concorrentes que escrevem no mesmo target_path.
+_exec_path_locks: dict[str, asyncio.Lock] = {}
+_exec_path_locks_mutex: asyncio.Lock = asyncio.Lock()
+
+
+async def _get_exec_path_lock(target_path: str) -> asyncio.Lock:
+    async with _exec_path_locks_mutex:
+        if target_path not in _exec_path_locks:
+            _exec_path_locks[target_path] = asyncio.Lock()
+        return _exec_path_locks[target_path]
 
 
 class MissionExecutor:
@@ -49,6 +63,14 @@ class MissionExecutor:
         return results
 
     async def _execute_step(self, step: StepSpec) -> StepResult:
+        """Adquire lock por target_path antes de disparar o request de execução."""
+        if step.target_path is not None:
+            path_lock = await _get_exec_path_lock(step.target_path)
+            async with path_lock:
+                return await self._do_execute(step)
+        return await self._do_execute(step)
+
+    async def _do_execute(self, step: StepSpec) -> StepResult:
         body: dict = {
             "mode":   step.mode,
             "action": step.action,

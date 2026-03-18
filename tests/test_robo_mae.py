@@ -1,3 +1,4 @@
+import asyncio
 import json
 import sqlite3
 import uuid
@@ -28,10 +29,11 @@ _MANIFEST = {
     "requires_approval":  ["run_script", "git_push", "delete_file", "access_secret", "edit_core"],
 }
 
-_TARGET_APPLY   = "tests/rm_apply.txt"
-_TARGET_VETO    = "restricted/rm_veto.txt"   # restricted/ → guardian bloqueia
-_TARGET_IO_FAIL = "tests/rm_io_fail.txt"
-_TARGET_DRAFT   = "tests/rm_draft_activate.txt"
+_TARGET_APPLY       = "tests/rm_apply.txt"
+_TARGET_VETO        = "restricted/rm_veto.txt"   # restricted/ → guardian bloqueia
+_TARGET_IO_FAIL     = "tests/rm_io_fail.txt"
+_TARGET_DRAFT       = "tests/rm_draft_activate.txt"
+_TARGET_CONCURRENT  = "tests/rm_concurrent.txt"
 
 
 # ---------------------------------------------------------------------------
@@ -459,3 +461,64 @@ def test_t7_log_entries_carry_mission_id(guardian_id):
         f"Nenhuma entrada em uvicorn.log com correlation_id={mission_id}\n"
         f"O executor não está propagando X-Correlation-Id nos requests internos."
     )
+
+
+# ---------------------------------------------------------------------------
+# T8 — B2: serialização por target_path — 5 missões concorrentes, mesmo path
+# ---------------------------------------------------------------------------
+
+def test_t8_concurrent_missions_same_path_serialized(finalizer_id, guardian_id):
+    """
+    5 missões disparadas simultaneamente escrevem no mesmo target_path.
+    O executor serializa via _get_exec_path_lock: apenas uma missão por vez
+    detém o lock e faz o request de execução.
+    Resultado esperado:
+      - todas as 5 retornam 200 com success=True
+      - conteúdo final é um dos 5 payloads (sem corrupção)
+      - nenhum shadow file órfão
+      - mission_log registra 5 steps com status=applied
+    """
+    payloads = [f"conteudo_{i}" for i in range(5)]
+
+    async def _write(i):
+        async with httpx.AsyncClient(base_url=BASE_URL, headers=HEADERS, timeout=30.0) as c:
+            return await c.post(
+                "/missions/run",
+                json={
+                    "mission_id":   f"t8-{i}-{uuid.uuid4()}",
+                    "finalizer_id": finalizer_id,
+                    "guardian_id":  guardian_id,
+                    "steps": [{
+                        "action":      "write_file",
+                        "target_path": _TARGET_CONCURRENT,
+                        "payload":     payloads[i],
+                        "mode":        "apply",
+                    }],
+                },
+            )
+
+    async def _run():
+        return await asyncio.gather(*[_write(i) for i in range(5)])
+
+    responses = asyncio.run(_run())
+
+    assert all(r.status_code == 200 for r in responses), \
+        f"requests com falha: {[r.text for r in responses if r.status_code != 200]}"
+
+    # Conteúdo final deve ser um dos 5 payloads (sem corrupção)
+    content = (BASE_DIR / _TARGET_CONCURRENT).read_text(encoding="utf-8")
+    assert content in payloads, f"corrupção detectada: {repr(content)}"
+
+    # Busca precisa de shadows por basename
+    basename = Path(_TARGET_CONCURRENT).name
+    shadows  = list(BASE_DIR.rglob(f".{basename}.*.jod_tmp"))
+    assert shadows == [], f"shadow órfão encontrado: {shadows}"
+
+    # Todas as 5 missões registradas em mission_log com status=applied
+    for resp in responses:
+        body = resp.json()
+        mid  = body["mission_id"]
+        logs = _get_mission_log(mid)
+        assert len(logs) == 1,                   f"mission_log ausente para {mid}"
+        assert logs[0]["status"] == "applied",   f"status inesperado: {logs[0]['status']}"
+        assert logs[0]["io_committed"] == 1,     f"io_committed=0 para {mid}"

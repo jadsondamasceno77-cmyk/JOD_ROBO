@@ -202,3 +202,10 @@ Toda nova entrada deve incluir data e motivo.
 - **Decisão:** `run_mission` constrói `hdrs` com `"X-Correlation-Id": req.mission_id`; todos os requests internos do executor (validate, activate, execute) carregam esse header; `_CorrelationMiddleware` propaga para o ContextVar; logs JSON do servidor incluem `"correlation_id": mission_id` durante a execução da missão
 - **Evidências:** T6 prova echo do header na resposta outer; T7 prova entradas em uvicorn.log com correlation_id = mission_id a partir de log.info("Agente ativado:") gerado pelo activate interno
 - **Resultado:** 7/7 testes do robô-mãe + 53/53 regressão = 60/60 verde
+
+## D-035 — B2: serialização por target_path no MissionExecutor
+- **Data:** 2026-03-18
+- **Decisão:** `robo_mae/executor.py` mantém registro de `asyncio.Lock` por `target_path` no nível de módulo (`_exec_path_locks`); `_execute_step` delega para `_do_execute` envolvendo o HTTP call em `async with path_lock`; missões concorrentes escrevendo no mesmo path são serializadas antes do request
+- **Garantia:** defense-in-depth além do `_get_path_lock` já existente no servidor; fila de espera ocorre no nível do executor, não apenas no servidor
+- **Evidência:** T8 — 5 missões concorrentes, mesmo path, todas returned 200+applied, conteúdo sem corrupção, sem shadow órfão; 8/8 robô-mãe + 59/59 regressão = 67/67 verde
+- **Padrão correto para teste concurrent:** `async def _run(): return await asyncio.gather(...)` + `asyncio.run(_run())`; shadow search: `basename = Path(target).name` + `BASE_DIR.rglob(f".{basename}.*.jod_tmp")`
