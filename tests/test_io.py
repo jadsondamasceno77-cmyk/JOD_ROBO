@@ -1,6 +1,6 @@
 """Testes unitários para jod_brain.io."""
 import sys, os, pytest
-sys.path.insert(0, "/home/wsl/JOD_ROBO")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from jod_brain.io import write_file
 
 def test_write_file_cria_arquivo(tmp_path):

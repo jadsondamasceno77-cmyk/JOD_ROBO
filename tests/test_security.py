@@ -1,6 +1,7 @@
 """Testes unitários para jod_brain.security."""
 import sys, os, pytest
-sys.path.insert(0, "/home/wsl/JOD_ROBO")
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, _ROOT)
 from jod_brain.security import safe_path, validate_python, sanitize_content, SecurityError
 
 def test_path_traversal_bloqueado():
@@ -21,7 +22,7 @@ def test_extensao_proibida_bin():
 
 def test_arquivo_protegido_bloqueado():
     with pytest.raises(SecurityError):
-        safe_path("/home/wsl/JOD_ROBO", "app/main.py")
+        safe_path(_ROOT, "app/main.py")
 
 def test_path_valido_permitido(tmp_path):
     result = safe_path(str(tmp_path), "agents/test.py")

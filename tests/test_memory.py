@@ -1,6 +1,6 @@
 """Testes unitários para jod_brain.memory."""
 import sys, os, json, uuid, pytest, tempfile
-sys.path.insert(0, "/home/wsl/JOD_ROBO")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from jod_brain import memory as mem
 
 def test_load_retorna_estrutura_vazia_se_nao_existe():

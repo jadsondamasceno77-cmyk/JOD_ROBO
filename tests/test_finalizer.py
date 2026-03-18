@@ -10,7 +10,7 @@ _tmpdir = tempfile.mkdtemp()
 os.environ["DATABASE_URL"] = f"sqlite:///{_tmpdir}/test_jod_robo.db"
 os.environ.setdefault("JOD_ROBO_API_TOKEN", "dev-token")
 
-sys.path.insert(0, "/home/wsl/JOD_ROBO")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import pytest
 from fastapi.testclient import TestClient

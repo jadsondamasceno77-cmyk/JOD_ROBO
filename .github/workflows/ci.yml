@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main", "master", "develop"]
+    branches: ["main", "master", "develop", "padrão"]
   pull_request:
-    branches: ["main", "master"]
+    branches: ["main", "master", "padrão"]
 
 jobs:
   test:
@@ -50,6 +50,13 @@ jobs:
             tests/test_b1_stale_attestation.py \
             tests/test_b1_2_guardian_veto_e2e.py \
             tests/test_b2_serialization_and_logs.py \
+            tests/test_security.py \
+            tests/test_io.py \
+            tests/test_robo_mae.py \
+            tests/test_chaos.py \
+            tests/test_recovery.py \
+            tests/test_memory.py \
+            tests/test_watchdog.py \
             -v --tb=short --junit-xml=test-results.xml
         env:
           JOD_ENV: test

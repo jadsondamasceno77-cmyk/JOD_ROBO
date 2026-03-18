@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 BASE_URL = "http://127.0.0.1:37777"
 HEADERS  = {"Authorization": "Bearer dev-token"}
-BASE_DIR = Path("/home/wsl/JOD_ROBO")
+BASE_DIR = Path(__file__).parent.parent
 DB_PATH  = BASE_DIR / "jod_robo.db"
 
 _engine_test = create_engine(f"sqlite:///{DB_PATH}", connect_args={"check_same_thread": False})

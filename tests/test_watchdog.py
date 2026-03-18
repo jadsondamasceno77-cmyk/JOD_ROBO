@@ -6,6 +6,7 @@ T55–T56: integração — servidor obrigatório em 127.0.0.1:37777
 """
 import asyncio
 import json
+import os
 import sqlite3
 import uuid
 from datetime import datetime, timedelta
@@ -20,7 +21,7 @@ from robo_mae.watchdog import WatchdogResult, WatchdogScanner
 
 BASE_URL = "http://127.0.0.1:37777"
 HEADERS  = {"Authorization": "Bearer dev-token"}
-DB_PATH  = "/home/wsl/JOD_ROBO/jod_robo.db"
+DB_PATH  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "jod_robo.db")
 
 
 # ---------------------------------------------------------------------------

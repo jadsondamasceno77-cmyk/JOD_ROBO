@@ -24,7 +24,7 @@ load_dotenv()
 # ---------------------------------------------------------------------------
 # Config
 # ---------------------------------------------------------------------------
-BASE_DIR = Path("/home/wsl/JOD_ROBO").resolve()
+BASE_DIR = Path(__file__).parent.resolve()
 AGENTS_DIR = BASE_DIR / "agents"
 TEMPLATES_DIR = BASE_DIR / "templates"
 LOCAL_AI_URL = os.getenv("LOCAL_AI_URL", "http://127.0.0.1:11434/api/generate")

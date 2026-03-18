@@ -6,7 +6,7 @@ from pathlib import Path
 
 BASE_URL = "http://127.0.0.1:37777"
 HEADERS  = {"Authorization": "Bearer dev-token"}
-BASE_DIR = Path("/home/wsl/JOD_ROBO")
+BASE_DIR = Path(__file__).parent.parent
 
 _MANIFEST = {
     "allowed_actions": ["write_file", "read_file", "list_dir"],
@@ -130,3 +130,41 @@ def test_no_regression(finalizer_id):
     )
     assert r.status_code == 200, r.text
     assert r.json()["applied"] is True
+
+
+def test_json_formatter_ts_has_real_microseconds():
+    """P2 — contrato: ts deve ser ISO8601 com 6 dígitos de microsegundo reais (não literal %f)."""
+    import json as _json
+    import logging
+    import os
+    import re
+    import sys
+    import tempfile
+    import importlib.util
+
+    _root = str(BASE_DIR)
+    if _root not in sys.path:
+        sys.path.insert(0, _root)
+
+    _tmpdb = tempfile.mkdtemp()
+    os.environ.setdefault("DATABASE_URL", f"sqlite:///{_tmpdb}/ts_test.db")
+
+    spec = importlib.util.spec_from_file_location(
+        "_main_fase2_ts", str(BASE_DIR / "main_fase2.py")
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    formatter = mod._JsonFormatter()
+    record = logging.LogRecord(
+        name="ts-test", level=logging.INFO,
+        pathname="", lineno=0, msg="verifica ts", args=(), exc_info=None,
+    )
+    out = formatter.format(record)
+    data = _json.loads(out)
+    ts = data["ts"]
+
+    assert re.fullmatch(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}", ts), (
+        f"ts deve ser ISO8601 com 6 dígitos de microsegundo, obtido: {ts!r}"
+    )
+    assert "%f" not in ts, f"ts contém literal %f: {ts!r}"

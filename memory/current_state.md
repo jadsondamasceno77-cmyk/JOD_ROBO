@@ -1,5 +1,5 @@
 # Estado Atual do Projeto — JOD_ROBO
-**Atualizado em:** 2026-03-18 (MACROBLOCO D)
+**Atualizado em:** 2026-03-18 (MACROBLOCO E)
 
 ## Arquivos principais
 
@@ -25,20 +25,22 @@
 | MACROBLOCO A — aprovação, retry, circuit breaker | 6 passed | fechado (D-037, commit d18c051) |
 | MACROBLOCO B — memory_service | 16 passed | fechado (D-038, commit e1937a2) |
 | MACROBLOCO C — reflection_engine + build_agent | 9 passed | fechado (D-039, commit 1fd2315) |
-| MACROBLOCO D — watchdog autônomo + redespacho formal | 9 passed | fechado (D-040, commit pendente) |
+| MACROBLOCO D — watchdog autônomo + redespacho formal | 9 passed | fechado (D-040, commit 9f7d12e) |
+| MACROBLOCO E — ts real nos logs JSON + CI remoto | 1+145 passed | fechado (D-041, D-042, commit pendente) |
 
 ## Regressão confirmada
-- **144 passed, 0 failed** — última execução: 2026-03-18 (pós MACROBLOCO D)
+- **145 passed, 0 failed** — última execução: 2026-03-18 (pós MACROBLOCO E)
 
 ## Estado de P2 e P3 — com ressalva
 
 ### P2 — Logs JSON + correlation_id
-- **RESSALVA:** campo `ts` apareceu com `"%f"` literal em vez de microsegundos reais
-- **Status: NÃO CERTIFICADO 10/10** — requer correção do timestamp antes de fechar
+- **CERTIFICADO 10/10** — 2026-03-18 (D-041)
+- `_JsonFormatter` produz `ts` com microsegundos reais: `2026-03-18T21:13:08.332157`
+- Contrato travado por `test_json_formatter_ts_has_real_microseconds` em `test_b2_serialization_and_logs.py`
 
 ### P3 — CI/CD GitHub Actions
-- **RESSALVA:** sem evidência remota de GitHub Actions executando no repositório
-- **Status: NÃO CERTIFICADO 10/10** — requer push + execução remota confirmada
+- **PENDENTE evidência remota** — push em andamento (D-042)
+- Workflow corrigido: trigger inclui `padrão`, 13 arquivos de teste (145 testes), paths dinâmicos em todos os arquivos
 
 ## Robô-mãe
 - **MVP IMPLEMENTADO E APROVADO** — 2026-03-17

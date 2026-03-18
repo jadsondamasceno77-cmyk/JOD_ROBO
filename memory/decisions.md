@@ -148,6 +148,14 @@ Toda nova entrada deve incluir data e motivo.
 - **Ressalva:** campo `ts` exibiu `"%f"` literal em vez de microsegundos reais. `formatTime` com `"%Y-%m-%dT%H:%M:%S.%f"` não funciona nativamente — `%f` não é suportado por `logging.Formatter.formatTime`. Requer correção via `datetime.now().strftime` ou `record.created`.
 - **Status:** NÃO CERTIFICADO 10/10 — requer correção do ts antes de fechar
 
+## D-041 — P2 certificado: ts com microsegundos reais travado por teste unitário
+- **Data:** 2026-03-18
+- **Decisão:** implementação `_JsonFormatter` confirmada como correta — usa `datetime.fromtimestamp(record.created, tz=timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.") + f"{int(record.created % 1 * 1e6):06d}"`, nunca `%f` literal
+- **Motivo:** ressalva D-026 era de versão anterior; código atual já produz microsegundos reais (ex: `2026-03-18T21:13:08.332157`)
+- **Contrato travado:** `test_json_formatter_ts_has_real_microseconds` em `test_b2_serialization_and_logs.py` — valida regex `\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}` e ausência de `%f` literal
+- **Evidência:** 1 passed + 145/145 regressão local verde — 2026-03-18
+- **Status:** CERTIFICADO 10/10
+
 ## D-027 — P3: CI/CD GitHub Actions — com ressalva
 - **Data:** 2026-03-17
 - **Decisão:** `.github/workflows/ci.yml` criado — push/PR dispara lint + 59 testes + upload de artefatos
@@ -155,6 +163,17 @@ Toda nova entrada deve incluir data e motivo.
 - **Evidência:** simulação local — 59 passed em 6.75s, `test-results.xml` gerado
 - **Ressalva:** sem evidência remota de GitHub Actions executando. Requer push para origin + URL de run verde confirmada.
 - **Status:** NÃO CERTIFICADO 10/10 — requer validação remota
+
+## D-042 — P3 certificado: GitHub Actions verde com suíte completa
+- **Data:** 2026-03-18
+- **Decisão:** workflow corrigido para branch `padrão` + 144 testes (todos os 13 arquivos) + paths dinâmicos em todos os test files e `main_fase2.py`
+- **Motivo:** ressalva D-027 — branch não disparava CI; workflow executava apenas 59/144 testes; paths hardcoded quebrariam em `/home/runner/work/...`
+- **Correções aplicadas:**
+  - `main_fase2.py`: `BASE_DIR = Path(__file__).parent.resolve()` (era hardcoded)
+  - 12 arquivos de teste: `DB_PATH`/`BASE_DIR`/`sys.path.insert` convertidos para `Path(__file__).parent.parent` ou `os.path.dirname`
+  - `ci.yml`: trigger inclui branch `padrão`; test list expandida de 6 para 13 arquivos (59→145 testes)
+- **Evidência remota:** URL do GitHub Actions run — pendente confirmação pós-push
+- **Status:** PENDENTE evidência remota (push em andamento)
 
 ## D-028 — Robô-mãe só inicia após base limpa
 - **Data:** 2026-03-17

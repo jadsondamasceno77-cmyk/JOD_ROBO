@@ -9,8 +9,9 @@ from pathlib import Path
 
 BASE_URL = "http://127.0.0.1:37777"
 HEADERS  = {"Authorization": "Bearer dev-token"}
-DB_PATH  = "/home/wsl/JOD_ROBO/jod_robo.db"
-BASE_DIR = Path("/home/wsl/JOD_ROBO")
+_ROOT    = Path(__file__).parent.parent
+DB_PATH  = str(_ROOT / "jod_robo.db")
+BASE_DIR = _ROOT
 
 _MANIFEST = {
     "allowed_actions": ["write_file", "read_file", "list_dir"],
