@@ -1929,7 +1929,7 @@ async def run_mission(
         ],
     )
 
-    hdrs = {"Authorization": authorization}
+    hdrs = {"Authorization": authorization, "X-Correlation-Id": req.mission_id}
     try:
         async with httpx.AsyncClient(timeout=60.0) as client:
             registry = AgentRegistry(Session, client, _SELF_BASE_URL, hdrs)

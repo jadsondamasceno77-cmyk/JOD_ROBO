@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import uuid
 
@@ -357,3 +358,104 @@ def test_t5_dry_run_nao_escreve(finalizer_id, guardian_id):
     assert logs[0]["status"] == "dry_run_ok"
 
     assert not (BASE_DIR / target).exists()
+
+
+# ---------------------------------------------------------------------------
+# T6 — X-Correlation-Id echoed back na resposta de /missions/run
+# ---------------------------------------------------------------------------
+
+def test_t6_correlation_id_echoed_in_response(finalizer_id, guardian_id):
+    """
+    O caller envia X-Correlation-Id = mission_id na requisição outer.
+    O _CorrelationMiddleware deve ecoar o mesmo valor no header da resposta.
+    """
+    mission_id = f"t6-{uuid.uuid4()}"
+
+    r = httpx.post(
+        f"{BASE_URL}/missions/run",
+        headers={**HEADERS, "X-Correlation-Id": mission_id},
+        json={
+            "mission_id":   mission_id,
+            "finalizer_id": finalizer_id,
+            "guardian_id":  guardian_id,
+            "steps": [{
+                "action":      "write_file",
+                "target_path": "tests/rm_xcid.txt",
+                "payload":     "xcid test",
+                "mode":        "apply",
+            }],
+        },
+    )
+    assert r.status_code == 200, r.text
+
+    # Middleware deve ecoar X-Correlation-Id de volta
+    assert r.headers.get("x-correlation-id") == mission_id, (
+        f"X-Correlation-Id esperado={mission_id}, "
+        f"obtido={r.headers.get('x-correlation-id')}"
+    )
+
+    # mission_log.correlation_id = mission_id
+    logs = _get_mission_log(mission_id)
+    assert len(logs) == 1
+    assert logs[0]["correlation_id"] == mission_id, (
+        f"mission_log.correlation_id={logs[0]['correlation_id']} != {mission_id}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# T7 — logs do servidor carregam mission_id como correlation_id
+# ---------------------------------------------------------------------------
+
+def test_t7_log_entries_carry_mission_id(guardian_id):
+    """
+    Usa um finalizer em draft criado inline, para forçar calls reais de
+    validate+activate dentro do ensure_active. Essas chamadas passam
+    X-Correlation-Id = mission_id, e o servidor gera log.info("Agente ativado: ...")
+    com correlation_id = mission_id. O uvicorn.log deve refletir isso.
+    """
+    # Criar um finalizer novo em estado draft
+    r = httpx.post(
+        f"{BASE_URL}/agents/finalizer",
+        headers=HEADERS,
+        json={"name": "finalizer-t7-xcid", "manifest": _MANIFEST},
+    )
+    assert r.status_code == 200, f"criar finalizer t7 falhou: {r.text}"
+    fid_t7 = r.json()["agent_id"]
+
+    mission_id = f"t7-{uuid.uuid4()}"
+    log_path   = BASE_DIR / "uvicorn.log"
+
+    # ensure_active vai chamar validate + activate, gerando log.info com mission_id
+    r = httpx.post(
+        f"{BASE_URL}/missions/run",
+        headers=HEADERS,
+        json={
+            "mission_id":   mission_id,
+            "finalizer_id": fid_t7,
+            "guardian_id":  guardian_id,
+            "steps": [{
+                "action":      "write_file",
+                "target_path": "tests/rm_xcid2.txt",
+                "payload":     "xcid log proof",
+                "mode":        "apply",
+            }],
+        },
+    )
+    assert r.status_code == 200, r.text
+    assert r.json()["summary"]["success"] is True
+
+    # Verificar no uvicorn.log que os requests internos carregam mission_id
+    assert log_path.exists(), "uvicorn.log não encontrado"
+    matched = []
+    for line in log_path.read_text(errors="replace").splitlines():
+        try:
+            entry = json.loads(line)
+        except (json.JSONDecodeError, ValueError):
+            continue
+        if entry.get("correlation_id") == mission_id:
+            matched.append(entry)
+
+    assert len(matched) > 0, (
+        f"Nenhuma entrada em uvicorn.log com correlation_id={mission_id}\n"
+        f"O executor não está propagando X-Correlation-Id nos requests internos."
+    )

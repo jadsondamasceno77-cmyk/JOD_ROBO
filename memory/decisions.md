@@ -196,3 +196,9 @@ Toda nova entrada deve incluir data e motivo.
 - **Decisão:** MVP do Robô-mãe implementado em `robo_mae/` com endpoint `POST /missions/run`; tabela `mission_log` com migração idempotente; execução sequencial abort-on-first-error
 - **Evidências:** 5/5 testes do MVP verdes; 53/53 regressão completa verde; `mission_log` populado com status corretos por tipo (applied, vetoed, error, dry_run_ok)
 - **Componentes:** `context.py`, `registry.py`, `executor.py`, `log.py`, `reporter.py`
+
+## D-034 — X-Correlation-Id = mission_id propagado em todos os requests internos
+- **Data:** 2026-03-18
+- **Decisão:** `run_mission` constrói `hdrs` com `"X-Correlation-Id": req.mission_id`; todos os requests internos do executor (validate, activate, execute) carregam esse header; `_CorrelationMiddleware` propaga para o ContextVar; logs JSON do servidor incluem `"correlation_id": mission_id` durante a execução da missão
+- **Evidências:** T6 prova echo do header na resposta outer; T7 prova entradas em uvicorn.log com correlation_id = mission_id a partir de log.info("Agente ativado:") gerado pelo activate interno
+- **Resultado:** 7/7 testes do robô-mãe + 53/53 regressão = 60/60 verde
