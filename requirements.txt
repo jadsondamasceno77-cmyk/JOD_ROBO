@@ -17,6 +17,8 @@ Pillow==10.1.0
 
 # Git (já vem com Python, mas garante)
 gitpython==3.1.40
+# ORM
+SQLAlchemy==2.0.48
 # Testes
 pytest==8.0.0
 anyio==4.2.0
