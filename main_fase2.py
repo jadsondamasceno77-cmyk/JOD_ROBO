@@ -396,6 +396,7 @@ async def lifespan(app: FastAPI):
     _migrate_mission_log(engine)
     _migrate_mission_control(engine)
     _migrate_macrobloco_a(engine)
+    _migrate_memory_service(engine)
 
     # Startup sweep: remove shadow files (.*.jod_tmp) deixados por crashes anteriores
     for _tmp in BASE_DIR.rglob(".*.jod_tmp"):
@@ -538,6 +539,54 @@ class ApprovalDecisionRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
     decided_by: str           = Field(..., min_length=1)
     notes:      Optional[str] = None
+
+
+# ── Memory Service schemas ───────────────────────────────────────────────────
+class MemEventCreate(BaseModel):
+    agent_id:    str
+    event_type:  str
+    summary:     str
+    payload:     Optional[dict] = None
+    occurred_at: Optional[str]  = None
+
+
+class MemFactCreate(BaseModel):
+    category:   str
+    key:        str
+    value:      str
+    confidence: float         = 1.0
+    source:     Optional[str] = None
+
+
+class MemPatternCreate(BaseModel):
+    name:               str
+    description:        str
+    steps:              list
+    trigger_conditions: Optional[list] = None
+    success_rate:       float          = 0.0
+
+
+class MemNodeCreate(BaseModel):
+    node_type:  str
+    label:      str
+    properties: Optional[dict] = None
+
+
+class MemEdgeCreate(BaseModel):
+    source_id:  str
+    relation:   str
+    target_id:  str
+    weight:     float         = 1.0
+    properties: Optional[dict] = None
+
+
+class MemContextRequest(BaseModel):
+    agent_id: str
+
+
+class MemReflectRequest(BaseModel):
+    agent_id: str
+    intent:   str
 
 
 # ---------------------------------------------------------------------------
@@ -2003,6 +2052,19 @@ from robo_mae.mission_control import MissionControl as _MissionControl
 from robo_mae.registry        import AgentRegistry
 from robo_mae.reporter        import get_mission_summary
 
+# ---------------------------------------------------------------------------
+# Memory Service
+# ---------------------------------------------------------------------------
+from memory_service.migrate           import _migrate_memory_service
+from memory_service.storage           import (
+    insert_episodic_event, list_episodic_events,
+    upsert_semantic_fact, list_semantic_facts,
+    upsert_procedural_pattern, list_procedural_patterns,
+    insert_graph_node, insert_graph_edge, list_graph_neighbors,
+)
+from memory_service.retrieval_gateway import RetrievalGateway
+from memory_service.policy_guard      import assert_advisory_only, MemoryGovernanceError
+
 
 @app.post("/missions/run", tags=["missions"])
 async def run_mission(
@@ -2147,6 +2209,134 @@ async def deny_mission(
 def _now_iso_main() -> str:
     """UTC naive ISO — helper local para comparação nos endpoints de approval."""
     return datetime.utcnow().isoformat()
+
+
+# ---------------------------------------------------------------------------
+# Memory Service endpoints
+# ---------------------------------------------------------------------------
+
+@app.post("/memory/events", tags=["memory"], status_code=201)
+async def memory_create_event(
+    body: MemEventCreate,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    eid = insert_episodic_event(
+        Session, body.agent_id, body.event_type, body.summary,
+        payload=body.payload, occurred_at=body.occurred_at,
+    )
+    return {"advisory_only": True, "id": eid}
+
+
+@app.get("/memory/events", tags=["memory"])
+async def memory_list_events(
+    agent_id:   Optional[str] = None,
+    event_type: Optional[str] = None,
+    limit:      int           = 20,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).query_episodic(
+        agent_id=agent_id, event_type=event_type, limit=limit
+    )
+
+
+@app.post("/memory/facts", tags=["memory"])
+async def memory_upsert_fact(
+    body: MemFactCreate,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    fid = upsert_semantic_fact(
+        Session, body.category, body.key, body.value,
+        confidence=body.confidence, source=body.source,
+    )
+    return {"advisory_only": True, "id": fid}
+
+
+@app.get("/memory/facts", tags=["memory"])
+async def memory_list_facts(
+    category: Optional[str] = None,
+    key:      Optional[str] = None,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).query_semantic(category=category, key=key)
+
+
+@app.post("/memory/patterns", tags=["memory"])
+async def memory_upsert_pattern(
+    body: MemPatternCreate,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    pid = upsert_procedural_pattern(
+        Session, body.name, body.description, body.steps,
+        trigger_conditions=body.trigger_conditions,
+        success_rate=body.success_rate,
+    )
+    return {"advisory_only": True, "id": pid}
+
+
+@app.get("/memory/patterns", tags=["memory"])
+async def memory_list_patterns(
+    name: Optional[str] = None,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).query_procedural(name=name)
+
+
+@app.post("/memory/graph/nodes", tags=["memory"], status_code=201)
+async def memory_create_node(
+    body: MemNodeCreate,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    nid = insert_graph_node(Session, body.node_type, body.label,
+                             properties=body.properties)
+    return {"advisory_only": True, "id": nid}
+
+
+@app.post("/memory/graph/edges", tags=["memory"], status_code=201)
+async def memory_create_edge(
+    body: MemEdgeCreate,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    eid = insert_graph_edge(
+        Session, body.source_id, body.relation, body.target_id,
+        weight=body.weight, properties=body.properties,
+    )
+    return {"advisory_only": True, "id": eid}
+
+
+@app.get("/memory/graph/neighbors/{node_id}", tags=["memory"])
+async def memory_graph_neighbors(
+    node_id:  str,
+    relation: Optional[str] = None,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).query_graph(node_id=node_id, relation=relation)
+
+
+@app.post("/memory/context", tags=["memory"])
+async def memory_build_context(
+    body: MemContextRequest,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).build_agent_context(body.agent_id)
+
+
+@app.post("/memory/reflect", tags=["memory"])
+async def memory_reflect(
+    body: MemReflectRequest,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return RetrievalGateway(Session).reflect_and_consolidate(body.agent_id, body.intent)
 
 
 if os.environ.get("JOD_ENV") == "test":
