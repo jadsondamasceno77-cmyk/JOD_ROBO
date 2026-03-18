@@ -33,11 +33,18 @@ jobs:
         run: |
           JOD_ENV=test python3 main_fase2.py >> uvicorn.log 2>&1 &
           echo $! > /tmp/server.pid
-          sleep 4
-          curl -sf http://127.0.0.1:37777/agents/finalizer \
-            -H "Authorization: Bearer dev-token" \
-            -H "Content-Type: application/json" \
-            -d '{}' > /dev/null || true
+          for i in $(seq 1 30); do
+            sleep 1
+            if curl -sf http://127.0.0.1:37777/health/live > /dev/null 2>&1; then
+              echo "Server UP após ${i}s"
+              break
+            fi
+            if [ "$i" -eq 30 ]; then
+              echo "Server não subiu em 30s — log abaixo:"
+              cat uvicorn.log || true
+              exit 1
+            fi
+          done
         env:
           JOD_ENV: test
 
@@ -60,6 +67,10 @@ jobs:
             -v --tb=short --junit-xml=test-results.xml
         env:
           JOD_ENV: test
+
+      - name: Dump server log
+        if: always()
+        run: cat uvicorn.log || true
 
       - name: Stop server
         if: always()
