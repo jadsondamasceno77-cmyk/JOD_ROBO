@@ -41,8 +41,14 @@
 - **Status: NÃO CERTIFICADO 10/10** — requer push + execução remota confirmada
 
 ## Robô-mãe
-- **NÃO INICIADO**
-- só inicia após P2 e P3 certificados limpos + revisão geral final da base
+- **MVP IMPLEMENTADO E APROVADO** — 2026-03-17
+- Módulo: `robo_mae/` (context, registry, executor, log, reporter)
+- Endpoint: `POST /missions/run`
+- Tabela nova: `mission_log`
+- Suíte: `tests/test_robo_mae.py` — 5/5 passed
+- Regressão total: 58/58 passed
+- Modelo: INTERNO (DB direto para estado, REST loopback para ações)
+- Decisões: D-030, D-031, D-032, D-033
 
 ## Certificação de autonomia — CERT-001
 - Engenharia da base: em progresso — P2 e P3 com ressalva
@@ -51,8 +57,9 @@
 
 ## Banco de dados
 - SQLite em `jod_robo.db`
-- Tabelas: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`
+- Tabelas: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`, `mission_log`
 - `integration_audit` colunas B1: `io_committed`, `io_failure_reason`, `io_finalized_at`
+- `mission_log`: `id`, `mission_id`, `correlation_id`, `finalizer_id`, `guardian_id`, `action`, `target_path`, `status`, `io_committed`, `transaction_id`, `details`, `created_at`
 
 ## Porta local
 - `main_fase2.py`: `127.0.0.1:37777`

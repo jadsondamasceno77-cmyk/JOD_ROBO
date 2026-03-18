@@ -12,15 +12,17 @@
 - P2 logs JSON + correlation_id — ressalva: ts com "%f" literal (D-026)
 - P3 CI/CD — ressalva: sem evidência remota do GitHub Actions (D-027)
 
-## Etapa atual: saneamento da memória + correção da base
+## Etapa atual: pós-MVP do Robô-mãe
 
-### Ordem obrigatória antes do Robô-mãe
-1. ✅ Corrigir arquivos de memória (esta etapa)
-2. Corrigir campo `ts` do `_JsonFormatter` — microsegundos reais
-3. Validar P2 sem ressalva — 6 passed + ts correto
+### Fases concluídas nesta sessão
+- ✅ MVP do Robô-mãe — 5/5 passed, regressão 58/58 verde (D-033)
+
+### Próximas etapas recomendadas (sem ordem obrigatória definida pelo usuário)
+1. Endurecimento pós-MVP: serialização por target_path no executor
+2. Reconciliação automática pós-os.replace (crash recovery de missão)
+3. Corrigir campo `ts` do `_JsonFormatter` — microsegundos reais (P2 ressalva)
 4. Validar P3 com evidência remota — push + GitHub Actions verde
-5. Revisão geral final da base
-6. **Só então iniciar o Robô-mãe**
+5. Canal de aprovação humana para needs_approval (human-on-the-loop real)
 
 ## Regras obrigatórias do Robô-mãe (para referência futura)
 - zero `input()` no meio do fluxo

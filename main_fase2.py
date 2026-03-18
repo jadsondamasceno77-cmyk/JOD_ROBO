@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, Literal, Optional
 
 import httpx
 import uvicorn
@@ -32,6 +32,7 @@ LOCAL_AI_MODEL            = os.getenv("LOCAL_AI_MODEL",            "gemma3:4b")
 LOCAL_AI_STRUCTURED_MODEL = os.getenv("LOCAL_AI_STRUCTURED_MODEL", "functiongemma")
 API_TOKEN = os.getenv("JOD_ROBO_API_TOKEN", "dev-token")
 DB_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR}/jod_robo.db")
+_SELF_BASE_URL = f"http://127.0.0.1:{os.getenv('SERVER_PORT', '37777')}"
 
 AGENTS_DIR.mkdir(parents=True, exist_ok=True)
 TEMPLATES_DIR.mkdir(parents=True, exist_ok=True)
@@ -222,6 +223,31 @@ class IntegrationAuditRecord(Base):
 Base.metadata.create_all(engine)
 
 
+def _migrate_mission_log(engine) -> None:
+    """
+    Cria a tabela mission_log se ainda não existir.
+    Idempotente: CREATE TABLE IF NOT EXISTS não falha em reinicializações.
+    """
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS mission_log (
+                id             INTEGER PRIMARY KEY AUTOINCREMENT,
+                mission_id     TEXT    NOT NULL,
+                correlation_id TEXT,
+                finalizer_id   TEXT    NOT NULL,
+                guardian_id    TEXT,
+                action         TEXT    NOT NULL,
+                target_path    TEXT,
+                status         TEXT    NOT NULL,
+                io_committed   INTEGER,
+                transaction_id TEXT,
+                details        TEXT,
+                created_at     DATETIME DEFAULT CURRENT_TIMESTAMP
+            )
+        """))
+        conn.commit()
+
+
 def _migrate_integration_audit(engine) -> None:
     """
     Adiciona colunas B1 em integration_audit se ainda não existirem.
@@ -282,6 +308,7 @@ async def lifespan(app: FastAPI):
     global _worker_task
 
     _migrate_integration_audit(engine)
+    _migrate_mission_log(engine)
 
     # Startup sweep: remove shadow files (.*.jod_tmp) deixados por crashes anteriores
     for _tmp in BASE_DIR.rglob(".*.jod_tmp"):
@@ -396,6 +423,25 @@ class OrchestrateResponse(BaseModel):
     executor_output: ExecutorOutput
     orchestrator_output: OrchestratorOutput
     model: str
+
+
+# ---------------------------------------------------------------------------
+# Robô-mãe schemas
+# ---------------------------------------------------------------------------
+class StepSpecIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    action:      str                        = Field(..., min_length=1)
+    target_path: Optional[str]              = None
+    payload:     Optional[str]              = None
+    mode:        Literal["apply", "dry_run"] = "apply"
+
+
+class RunMissionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    mission_id:   str             = Field(..., min_length=1)
+    finalizer_id: str             = Field(..., min_length=1)
+    guardian_id:  Optional[str]   = None
+    steps:        list[StepSpecIn] = Field(..., min_length=1)
 
 
 # ---------------------------------------------------------------------------
@@ -1852,6 +1898,50 @@ async def list_guardian_audit(agent_id: str,
 # ---------------------------------------------------------------------------
 # Test routes (only when JOD_ENV=test)
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Robô-mãe — MVP
+# ---------------------------------------------------------------------------
+from robo_mae.context  import MissionContext, StepSpec
+from robo_mae.executor import MissionExecutor
+from robo_mae.registry import AgentRegistry
+from robo_mae.reporter import get_mission_summary
+
+
+@app.post("/missions/run", tags=["missions"])
+async def run_mission(
+    req: RunMissionRequest,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+
+    ctx = MissionContext(
+        mission_id   = req.mission_id,
+        finalizer_id = req.finalizer_id,
+        guardian_id  = req.guardian_id,
+        steps        = [
+            StepSpec(
+                action      = s.action,
+                target_path = s.target_path,
+                payload     = s.payload,
+                mode        = s.mode,
+            )
+            for s in req.steps
+        ],
+    )
+
+    hdrs = {"Authorization": authorization}
+    try:
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            registry = AgentRegistry(Session, client, _SELF_BASE_URL, hdrs)
+            executor = MissionExecutor(ctx, registry, Session, client, _SELF_BASE_URL, hdrs)
+            await executor.run()
+    except RuntimeError as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+    summary = get_mission_summary(Session, req.mission_id)
+    return {"mission_id": req.mission_id, "summary": summary}
+
+
 if os.environ.get("JOD_ENV") == "test":
 
     @app.post("/test/io-fail/set")

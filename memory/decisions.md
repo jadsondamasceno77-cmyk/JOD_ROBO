@@ -173,3 +173,26 @@ Toda nova entrada deve incluir data e motivo.
   - Log Humano posterior = auditor externo, não destravamento de execução
 - **Motivo:** registrar formalmente para que o Robô-mãe nasça sem este padrão
 - **Referência:** CERT-001
+
+## D-030 — Modelo INTERNO escolhido para o Robô-mãe
+- **Data:** 2026-03-17
+- **Decisão:** o Robô-mãe é um módulo Python dentro do mesmo processo que `main_fase2.py`; lê estado via SQLAlchemy (`Session`) e emite ações via HTTP loopback para os endpoints REST existentes
+- **Motivo:** verificação de `io_committed` exige leitura direta de `integration_audit`; criar endpoint REST só para isso aumentaria a superfície sem benefício real; acesso via `SessionLocal` já é auditável
+- **Fronteira:** leitura de estado = DB direto; emissão de ações = REST (para manter audit trail)
+
+## D-031 — Tabela real de agentes é `agents` (única)
+- **Data:** 2026-03-17
+- **Decisão:** tanto finalizer quanto guardian são persistidos em `agents`; distinção por `template_name` (`"finalizer_agent"` ou `"guardian_agent"`); `finalizer_agents` e `guardian_agents` não existem
+- **Motivo:** inspeção direta do código confirmou `AgentRecord.__tablename__ = "agents"` como único ORM de agentes
+- **Consequência:** `AgentRegistry.get_agent_state()` usa `SELECT id, status, template_name FROM agents WHERE id = :aid`
+
+## D-032 — ensure_active com verificação final autoritativa via DB
+- **Data:** 2026-03-17
+- **Decisão:** `ensure_active` aceita 200 ou 409 de validate/activate; o gate de sucesso é exclusivamente a re-leitura do `status` em `agents` após as chamadas REST; HTTP response não é suficiente
+- **Motivo:** 409 em activate pode indicar "já active" (sucesso) ou "não validated" (falha); só o DB diz qual é o caso real
+
+## D-033 — MVP do Robô-mãe implementado com 5 testes verdes
+- **Data:** 2026-03-17
+- **Decisão:** MVP do Robô-mãe implementado em `robo_mae/` com endpoint `POST /missions/run`; tabela `mission_log` com migração idempotente; execução sequencial abort-on-first-error
+- **Evidências:** 5/5 testes do MVP verdes; 53/53 regressão completa verde; `mission_log` populado com status corretos por tipo (applied, vetoed, error, dry_run_ok)
+- **Componentes:** `context.py`, `registry.py`, `executor.py`, `log.py`, `reporter.py`
