@@ -12,7 +12,9 @@
 - P2 logs JSON + correlation_id — ressalva: ts com "%f" literal (D-026)
 - P3 CI/CD — ressalva: sem evidência remota do GitHub Actions (D-027)
 
-## Etapa atual: pós-MVP do Robô-mãe
+## Fase 1 encerrada: Recuperação real pós-queda — 10/10 (D-036)
+
+## Próxima etapa: Fase 2 do core transacional rumo ao Nível 5
 
 ### Fases concluídas nesta sessão
 - ✅ MVP do Robô-mãe — 5/5 passed, regressão 58/58 verde (D-033)

@@ -1,14 +1,15 @@
 import asyncio
+import uuid
 
 import httpx
 from sqlalchemy import text
 
 from .context import MissionContext, StepResult, StepSpec
-from .log import record_step
+from .log import begin_step, finish_step
+from .mission_control import FencingError, MissionControl, run_heartbeat
 from .registry import AgentRegistry
 
-# Per-path lock registry, compartilhado entre todas as instâncias de MissionExecutor.
-# Serializa missões concorrentes que escrevem no mesmo target_path.
+# Per-path lock registry — serializa missões concorrentes no mesmo target_path
 _exec_path_locks: dict[str, asyncio.Lock] = {}
 _exec_path_locks_mutex: asyncio.Lock = asyncio.Lock()
 
@@ -40,25 +41,128 @@ class MissionExecutor:
     async def run(self) -> list[StepResult]:
         ctx = self._ctx
 
+        # ── Fase A: decisão ─────────────────────────────────────────────────
+        with self._sf() as s:
+            MissionControl.create(s, ctx.mission_id)
+
+        with self._sf() as s:
+            decision = MissionControl.reconcile(s, ctx.mission_id)
+
+        if decision.action == "NOOP":
+            raise RuntimeError(
+                f"missão {ctx.mission_id}: {decision.reason}"
+            )
+
+        if decision.action == "QUARANTINE":
+            with self._sf() as s:
+                MissionControl.quarantine(s, ctx.mission_id, decision.reason)
+            raise RuntimeError(
+                f"missão {ctx.mission_id} quarentenada: {decision.reason}"
+            )
+
+        # decision.action == "RESUME" — resume_from_step é a autoridade do reconcile
+        resume_from = decision.resume_from_step  # type: ignore[assignment]
+
+        # ── Fase B: aquisição atômica ────────────────────────────────────────
+        # claim: PENDING → RUNNING (primeira execução)
+        # takeover: RUNNING+stale → RUNNING (recovery)
+        owner_id = str(uuid.uuid4())
+
+        with self._sf() as s:
+            lock_version = MissionControl.claim(s, ctx.mission_id, owner_id)
+        if lock_version is None:
+            with self._sf() as s:
+                lock_version = MissionControl.takeover(s, ctx.mission_id, owner_id)
+        if lock_version is None:
+            raise RuntimeError(
+                f"ownership não adquirida para {ctx.mission_id}: race condition"
+            )
+
+        # ── Fase C: repair pré-execução ──────────────────────────────────────
+        # Se houve crash entre begin_step e finish_step com io_committed=1
+        # confirmado pelo reconcile, reparar a entrada RUNNING para 'applied'.
+        if resume_from > 0:
+            with self._sf() as s:
+                s.execute(
+                    text("""
+                        UPDATE mission_log
+                        SET status='applied', io_committed=1
+                        WHERE mission_id=:mid
+                          AND step_index=:idx
+                          AND status='RUNNING'
+                    """),
+                    {"mid": ctx.mission_id, "idx": resume_from - 1},
+                )
+                s.commit()
+
+        # ── Fase D: ativação de agentes ──────────────────────────────────────
         await self._reg.ensure_active_finalizer(ctx.finalizer_id)
         if ctx.guardian_id:
             await self._reg.ensure_active_guardian(ctx.guardian_id)
 
-        results: list[StepResult] = []
-        for step in ctx.steps:
-            result = await self._execute_step(step)
-            record_step(
-                self._sf,
-                ctx.mission_id,
-                ctx.mission_id,   # correlation_id = mission_id no MVP
-                ctx.finalizer_id,
-                ctx.guardian_id,
-                step,
-                result,
-            )
-            results.append(result)
-            if result.status in ("io_failed", "error"):
-                break  # abort-on-first-error
+        # ── Fase E: loop de execução ─────────────────────────────────────────
+        stop_event = asyncio.Event()
+        hb_task = asyncio.create_task(
+            run_heartbeat(self._sf, ctx.mission_id, owner_id, lock_version, stop_event)
+        )
+
+        results:           list[StepResult] = []
+        completed_normally = False
+        mission_success    = True
+
+        try:
+            for step_index, step in enumerate(ctx.steps):
+                if step_index < resume_from:
+                    continue  # pular steps já confirmados pelo reconcile
+
+                with self._sf() as s:
+                    MissionControl.fence(s, ctx.mission_id, owner_id, lock_version)
+
+                with self._sf() as s:
+                    MissionControl.advance_step(
+                        s, ctx.mission_id, owner_id, lock_version, step_index
+                    )
+
+                log_rowid = begin_step(
+                    self._sf,
+                    ctx.mission_id,
+                    ctx.mission_id,  # correlation_id = mission_id
+                    ctx.finalizer_id,
+                    ctx.guardian_id,
+                    step,
+                    step_index,
+                )
+                result = await self._execute_step(step)
+                finish_step(self._sf, log_rowid, result)
+                results.append(result)
+
+                if result.status in ("io_failed", "error", "vetoed"):
+                    mission_success = False
+                if result.status in ("io_failed", "error"):
+                    break  # abort-on-first-error
+
+            completed_normally = True
+
+        except FencingError:
+            completed_normally = False
+            raise
+
+        finally:
+            stop_event.set()
+            hb_task.cancel()
+            try:
+                await hb_task
+            except asyncio.CancelledError:
+                pass
+
+            if completed_normally:
+                try:
+                    with self._sf() as s:
+                        MissionControl.complete(
+                            s, ctx.mission_id, owner_id, lock_version, mission_success
+                        )
+                except FencingError:
+                    pass  # ownership perdida no último momento — reconciliador decide
 
         return results
 
@@ -109,7 +213,6 @@ class MissionExecutor:
                 evidence = raw.get("evidence") or {}
                 tid = evidence.get("guardian_transaction_id")
                 if tid:
-                    # Verificação extra via integration_audit — segurança pós-HTTP-200
                     io_ok = self._verify_io_committed(tid)
                     status = "applied" if io_ok else "io_failed"
                     return StepResult(
@@ -118,14 +221,12 @@ class MissionExecutor:
                         io_committed=1 if io_ok else 0,
                         http_status=200, raw=raw,
                     )
-                # Sem guardian — sem integration_audit; confiar no HTTP 200
                 return StepResult(
                     step=step, status="applied",
                     io_committed=None,
                     http_status=200, raw=raw,
                 )
 
-            # forbidden, needs_approval, not_implemented ou status inesperado
             return StepResult(step=step, status="error", http_status=200, raw=raw)
 
         if r.status_code == 403:

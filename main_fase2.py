@@ -248,6 +248,32 @@ def _migrate_mission_log(engine) -> None:
         conn.commit()
 
 
+def _migrate_mission_control(engine) -> None:
+    """
+    Cria tabela mission_control e adiciona step_index a mission_log. Idempotente.
+    """
+    with engine.connect() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS mission_control (
+                mission_id   TEXT    PRIMARY KEY,
+                status       TEXT    NOT NULL DEFAULT 'PENDING',
+                owner_id     TEXT,
+                lock_version INTEGER NOT NULL DEFAULT 0,
+                heartbeat_at TEXT,
+                claimed_at   TEXT,
+                current_step INTEGER NOT NULL DEFAULT 0,
+                created_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+            )
+        """))
+        conn.commit()
+
+        result  = conn.execute(text("PRAGMA table_info(mission_log)"))
+        existing = {row[1] for row in result.fetchall()}
+        if "step_index" not in existing:
+            conn.execute(text("ALTER TABLE mission_log ADD COLUMN step_index INTEGER"))
+            conn.commit()
+
+
 def _migrate_integration_audit(engine) -> None:
     """
     Adiciona colunas B1 em integration_audit se ainda não existirem.
@@ -309,6 +335,7 @@ async def lifespan(app: FastAPI):
 
     _migrate_integration_audit(engine)
     _migrate_mission_log(engine)
+    _migrate_mission_control(engine)
 
     # Startup sweep: remove shadow files (.*.jod_tmp) deixados por crashes anteriores
     for _tmp in BASE_DIR.rglob(".*.jod_tmp"):

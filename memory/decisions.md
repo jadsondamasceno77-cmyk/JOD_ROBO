@@ -209,3 +209,15 @@ Toda nova entrada deve incluir data e motivo.
 - **Garantia:** defense-in-depth além do `_get_path_lock` já existente no servidor; fila de espera ocorre no nível do executor, não apenas no servidor
 - **Evidência:** T8 — 5 missões concorrentes, mesmo path, todas returned 200+applied, conteúdo sem corrupção, sem shadow órfão; 8/8 robô-mãe + 59/59 regressão = 67/67 verde
 - **Padrão correto para teste concurrent:** `async def _run(): return await asyncio.gather(...)` + `asyncio.run(_run())`; shadow search: `basename = Path(target).name` + `BASE_DIR.rglob(f".{basename}.*.jod_tmp")`
+
+## D-036 — Fase 1: Recuperação real pós-queda — encerrada 10/10
+- **Data:** 2026-03-18
+- **Decisão:** implementação completa de mission_control, ownership/claim/takeover, heartbeat, fencing hard, two-phase step logging e reconciliador com matriz exaustiva
+- **Arquivos novos:** `robo_mae/mission_control.py` (MissionControl, FencingError, ReconcileDecision, run_heartbeat), `tests/test_recovery.py` (T9–T16)
+- **Arquivos alterados:** `robo_mae/executor.py` (fluxo A–E com reconcile como autoridade), `robo_mae/log.py` (begin_step + finish_step), `main_fase2.py` (_migrate_mission_control)
+- **Semântica exata:** `claim()` PENDING→RUNNING; `takeover()` RUNNING+stale→RUNNING (novo dono); zero sobreposição
+- **QUARANTINE:** estado formal explícito no mission_control, nunca erro genérico silencioso
+- **reconcile():** autoridade única de resume_from_step; executor consome sem recalcular
+- **Two-phase logging:** `begin_step` INSERT RUNNING → `finish_step` UPDATE resultado final
+- **Repair:** executor repara entrada RUNNING do passo anterior (io_committed=1 confirmado) antes de executar
+- **Evidência:** T9–T14 unitários 6/6 + T15 recovery real (não-duplicação provada) + T16 fencing real (HTTP 500 + DB intacto); T1–T8 regressão intacta; 104/104 verde

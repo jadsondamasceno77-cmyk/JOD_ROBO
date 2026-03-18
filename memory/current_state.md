@@ -1,5 +1,5 @@
 # Estado Atual do Projeto — JOD_ROBO
-**Atualizado em:** 2026-03-17
+**Atualizado em:** 2026-03-18
 
 ## Arquivos principais
 
@@ -23,7 +23,7 @@
 | P1 — serialização por target_path | 3 passed | aprovado (D-025) |
 
 ## Regressão ampliada confirmada localmente
-- 59 passed, 0 failed — última execução: 2026-03-17
+- 104 passed, 0 failed — última execução: 2026-03-18
 
 ## Estado de P2 e P3 — com ressalva
 
@@ -45,10 +45,19 @@
 - Módulo: `robo_mae/` (context, registry, executor, log, reporter)
 - Endpoint: `POST /missions/run`
 - Tabela nova: `mission_log`
-- Suíte: `tests/test_robo_mae.py` — 5/5 passed
-- Regressão total: 58/58 passed
+- Suíte: `tests/test_robo_mae.py` — 8/8 passed
+- Regressão total: 104/104 passed
 - Modelo: INTERNO (DB direto para estado, REST loopback para ações)
-- Decisões: D-030, D-031, D-032, D-033
+- Decisões: D-030, D-031, D-032, D-033, D-034, D-035
+
+## Fase 1 — Recuperação real pós-queda (FECHADA — 2026-03-18)
+- **Status: 10/10 fechado (D-036)**
+- Novos arquivos: `robo_mae/mission_control.py`, `tests/test_recovery.py`
+- Arquivos alterados: `robo_mae/executor.py`, `robo_mae/log.py`, `main_fase2.py`
+- Nova tabela: `mission_control` (status, owner_id, lock_version, heartbeat_at, claimed_at, current_step)
+- Evolução: `mission_log` + coluna `step_index`
+- Testes: T9–T16 — 8/8 passed (6 unitários + T15 recovery real + T16 fencing real)
+- Suíte total: 104/104 verde
 
 ## Certificação de autonomia — CERT-001
 - Engenharia da base: em progresso — P2 e P3 com ressalva
@@ -59,7 +68,8 @@
 - SQLite em `jod_robo.db`
 - Tabelas: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`, `mission_log`
 - `integration_audit` colunas B1: `io_committed`, `io_failure_reason`, `io_finalized_at`
-- `mission_log`: `id`, `mission_id`, `correlation_id`, `finalizer_id`, `guardian_id`, `action`, `target_path`, `status`, `io_committed`, `transaction_id`, `details`, `created_at`
+- `mission_log`: `id`, `mission_id`, `correlation_id`, `finalizer_id`, `guardian_id`, `action`, `target_path`, `status`, `io_committed`, `transaction_id`, `details`, `created_at`, `step_index`
+- `mission_control`: `mission_id`, `status`, `owner_id`, `lock_version`, `heartbeat_at`, `claimed_at`, `current_step`, `created_at`
 
 ## Porta local
 - `main_fase2.py`: `127.0.0.1:37777`
