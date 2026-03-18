@@ -1,5 +1,5 @@
 # Estado Atual do Projeto — JOD_ROBO
-**Atualizado em:** 2026-03-18
+**Atualizado em:** 2026-03-18 (MACROBLOCO D)
 
 ## Arquivos principais
 
@@ -21,59 +21,74 @@
 | B1 — stale attestation | 5 passed | 10/10 fechado (D-022) |
 | B1.2 — veto E2E real do Guardião | 4 passed | 10/10 fechado (D-024) |
 | P1 — serialização por target_path | 3 passed | aprovado (D-025) |
+| Fase 1 — Recuperação real pós-queda | 8 passed | 10/10 fechado (D-036) |
+| MACROBLOCO A — aprovação, retry, circuit breaker | 6 passed | fechado (D-037, commit d18c051) |
+| MACROBLOCO B — memory_service | 16 passed | fechado (D-038, commit e1937a2) |
+| MACROBLOCO C — reflection_engine + build_agent | 9 passed | fechado (D-039, commit 1fd2315) |
+| MACROBLOCO D — watchdog autônomo + redespacho formal | 9 passed | fechado (D-040, commit pendente) |
 
-## Regressão ampliada confirmada localmente
-- 104 passed, 0 failed — última execução: 2026-03-18
+## Regressão confirmada
+- **144 passed, 0 failed** — última execução: 2026-03-18 (pós MACROBLOCO D)
 
 ## Estado de P2 e P3 — com ressalva
 
 ### P2 — Logs JSON + correlation_id
-- header X-Correlation-Id: passou
-- correlation_id propagado: passou
-- logs em JSON: passou
 - **RESSALVA:** campo `ts` apareceu com `"%f"` literal em vez de microsegundos reais
 - **Status: NÃO CERTIFICADO 10/10** — requer correção do timestamp antes de fechar
 
 ### P3 — CI/CD GitHub Actions
-- workflow `.github/workflows/ci.yml` criado
-- simulação local: 59 passed em 6.75s
 - **RESSALVA:** sem evidência remota de GitHub Actions executando no repositório
 - **Status: NÃO CERTIFICADO 10/10** — requer push + execução remota confirmada
 
 ## Robô-mãe
 - **MVP IMPLEMENTADO E APROVADO** — 2026-03-17
-- Módulo: `robo_mae/` (context, registry, executor, log, reporter)
-- Endpoint: `POST /missions/run`
-- Tabela nova: `mission_log`
-- Suíte: `tests/test_robo_mae.py` — 8/8 passed
-- Regressão total: 104/104 passed
-- Modelo: INTERNO (DB direto para estado, REST loopback para ações)
-- Decisões: D-030, D-031, D-032, D-033, D-034, D-035
+- Módulo: `robo_mae/` (context, registry, executor, log, reporter, mission_control)
+- Endpoint: `POST /missions/run` + `/missions/{id}/approval` + `/approve` + `/deny`
+- Tabelas: `mission_log`, `mission_control`, `approval_requests`, `circuit_breaker`
+- Decisões: D-030 a D-037
 
-## Fase 1 — Recuperação real pós-queda (FECHADA — 2026-03-18)
-- **Status: 10/10 fechado (D-036)**
-- Novos arquivos: `robo_mae/mission_control.py`, `tests/test_recovery.py`
-- Arquivos alterados: `robo_mae/executor.py`, `robo_mae/log.py`, `main_fase2.py`
-- Nova tabela: `mission_control` (status, owner_id, lock_version, heartbeat_at, claimed_at, current_step)
-- Evolução: `mission_log` + coluna `step_index`
-- Testes: T9–T16 — 8/8 passed (6 unitários + T15 recovery real + T16 fencing real)
-- Suíte total: 104/104 verde
+## Memory Service — MACROBLOCO B
+- **IMPLEMENTADO E APROVADO** — 2026-03-18
+- Módulo: `memory_service/` (policy_guard, migrate, storage, retrieval_gateway)
+- Separado completamente de `robo_mae/` — sem contaminação do core crítico
+- Contrato: memória cognitiva é advisory_only; policy_guard é barreira formal
+- Tabelas: `episodic_events`, `semantic_facts`, `procedural_patterns`, `graph_nodes`, `graph_edges`
+- Endpoints: 11 rotas `/memory/` (events, facts, patterns, graph/nodes, graph/edges, graph/neighbors, context, reflect)
+- Testes: T23–T38 (11 unitários + 5 endpoint)
+- Decisão: D-038
+
+## Banco de dados
+- SQLite em `jod_robo.db`
+- Tabelas core: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`, `mission_log`, `mission_control`, `approval_requests`, `circuit_breaker`
+- Tabelas memory_service: `episodic_events`, `semantic_facts`, `procedural_patterns`, `graph_nodes`, `graph_edges`
 
 ## Certificação de autonomia — CERT-001
 - Engenharia da base: em progresso — P2 e P3 com ressalva
 - Autonomia Total Real: **NÃO CERTIFICADA** — requer Log Humano válido
 - Nível 5 operacional: **NÃO CERTIFICADO** — requer Log Humano válido
 
-## Banco de dados
-- SQLite em `jod_robo.db`
-- Tabelas: `agents`, `finalizer_manifests`, `finalizer_snapshots`, `finalizer_audit`, `guardian_audit`, `integration_audit`, `mission_log`
-- `integration_audit` colunas B1: `io_committed`, `io_failure_reason`, `io_finalized_at`
-- `mission_log`: `id`, `mission_id`, `correlation_id`, `finalizer_id`, `guardian_id`, `action`, `target_path`, `status`, `io_committed`, `transaction_id`, `details`, `created_at`, `step_index`
-- `mission_control`: `mission_id`, `status`, `owner_id`, `lock_version`, `heartbeat_at`, `claimed_at`, `current_step`, `created_at`
-
 ## Porta local
 - `main_fase2.py`: `127.0.0.1:37777`
 
+## Memory Service — MACROBLOCO C
+- **IMPLEMENTADO E APROVADO** — 2026-03-18
+- reflection_engine: `consolidate_signals`, `update_pattern_score` (sem usage_count), `run_reflection` (escopado)
+- `list_reflection_signals(scope=)` com match exato via substr/length (sem LIKE underscore wildcard)
+- `build_agent_context` ranqueia procedural por success_rate DESC + reflection_summary escopado com fallback global
+- Endpoints: `POST /memory/reflect/run`, `GET /agents/{id}/build-context`
+- Decisão: D-039
+
+## MACROBLOCO D — Watchdog
+- **IMPLEMENTADO E APROVADO** — 2026-03-18
+- Módulo: `robo_mae/watchdog.py` (WatchdogResult, WatchdogScanner, scan_once, run_loop)
+- Endpoint: `POST /watchdog/scan` (auth obrigatória, retorna scanned/resumed/quarantined/failed/noop)
+- Integração: lifespan com scan imediato no startup + shutdown limpo
+- context_json: persistido em mission_control no /missions/run (idempotente via IS NULL)
+- _redispatch_mission: redespacho formal sem bypassar claim/takeover/fencing
+- Separação: robo_mae/watchdog.py NÃO importa memory_service
+- Testes: T48–T56 (7 unitários + 2 integração)
+- Decisão: D-040
+
 ## Git
 - Branch: `padrão`
-- Último commit: `f34d839`
+- Último commit: `1fd2315`

@@ -210,6 +210,30 @@ Toda nova entrada deve incluir data e motivo.
 - **Evidência:** T8 — 5 missões concorrentes, mesmo path, todas returned 200+applied, conteúdo sem corrupção, sem shadow órfão; 8/8 robô-mãe + 59/59 regressão = 67/67 verde
 - **Padrão correto para teste concurrent:** `async def _run(): return await asyncio.gather(...)` + `asyncio.run(_run())`; shadow search: `basename = Path(target).name` + `BASE_DIR.rglob(f".{basename}.*.jod_tmp")`
 
+## D-040 — MACROBLOCO D: watchdog autônomo com redespacho formal
+- **Data:** 2026-03-18
+- **Decisão:** `robo_mae/watchdog.py` — WatchdogScanner + WatchdogResult + run_loop. scan_once() varre mission_control WHERE status IN ('RUNNING', 'WAITING_APPROVAL'), delega a reconcile() e age apenas sobre o resultado: QUARANTINE → quarantine(), FAIL → contabiliza, NOOP → contabiliza, RESUME → asyncio.create_task(_redispatch_mission). Redespacho formal via context_json persistido em mission_control na criação da missão. Endpoint POST /watchdog/scan com auth. Lifespan integra startup (scan imediato) + shutdown limpo. SEM import de memory_service. T48–T56: 9 passed. Regressão: 144 passed.
+- **Motivo:** watchdog autônomo que detecta missões travadas e as redespacha pelo caminho normal (claim/takeover/fencing), sem bypassar nenhum guardrail do core transacional.
+
+## D-039 — MACROBLOCO C: reflection_engine + build_agent integrado
+- **Data:** 2026-03-18
+- **Decisão:** `reflection_engine.py` roda fora do caminho crítico; lê de `episodic_events` e `procedural_patterns`; escreve apenas em `semantic_facts` e `procedural_patterns.success_rate/updated_at`; nunca toca `usage_count`, `mission_control`, `mission_log`, `approval_requests` ou `circuit_breaker`
+- **Contrato de escopo:** `run_reflection(agent_id=X)` usa apenas eventos de X em `_adjust_patterns`; `agent_id=None` é global; `build_agent_context` prioriza `list_reflection_signals(scope=agent_id)` com fallback para `scope="global"` quando vazio
+- **Guardrail SQLite underscore:** `list_reflection_signals(scope=)` usa `substr/length` para match exato de sufixo — nunca `LIKE '%_scope'` porque `_` é wildcard no SQLite. T44 valida que `applied_ag-x` e `applied_xag` não são retornados ao buscar `scope="ag"`
+- **usage_count:** soberania do executor — `update_pattern_score()` toca apenas `success_rate` e `updated_at`; T40 assert explícito `usage_count == 0` após reflexão
+- **Endpoints:** `POST /memory/reflect/run` (on-demand, advisory_only); `GET /agents/{id}/build-context` (contexto enriquecido advisory_only); `reflect_and_consolidate()` stub permanece intacto (T30 válido)
+- **Evidência:** T39–T47 (6 unitários + 3 endpoint) + 135/135 regressão verde; commit 1fd2315
+
+## D-038 — MACROBLOCO B: memory_service separado — episódica, semântica, procedural, graph
+- **Data:** 2026-03-18
+- **Decisão:** `memory_service/` completamente separado de `robo_mae/` e do core crítico; nenhuma função de memory_service participa de mission execution, ownership, lock_version, heartbeat, retry, recovery, quarantine, fencing ou approval
+- **Contrato formal:** `policy_guard.enforce_advisory()` é chamado em toda saída do `RetrievalGateway`; se `advisory_only` não for True, `MemoryGovernanceError` é levantada antes de retornar — memória cognitiva não pode ser usada operacionalmente
+- **Guardrail build_agent_context:** graph prioriza `list_graph_neighbors(agent_node_id)` quando existe nó com `label=agent_id`; fallback para `list_graph_nodes(limit=20)` quando sem vínculo específico — contrato fechado via `find_node_by_label()`
+- **Tabelas:** `episodic_events`, `semantic_facts` (UNIQUE category+key), `procedural_patterns` (UNIQUE name), `graph_nodes`, `graph_edges` (UNIQUE source+relation+target)
+- **Endpoints:** 11 rotas `/memory/` em `main_fase2.py`; schemas `Mem*` adicionados ao bloco Pydantic existente
+- **reflect_and_consolidate():** stub — registra intenção como `consolidation_intent` episódico; retorna `pending_consolidation`; consolidação real fora do escopo
+- **Evidência:** T23–T38 (11 unitários + 5 endpoint) + 126/126 regressão verde; commit e1937a2
+
 ## D-036 — Fase 1: Recuperação real pós-queda — encerrada 10/10
 - **Data:** 2026-03-18
 - **Decisão:** implementação completa de mission_control, ownership/claim/takeover, heartbeat, fencing hard, two-phase step logging e reconciliador com matriz exaustiva

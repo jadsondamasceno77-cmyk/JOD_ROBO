@@ -333,6 +333,20 @@ def _migrate_macrobloco_a(engine) -> None:
             conn.commit()
 
 
+def _migrate_macrobloco_d(engine) -> None:
+    """
+    Adiciona context_json em mission_control para redespacho formal do watchdog.
+    Idempotente: verifica via PRAGMA antes de ALTER TABLE.
+    """
+    with engine.connect() as conn:
+        existing = {row[1] for row in conn.execute(
+            text("PRAGMA table_info(mission_control)")
+        ).fetchall()}
+        if "context_json" not in existing:
+            conn.execute(text("ALTER TABLE mission_control ADD COLUMN context_json TEXT"))
+            conn.commit()
+
+
 def _migrate_integration_audit(engine) -> None:
     """
     Adiciona colunas B1 em integration_audit se ainda não existirem.
@@ -360,7 +374,10 @@ def _migrate_integration_audit(engine) -> None:
 # Async task queue
 # ---------------------------------------------------------------------------
 task_queue: asyncio.Queue = asyncio.Queue()
-_worker_task: Optional[asyncio.Task] = None
+_worker_task:      Optional[asyncio.Task]  = None
+_watchdog_stop:    Optional[asyncio.Event] = None
+_watchdog_task:    Optional[asyncio.Task]  = None
+_watchdog_scanner                          = None  # WatchdogScanner, set in lifespan
 
 
 async def _queue_worker():
@@ -390,13 +407,14 @@ async def enqueue(fn, *args, **kwargs):
 # ---------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global _worker_task
+    global _worker_task, _watchdog_stop, _watchdog_task, _watchdog_scanner
 
     _migrate_integration_audit(engine)
     _migrate_mission_log(engine)
     _migrate_mission_control(engine)
     _migrate_macrobloco_a(engine)
     _migrate_memory_service(engine)
+    _migrate_macrobloco_d(engine)
 
     # Startup sweep: remove shadow files (.*.jod_tmp) deixados por crashes anteriores
     for _tmp in BASE_DIR.rglob(".*.jod_tmp"):
@@ -407,13 +425,28 @@ async def lifespan(app: FastAPI):
             log.error("lifespan sweep: falha ao remover %s: %s", _tmp, _exc)
     _worker_task = asyncio.create_task(_queue_worker())
     log.info("Queue worker started")
+
+    _watchdog_stop = asyncio.Event()
+    _watchdog_scanner = WatchdogScanner(Session, _redispatch_mission)
+    _watchdog_task = asyncio.create_task(_watchdog_scanner.run_loop(_watchdog_stop))
+    log.info("Watchdog started")
+
     yield
+
     _worker_task.cancel()
     try:
         await _worker_task
     except asyncio.CancelledError:
         pass
     log.info("Queue worker stopped")
+
+    _watchdog_stop.set()
+    _watchdog_task.cancel()
+    try:
+        await _watchdog_task
+    except asyncio.CancelledError:
+        pass
+    log.info("Watchdog stopped")
 
 
 # ---------------------------------------------------------------------------
@@ -2055,6 +2088,7 @@ from robo_mae.executor        import MissionExecutor
 from robo_mae.mission_control import MissionControl as _MissionControl
 from robo_mae.registry        import AgentRegistry
 from robo_mae.reporter        import get_mission_summary
+from robo_mae.watchdog        import WatchdogScanner
 
 # ---------------------------------------------------------------------------
 # Memory Service
@@ -2069,6 +2103,48 @@ from memory_service.storage            import (
 from memory_service.retrieval_gateway  import RetrievalGateway
 from memory_service.policy_guard       import assert_advisory_only, MemoryGovernanceError
 from memory_service.reflection_engine  import run_reflection
+
+
+async def _redispatch_mission(mission_id: str) -> None:
+    """
+    Redespacho formal de missão pelo watchdog.
+    Lê context_json de mission_control, reconstrói MissionContext e executa
+    pelo caminho normal (claim/takeover/fencing preservados).
+    Não executa inline dentro do watchdog.
+    """
+    with Session() as s:
+        row = s.execute(
+            text("SELECT context_json FROM mission_control WHERE mission_id=:mid"),
+            {"mid": mission_id},
+        ).fetchone()
+
+    if row is None or not row[0]:
+        log.error("redispatch: context_json ausente para mission=%s", mission_id)
+        return
+
+    try:
+        ctx_data = json.loads(row[0])
+    except Exception as exc:
+        log.error("redispatch: context_json inválido para mission=%s: %s", mission_id, exc)
+        return
+
+    ctx = MissionContext(
+        mission_id        = mission_id,
+        finalizer_id      = ctx_data["finalizer_id"],
+        guardian_id       = ctx_data.get("guardian_id"),
+        max_retries       = ctx_data.get("max_retries", 3),
+        retry_delay_secs  = ctx_data.get("retry_delay_secs", 2.0),
+        approval_ttl_secs = ctx_data.get("approval_ttl_secs", 86400),
+        steps             = [StepSpec(**step) for step in ctx_data["steps"]],
+    )
+    hdrs = {"Authorization": f"Bearer {API_TOKEN}"}
+    try:
+        async with httpx.AsyncClient(timeout=60.0) as client:
+            registry = AgentRegistry(Session, client, _SELF_BASE_URL, hdrs)
+            executor = MissionExecutor(ctx, registry, Session, client, _SELF_BASE_URL, hdrs)
+            await executor.run()
+    except Exception as exc:
+        log.error("redispatch: executor falhou para mission=%s: %s", mission_id, exc)
 
 
 @app.post("/missions/run", tags=["missions"])
@@ -2095,6 +2171,30 @@ async def run_mission(
             for s in req.steps
         ],
     )
+
+    # Persistir contexto para redespacho autônomo pelo watchdog
+    _ctx_json = json.dumps({
+        "finalizer_id":     req.finalizer_id,
+        "guardian_id":      req.guardian_id,
+        "steps":            [
+            {"action": s.action, "target_path": s.target_path,
+             "payload": s.payload, "mode": s.mode}
+            for s in req.steps
+        ],
+        "max_retries":       req.max_retries,
+        "retry_delay_secs":  req.retry_delay_secs,
+        "approval_ttl_secs": req.approval_ttl_secs,
+    })
+    with Session() as _s:
+        _MissionControl.create(_s, req.mission_id)
+        _s.execute(
+            text("""
+                UPDATE mission_control SET context_json=:ctx
+                WHERE mission_id=:mid AND context_json IS NULL
+            """),
+            {"ctx": _ctx_json, "mid": req.mission_id},
+        )
+        _s.commit()
 
     hdrs = {"Authorization": authorization, "X-Correlation-Id": req.mission_id}
     try:
@@ -2214,6 +2314,25 @@ async def deny_mission(
 def _now_iso_main() -> str:
     """UTC naive ISO — helper local para comparação nos endpoints de approval."""
     return datetime.utcnow().isoformat()
+
+
+# ---------------------------------------------------------------------------
+# MACROBLOCO D — Watchdog
+# ---------------------------------------------------------------------------
+
+@app.post("/watchdog/scan", tags=["watchdog"])
+async def watchdog_scan(
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    result = await _watchdog_scanner.scan_once()
+    return {
+        "scanned":     result.scanned,
+        "resumed":     result.resumed,
+        "quarantined": result.quarantined,
+        "failed":      result.failed,
+        "noop":        result.noop,
+    }
 
 
 # ---------------------------------------------------------------------------
