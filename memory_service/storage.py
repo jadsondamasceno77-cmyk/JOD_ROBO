@@ -299,3 +299,36 @@ def list_graph_neighbors(
         }
         for r in rows
     ]
+
+
+# ── Reflection Signals ────────────────────────────────────────────────────────
+
+def list_reflection_signals(
+    session_factory, scope: str | None = None, limit: int = 5
+) -> list[dict]:
+    """
+    Retorna top sinais de reflexão (category=reflection_signal), ordenados por contagem DESC.
+
+    scope fornecido → match exato de sufixo '_<scope>' via substr/length.
+    Não usa LIKE com underscore porque '_' é wildcard no SQLite.
+
+    scope=None → retorna todos os sinais globais e escopados.
+    """
+    params: dict = {"limit": limit}
+    scope_filter = ""
+    if scope:
+        # Exact suffix match: last len(scope) chars == scope AND char before == '_'
+        scope_filter = """
+            AND length(key) > length(:scope)
+            AND substr(key, length(key) - length(:scope) + 1) = :scope
+            AND substr(key, length(key) - length(:scope), 1) = '_'
+        """
+        params["scope"] = scope
+    with session_factory() as s:
+        rows = s.execute(text(f"""
+            SELECT key, value FROM semantic_facts
+            WHERE category = 'reflection_signal'
+            {scope_filter}
+            ORDER BY CAST(value AS INTEGER) DESC LIMIT :limit
+        """), params).fetchall()
+    return [{"signal": r[0], "count": int(r[1])} for r in rows]

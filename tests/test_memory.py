@@ -346,3 +346,172 @@ def test_T38_endpoint_context_build():
     assert "procedural" in data
     assert "graph"      in data   # fechamento 1: graph sempre presente
     assert any(e["agent_id"] == "ag-ctx-T38" for e in data["episodic"])
+
+
+# =============================================================================
+# MACROBLOCO C — reflection_engine + build_agent integrado (T39–T46)
+# =============================================================================
+
+from memory_service.reflection_engine import (
+    consolidate_signals,
+    update_pattern_score,
+    run_reflection,
+)
+from memory_service.storage import list_reflection_signals
+
+
+# T39 — consolidate_signals: conta eventos → semantic_facts gravadas
+def test_T39_consolidate_signals_writes_semantic_facts():
+    sf = _make_mem_sf()
+    insert_episodic_event(sf, "ag", "applied", "ok")
+    insert_episodic_event(sf, "ag", "applied", "ok2")
+    insert_episodic_event(sf, "ag", "error",   "falhou")
+    counts = consolidate_signals(sf, agent_id="ag")
+    assert counts["applied"] == 2
+    assert counts["error"]   == 1
+    facts = list_semantic_facts(sf, category="reflection_signal")
+    keys = {f["key"] for f in facts}
+    assert "applied_ag" in keys
+    assert "error_ag"   in keys
+    meta = list_semantic_facts(sf, category="reflection_meta")
+    assert any("last_reflection_ag" in f["key"] for f in meta)
+
+
+# T40 — update_pattern_score: clamp [0,1]; NÃO altera usage_count
+def test_T40_update_pattern_score_clamp_sem_usage_count():
+    sf = _make_mem_sf()
+    upsert_procedural_pattern(sf, "pat-score", "desc", ["s"], success_rate=0.5)
+    new_rate = update_pattern_score(sf, "pat-score", 0.3)
+    assert abs(new_rate - 0.8) < 1e-6
+    # clamp ao máximo
+    assert update_pattern_score(sf, "pat-score", 0.5) == 1.0
+    # clamp ao mínimo
+    assert update_pattern_score(sf, "pat-score", -2.0) == 0.0
+    # pattern inexistente → None
+    assert update_pattern_score(sf, "inexistente", 0.1) is None
+    # usage_count não é alterado pela reflexão
+    patterns = list_procedural_patterns(sf, name="pat-score")
+    assert patterns[0]["usage_count"] == 0
+
+
+# T41 — run_reflection: escopo por agente + global
+def test_T41_run_reflection_escopado():
+    sf = _make_mem_sf()
+    insert_episodic_event(sf, "ag-scoped", "applied", "missao ok")
+    insert_episodic_event(sf, "ag-scoped", "error",   "missao falhou")
+    insert_episodic_event(sf, "ag-outro",  "applied", "nao deve contar")
+
+    # escopo do agente — 2 eventos
+    result = run_reflection(sf, agent_id="ag-scoped")
+    assert result["advisory_only"] is True
+    data = result["data"]
+    assert data["scope"] == "ag-scoped"
+    assert data["total_events_analyzed"] == 2
+    assert "signal_counts"       in data
+    assert "patterns_adjusted"   in data
+
+    # global — 3 eventos
+    result_global = run_reflection(sf)
+    assert result_global["data"]["scope"] == "global"
+    assert result_global["data"]["total_events_analyzed"] == 3
+
+
+# T42 — build_agent_context: procedural ranqueado por success_rate DESC
+def test_T42_build_agent_context_procedural_ranked():
+    sf = _make_mem_sf()
+    upsert_procedural_pattern(sf, "pat-low",  "d", ["s"], success_rate=0.1)
+    upsert_procedural_pattern(sf, "pat-high", "d", ["s"], success_rate=0.9)
+    upsert_procedural_pattern(sf, "pat-mid",  "d", ["s"], success_rate=0.5)
+    gw = RetrievalGateway(sf)
+    ctx = gw.build_agent_context("ag3")
+    procedural = ctx["data"]["procedural"]
+    rates = [p["success_rate"] for p in procedural]
+    assert rates == sorted(rates, reverse=True)
+
+
+# T43 — build_agent_context: reflection_summary com sinais escopados + fallback global
+def test_T43_build_agent_context_reflection_summary_scoped_fallback():
+    sf = _make_mem_sf()
+    upsert_procedural_pattern(sf, "pp-a", "d", ["s"], success_rate=0.8)
+    # Sinal escopado para "ag-scope"
+    upsert_semantic_fact(sf, "reflection_signal", "applied_ag-scope", "5",
+                         source="reflection_engine")
+    # Sinal global
+    upsert_semantic_fact(sf, "reflection_signal", "error_global", "10",
+                         source="reflection_engine")
+    gw = RetrievalGateway(sf)
+
+    # Agente com sinal específico → retorna sinal escopado
+    ctx_scoped = gw.build_agent_context("ag-scope")
+    rs = ctx_scoped["data"]["reflection_summary"]
+    assert any("ag-scope" in s["signal"] for s in rs["top_signals"])
+
+    # Agente sem sinal específico → fallback global
+    ctx_fallback = gw.build_agent_context("ag-sem-sinal")
+    rs_fb = ctx_fallback["data"]["reflection_summary"]
+    assert any("global" in s["signal"] for s in rs_fb["top_signals"])
+
+
+# T44 — list_reflection_signals: guardrail underscore — match exato via substr/length
+def test_T44_list_reflection_signals_exact_scope_no_wildcard():
+    sf = _make_mem_sf()
+    # Chave com sufixo "ag" (sem underscore no scope)
+    upsert_semantic_fact(sf, "reflection_signal", "applied_ag",     "3", source="r")
+    # Chave com sufixo "ag-x" — NÃO deve ser retornada ao buscar scope="ag"
+    upsert_semantic_fact(sf, "reflection_signal", "applied_ag-x",   "5", source="r")
+    # Chave com sufixo "xag" — NÃO deve ser retornada (sem underscore antes)
+    upsert_semantic_fact(sf, "reflection_signal", "applied_xag",    "2", source="r")
+    # Chave global separada
+    upsert_semantic_fact(sf, "reflection_signal", "applied_global",  "9", source="r")
+
+    scoped = list_reflection_signals(sf, scope="ag")
+    keys = {s["signal"] for s in scoped}
+    assert "applied_ag"    in keys         # match exato
+    assert "applied_ag-x"  not in keys     # diferente
+    assert "applied_xag"   not in keys     # sem separador '_' antes de 'ag'
+    assert "applied_global" not in keys    # scope diferente
+
+
+# ---------------------------------------------------------------------------
+# T45–T46 — Integração de endpoint (requer servidor em http://127.0.0.1:37777)
+# ---------------------------------------------------------------------------
+
+def test_T45_endpoint_reflect_run():
+    r = _httpx.post(f"{_BASE_MEM}/memory/reflect/run",
+                    headers=_HDRS_MEM, json={"agent_id": None})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["advisory_only"] is True
+    data = body["data"]
+    assert "signal_counts"         in data
+    assert "patterns_adjusted"     in data
+    assert "total_events_analyzed" in data
+
+
+def test_T46_endpoint_agent_build_context():
+    # Criar agente
+    r_ag = _httpx.post(f"{_BASE_MEM}/agents", headers=_HDRS_MEM, json={
+        "name": "ag-build-ctx-T46", "role": "tester",
+        "system_prompt": "Agente de teste MACROBLOCO C",
+    })
+    assert r_ag.status_code == 201
+    agent_id = r_ag.json()["id"]
+
+    r = _httpx.get(f"{_BASE_MEM}/agents/{agent_id}/build-context", headers=_HDRS_MEM)
+    assert r.status_code == 200
+    body = r.json()
+    assert body["advisory_only"] is True
+    assert body["agent_id"]   == agent_id
+    assert body["agent_name"] == "ag-build-ctx-T46"
+    memory = body["memory"]
+    assert "episodic"           in memory
+    assert "semantic"           in memory
+    assert "procedural"         in memory
+    assert "graph"              in memory
+    assert "reflection_summary" in memory
+
+
+def test_T47_endpoint_build_context_agente_inexistente():
+    r = _httpx.get(f"{_BASE_MEM}/agents/id-nao-existe/build-context",
+                   headers=_HDRS_MEM)
+    assert r.status_code == 404

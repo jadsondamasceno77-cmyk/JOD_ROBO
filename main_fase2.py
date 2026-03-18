@@ -589,6 +589,10 @@ class MemReflectRequest(BaseModel):
     intent:   str
 
 
+class MemReflectRun(BaseModel):
+    agent_id: Optional[str] = None   # None → reflexão global
+
+
 # ---------------------------------------------------------------------------
 # Auth helper
 # ---------------------------------------------------------------------------
@@ -2055,15 +2059,16 @@ from robo_mae.reporter        import get_mission_summary
 # ---------------------------------------------------------------------------
 # Memory Service
 # ---------------------------------------------------------------------------
-from memory_service.migrate           import _migrate_memory_service
-from memory_service.storage           import (
+from memory_service.migrate            import _migrate_memory_service
+from memory_service.storage            import (
     insert_episodic_event, list_episodic_events,
     upsert_semantic_fact, list_semantic_facts,
     upsert_procedural_pattern, list_procedural_patterns,
     insert_graph_node, insert_graph_edge, list_graph_neighbors,
 )
-from memory_service.retrieval_gateway import RetrievalGateway
-from memory_service.policy_guard      import assert_advisory_only, MemoryGovernanceError
+from memory_service.retrieval_gateway  import RetrievalGateway
+from memory_service.policy_guard       import assert_advisory_only, MemoryGovernanceError
+from memory_service.reflection_engine  import run_reflection
 
 
 @app.post("/missions/run", tags=["missions"])
@@ -2337,6 +2342,49 @@ async def memory_reflect(
 ):
     verify_token(authorization)
     return RetrievalGateway(Session).reflect_and_consolidate(body.agent_id, body.intent)
+
+
+@app.post("/memory/reflect/run", tags=["memory"])
+async def memory_run_reflection(
+    body: MemReflectRun,
+    authorization: Optional[str] = Header(default=None),
+):
+    """
+    Dispara uma rodada de reflexão fora do caminho crítico.
+    Consolida sinais episódicos e ajusta success_rate de patterns (não toca usage_count).
+    agent_id=None → reflexão global; agent_id fornecido → escopada ao agente.
+    Retorna relatório advisory_only.
+    """
+    verify_token(authorization)
+    return run_reflection(Session, agent_id=body.agent_id)
+
+
+@app.get("/agents/{agent_id}/build-context", tags=["memory"])
+async def agent_build_context(
+    agent_id: str,
+    authorization: Optional[str] = Header(default=None),
+):
+    """
+    Constrói contexto enriquecido do agente:
+    dados do agente (nome, role) + memória completa (4 tipos) + reflection_summary.
+    Retorno é advisory_only — não governa decisões operacionais.
+    """
+    verify_token(authorization)
+    with Session() as s:
+        row = s.execute(
+            text("SELECT id, name, role FROM agents WHERE id = :aid"),
+            {"aid": agent_id},
+        ).fetchone()
+    if not row:
+        raise HTTPException(status_code=404, detail="Agent not found")
+    mem_ctx = RetrievalGateway(Session).build_agent_context(agent_id)
+    return {
+        "advisory_only": True,
+        "agent_id":   row[0],
+        "agent_name": row[1],
+        "agent_role": row[2],
+        "memory":     mem_ctx["data"],
+    }
 
 
 if os.environ.get("JOD_ENV") == "test":

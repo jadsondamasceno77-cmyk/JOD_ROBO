@@ -16,6 +16,7 @@ from .storage import (
     list_graph_neighbors,
     list_graph_nodes,
     list_procedural_patterns,
+    list_reflection_signals,
     list_semantic_facts,
 )
 
@@ -56,23 +57,46 @@ class RetrievalGateway:
 
     def build_agent_context(self, agent_id: str) -> dict:
         """
-        Contexto composto: episodic + semantic + procedural + graph.
+        Contexto composto: episodic + semantic + procedural + graph + reflection_summary.
 
         Graph: prioriza neighbors/relations do agente quando existe nó com
         label=agent_id no grafo; usa fallback de nós recentes quando não há
         vínculo específico.
+
+        Procedural: ranqueado por success_rate DESC (evidência acumulada pela reflexão).
+
+        reflection_summary: prioriza sinais escopados do agente;
+        fallback para sinais globais apenas se não houver sinais específicos.
         """
         agent_node_id = find_node_by_label(self._sf, agent_id)
-        if agent_node_id:
-            graph_data = list_graph_neighbors(self._sf, agent_node_id)
-        else:
-            graph_data = list_graph_nodes(self._sf, limit=20)
+        graph_data = (
+            list_graph_neighbors(self._sf, agent_node_id)
+            if agent_node_id
+            else list_graph_nodes(self._sf, limit=20)
+        )
+
+        procedural = list_procedural_patterns(self._sf)
+        procedural.sort(key=lambda p: p["success_rate"], reverse=True)
+
+        # Reflection summary: sinais escopados do agente; fallback global
+        top_signals = list_reflection_signals(self._sf, scope=agent_id, limit=5)
+        if not top_signals:
+            top_signals = list_reflection_signals(self._sf, scope="global", limit=5)
+
+        top_patterns = [
+            {"name": p["name"], "success_rate": p["success_rate"]}
+            for p in procedural[:3]
+        ]
 
         return enforce_advisory(wrap_advisory({
             "episodic":   list_episodic_events(self._sf, agent_id=agent_id, limit=5),
             "semantic":   list_semantic_facts(self._sf),
-            "procedural": list_procedural_patterns(self._sf),
+            "procedural": procedural,
             "graph":      graph_data,
+            "reflection_summary": {
+                "top_signals":  top_signals,
+                "top_patterns": top_patterns,
+            },
         }))
 
     def reflect_and_consolidate(self, agent_id: str, intent: str) -> dict:
