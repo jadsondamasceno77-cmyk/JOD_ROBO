@@ -100,6 +100,14 @@ jobs:
           except Exception as e:
               with open(summary, "a") as f:
                   f.write(f"## Could not parse XML: {e}\n")
+          try:
+              with open("/tmp/pytest_output.txt") as pf:
+                  content = pf.read()[-8000:]
+              with open(summary, "a") as f:
+                  f.write("\n## Pytest output (tail)\n```\n" + content + "\n```\n")
+          except Exception as e2:
+              with open(summary, "a") as f:
+                  f.write(f"\n## Could not read pytest output: {e2}\n")
           EOF
 
       - name: Dump server log
