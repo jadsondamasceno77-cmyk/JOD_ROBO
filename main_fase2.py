@@ -32,7 +32,8 @@ LOCAL_AI_URL = os.getenv("LOCAL_AI_URL", "http://127.0.0.1:11434/api/generate")
 LOCAL_AI_MODEL            = os.getenv("LOCAL_AI_MODEL",            "gemma3:4b")
 LOCAL_AI_STRUCTURED_MODEL = os.getenv("LOCAL_AI_STRUCTURED_MODEL", "functiongemma")
 API_TOKEN = os.getenv("JOD_ROBO_API_TOKEN", "dev-token")
-DB_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR}/jod_robo.db")
+_raw_db_url = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR}/jod_robo.db")
+DB_URL = _raw_db_url.replace("postgres://", "postgresql://", 1) if _raw_db_url.startswith("postgres://") else _raw_db_url
 _SELF_BASE_URL = f"http://127.0.0.1:{os.getenv('SERVER_PORT', '37777')}"
 
 AGENTS_DIR.mkdir(parents=True, exist_ok=True)
