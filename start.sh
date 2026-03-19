@@ -1,3 +1,2 @@
-#!/bin/bash
-cd /workspace
-python3 -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+#!/bin/sh
+exec uvicorn main_fase2:app --host 0.0.0.0 --port ${PORT:-8000}
