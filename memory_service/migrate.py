@@ -60,3 +60,15 @@ def _migrate_memory_service(engine) -> None:
                 UNIQUE(source_id, relation, target_id)
             )
         """))
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS metrics (
+                id         TEXT PRIMARY KEY,
+                source     TEXT NOT NULL,
+                operation  TEXT NOT NULL,
+                status     TEXT NOT NULL,
+                latency_ms REAL NOT NULL,
+                model      TEXT,
+                detail     TEXT,
+                created_at TEXT NOT NULL
+            )
+        """))

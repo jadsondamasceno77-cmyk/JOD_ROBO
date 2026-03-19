@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import re
+import time
 import uuid
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
@@ -870,6 +871,83 @@ async def _ollama_call(
 
 
 # ---------------------------------------------------------------------------
+# Groq API call
+# ---------------------------------------------------------------------------
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_MODEL   = "llama-3.3-70b-versatile"
+GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
+
+
+async def _groq_call(
+    system_prompt: str,
+    prompt: str,
+    role: str = "generic",
+    force_json: bool = False,
+    json_schema: dict | None = None,
+) -> str:
+    if force_json:
+        instruction = "Responda somente com um objeto JSON válido, compatível com o schema fornecido, sem texto antes ou depois."
+    else:
+        instruction = _ROLE_INSTRUCTIONS.get(role, _ROLE_INSTRUCTIONS["generic"])
+    _failures = get_similar_failures(Session, role, limit=2)
+    _failure_ctx = (
+        "\n\nContexto de falhas anteriores (advisory):\n" + json.dumps(_failures, ensure_ascii=False)
+        if _failures else ""
+    )
+    _prefix = get_optimized_prefix(Session, role)
+    _system = f"{_prefix}\n\n{system_prompt}{_failure_ctx}" if _prefix else f"{system_prompt}{_failure_ctx}"
+    payload: dict = {
+        "model": GROQ_MODEL,
+        "messages": [
+            {"role": "system", "content": f"{_system}\n\n{instruction}"},
+            {"role": "user",   "content": prompt},
+        ],
+    }
+    if force_json:
+        payload["response_format"] = {"type": "json_object"}
+    _t0 = time.monotonic()
+    _metric_status = "ok"
+    try:
+        async with httpx.AsyncClient(timeout=180.0) as client:
+            resp = await client.post(
+                GROQ_URL,
+                json=payload,
+                headers={"Authorization": f"Bearer {GROQ_API_KEY}"},
+            )
+            resp.raise_for_status()
+            response_text = resp.json()["choices"][0]["message"]["content"]
+            if force_json:
+                try:
+                    json.loads(response_text)
+                except ValueError:
+                    _metric_status = "error"
+                    record_json_failure(Session, role, response_text[:200])
+                    raise HTTPException(
+                        status_code=502,
+                        detail="Groq retornou resposta inválida: JSON esperado mas recebeu texto livre",
+                    )
+            return response_text
+    except httpx.ConnectError:
+        _metric_status = "error"
+        raise HTTPException(status_code=503, detail="Groq indisponível (connection refused)")
+    except httpx.TimeoutException:
+        _metric_status = "timeout"
+        raise HTTPException(status_code=504, detail="Groq não respondeu no prazo")
+    except HTTPException:
+        raise
+    except Exception as exc:
+        _metric_status = "error"
+        raise HTTPException(status_code=502, detail=f"Erro no Groq: {exc}")
+    finally:
+        record_metric(
+            Session, source="groq", operation=role,
+            status=_metric_status,
+            latency_ms=round((time.monotonic() - _t0) * 1000, 2),
+            model=GROQ_MODEL,
+        )
+
+
+# ---------------------------------------------------------------------------
 # OpenAI Responses API call
 # ---------------------------------------------------------------------------
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
@@ -1042,7 +1120,7 @@ async def orchestrate(req: OrchestrateRequest, authorization: Optional[str] = He
         f"Preencha 'principais_benefícios' com lista de pontos relevantes.\n"
         f"Preencha 'exemplo_de_uso' com um exemplo prático, se aplicável."
     )
-    analyst_output = await _ollama_call(
+    analyst_output = await _groq_call(
         analista.system_prompt,
         analyst_prompt,
         role="analyst",
@@ -1062,7 +1140,7 @@ async def orchestrate(req: OrchestrateRequest, authorization: Optional[str] = He
         f"Preencha 'proximo_passo' com a ação mais imediata e prioritária.\n\n"
         f"Análise:\n{analyst_output}"
     )
-    executor_output = await _ollama_call(
+    executor_output = await _groq_call(
         executor.system_prompt,
         executor_prompt,
         role="executor",
@@ -1083,7 +1161,7 @@ async def orchestrate(req: OrchestrateRequest, authorization: Optional[str] = He
         f"Análise:\n{analyst_output}\n\n"
         f"Ações propostas:\n{executor_output}"
     )
-    orchestrator_output = await _ollama_call(
+    orchestrator_output = await _groq_call(
         orquestrador.system_prompt,
         orchestrator_prompt,
         role="orchestrator",
@@ -1123,6 +1201,18 @@ async def orchestrate(req: OrchestrateRequest, authorization: Optional[str] = He
 @app.get("/queue/status", tags=["queue"])
 async def queue_status():
     return {"pending": task_queue.qsize()}
+
+
+# ---------------------------------------------------------------------------
+# Routes — metrics
+# ---------------------------------------------------------------------------
+@app.get("/metrics/summary", tags=["metrics"])
+async def metrics_summary(
+    hours: int = 24,
+    authorization: Optional[str] = Header(default=None),
+):
+    verify_token(authorization)
+    return query_metrics_summary(Session, hours=hours)
 
 
 # ---------------------------------------------------------------------------
@@ -2103,6 +2193,9 @@ from memory_service.storage            import (
 from memory_service.retrieval_gateway  import RetrievalGateway
 from memory_service.policy_guard       import assert_advisory_only, MemoryGovernanceError
 from memory_service.reflection_engine  import run_reflection
+from memory_service.metrics            import record_metric, query_metrics_summary
+from memory_service.learning           import record_mission_outcome, get_similar_failures
+from memory_service.prompt_optimizer   import record_json_failure, get_optimized_prefix
 
 
 async def _redispatch_mission(mission_id: str) -> None:
@@ -2202,7 +2295,14 @@ async def run_mission(
             registry = AgentRegistry(Session, client, _SELF_BASE_URL, hdrs)
             executor = MissionExecutor(ctx, registry, Session, client, _SELF_BASE_URL, hdrs)
             await executor.run()
+        record_mission_outcome(Session, req.mission_id, status="completed", steps_count=len(req.steps))
     except RuntimeError as exc:
+        record_mission_outcome(
+            Session, req.mission_id, status="failed",
+            steps_count=len(req.steps),
+            failed_step=str(exc)[:120],
+            error=str(exc)[:300],
+        )
         raise HTTPException(status_code=500, detail=str(exc))
 
     summary = get_mission_summary(Session, req.mission_id)
