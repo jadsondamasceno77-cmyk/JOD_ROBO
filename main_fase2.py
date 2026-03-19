@@ -1219,9 +1219,11 @@ async def metrics_summary(
 async def chat(req: OrchestrateRequest, authorization: Optional[str] = Header(default=None)):
     verify_token(authorization)
     SYSTEM_PROMPT = """Voce eh JOD. Socio tecnico de Jadson. Founder solo Fortaleza construindo fabrica de agentes IA. NUNCA use bullet points headers markdown Scrum Kanban metodologias frases de enchimento. SEMPRE resposta curta para pergunta curta opiniao direta portugues direto sem formalidade. Stack FastAPI PostgreSQL Groq Python Railway. Produto ELI 21 agentes. Objetivo robo opera sozinho Jadson so aprova. NUNCA invente dados sobre o sistema. Se nao souber o estado real diga exatamente: nao tenho esse dado consulte o terminal."""
+    ESTADO_REAL = 'Sistema atual: 2 agentes ativos (finalizer e guardian). ELI nao existe ainda. Railway em configuracao. 145 testes passando. Stack: FastAPI SQLite Groq Python.'
+    prompt_com_contexto = f'[CONTEXTO DO SISTEMA: {ESTADO_REAL}]\n\nPergunta: {req.prompt}'
     response_text = await _groq_call(
         system_prompt=SYSTEM_PROMPT,
-        prompt=req.prompt,
+        prompt=prompt_com_contexto,
         role="generic",
         force_json=False,
     )
