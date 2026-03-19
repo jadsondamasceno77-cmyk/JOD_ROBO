@@ -1,0 +1,32 @@
+{
+  "_comment": "Manifest padrao do Agente Finalizador. Nao editar manualmente em producao.",
+  "allowed_actions": [
+    "write_file",
+    "read_file",
+    "list_dir"
+  ],
+  "allowed_paths": [
+    "agents/",
+    "scripts/",
+    "templates/",
+    "tests/"
+  ],
+  "forbidden_paths": [
+    "app/",
+    "jod_brain/",
+    ".env",
+    "main_fase2.py",
+    "jod_brain_main.py",
+    "requirements.txt",
+    "Dockerfile",
+    "templates/finalizer_manifest.json"
+  ],
+  "allowed_hosts": [],
+  "requires_approval": [
+    "run_script",
+    "git_push",
+    "delete_file",
+    "access_secret",
+    "edit_core"
+  ]
+}

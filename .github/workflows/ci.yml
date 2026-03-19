@@ -48,13 +48,6 @@ jobs:
         env:
           JOD_ENV: test
 
-      - name: Verify server before tests
-        run: |
-          echo "=== Server health check antes dos testes ==="
-          curl -sf http://127.0.0.1:37777/health/live || \
-            (echo "SERVER DOWN antes dos testes!"; cat uvicorn.log; exit 1)
-          echo "Server UP confirmado"
-
       - name: Run all tests
         run: |
           JOD_ENV=test python3 -m pytest \
@@ -71,49 +64,9 @@ jobs:
             tests/test_recovery.py \
             tests/test_memory.py \
             tests/test_watchdog.py \
-            -v --tb=long --junit-xml=test-results.xml 2>&1 | tee /tmp/pytest_output.txt
-          exit ${PIPESTATUS[0]}
+            -v --tb=short --junit-xml=test-results.xml
         env:
           JOD_ENV: test
-
-      - name: Summarize failures
-        if: always()
-        run: |
-          python3 - <<'EOF'
-          import os, xml.etree.ElementTree as ET
-          summary = os.environ.get("GITHUB_STEP_SUMMARY", "/dev/null")
-          try:
-              root = ET.parse("test-results.xml").getroot()
-              failures = []
-              for tc in root.iter("testcase"):
-                  for tag in ("failure", "error"):
-                      node = tc.find(tag)
-                      if node is not None:
-                          name = f"{tc.get('classname','')}.{tc.get('name','')}"
-                          msg = (node.get("message","") or node.text or "")[:400]
-                          failures.append(f"- **{name}**: {msg}")
-              with open(summary, "a") as f:
-                  if failures:
-                      f.write("## Failed tests\n" + "\n".join(failures) + "\n")
-                  else:
-                      f.write("## No test failures in XML\n")
-          except Exception as e:
-              with open(summary, "a") as f:
-                  f.write(f"## Could not parse XML: {e}\n")
-          try:
-              with open("/tmp/pytest_output.txt") as pf:
-                  content = pf.read()[-8000:]
-              with open(summary, "a") as f:
-                  f.write("\n## Pytest output (tail)\n```\n" + content + "\n```\n")
-              # Emit failed lines as ::error:: annotations (readable via annotations API)
-              for line in content.splitlines():
-                  if "FAILED" in line or "ERROR" in line or "error" in line.lower():
-                      clean = line.strip().replace("%", "%25").replace("\r", "")[:200]
-                      print(f"::error::{clean}")
-          except Exception as e2:
-              with open(summary, "a") as f:
-                  f.write(f"\n## Could not read pytest output: {e2}\n")
-          EOF
 
       - name: Dump server log
         if: always()
