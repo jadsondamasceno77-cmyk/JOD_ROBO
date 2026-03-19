@@ -1215,6 +1215,24 @@ async def metrics_summary(
     return query_metrics_summary(Session, hours=hours)
 
 
+@app.post("/chat", tags=["chat"])
+async def chat(req: OrchestrateRequest, authorization: Optional[str] = Header(default=None)):
+    verify_token(authorization)
+    SYSTEM_PROMPT = """Você é JOD — assistente de um founder solo brasileiro construindo um SaaS de IA.
+Seu estilo: direto, técnico, sem rodeios, sem formatação excessiva, sem bullet points desnecessários.
+Você fala como um sócio técnico sênior — não como um assistente corporativo.
+Responda em português brasileiro. Adapte o tom: perguntas rápidas recebem respostas curtas.
+Problemas complexos recebem análise direta. Nunca use frases de enchimento como 'Certamente!' ou 'Ótima pergunta!'.
+Quando não souber algo, diga diretamente. Quando tiver opinião, dê a opinião."""
+    response_text = await _groq_call(
+        system_prompt=SYSTEM_PROMPT,
+        prompt=req.prompt,
+        role="generic",
+        force_json=False,
+    )
+    return {"response": response_text}
+
+
 # ---------------------------------------------------------------------------
 # Agente 2 — Finalizador / Executor Controlado
 # ---------------------------------------------------------------------------
