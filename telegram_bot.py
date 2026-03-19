@@ -25,7 +25,13 @@ async def tg_call(client: httpx.AsyncClient, method: str, **payload) -> dict:
 
 
 async def send_message(client: httpx.AsyncClient, chat_id: int, text: str) -> None:
-    await tg_call(client, "sendMessage", chat_id=chat_id, text=text, parse_mode="Markdown")
+    try:
+        await tg_call(client, "sendMessage", chat_id=chat_id, text=text, parse_mode="Markdown")
+    except httpx.HTTPStatusError as exc:
+        if exc.response.status_code == 400:
+            await tg_call(client, "sendMessage", chat_id=chat_id, text=text)
+        else:
+            raise
 
 
 def format_orchestrate(data: dict) -> str:
