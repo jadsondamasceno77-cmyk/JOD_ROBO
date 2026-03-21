@@ -81,6 +81,15 @@ JOD_ROBO/
 | Git push falhou | Verifique credenciais git e conexão |
 | Timeout no loop | Aumente --interval ou verifique rede |
 
+## Troubleshooting OpenClaw
+
+If OpenClaw shows the `Unrecognized key: enabled` error or hangs at `Waiting for agent reply`, consult [TROUBLESHOOTING.md](TROUBLESHOOTING.md) or run the fix script:
+
+```bash
+chmod +x fix_openclaw.sh
+./fix_openclaw.sh
+```
+
 ## LLM
 
 - **Primário**: Groq llama-3.3-70b-versatile (rápido, online)
