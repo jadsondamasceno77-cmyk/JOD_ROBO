@@ -95,9 +95,9 @@ async def execute_plan(plan: dict, flow_id: str) -> dict:
             r = await call("POST", "/agents/create-from-template", {
                 "action_type": "create_agent_from_template",
                 "parameters": {
-                    "template_name": params.get("template", "executor"),
-                    "new_agent_id": params.get("agent_id"),
-                    "name": params.get("name", params.get("agent_id"))
+                    "template_name": params.get("template", params.get("agent_type", params.get("template_name", "executor"))),
+                    "new_agent_id": params.get("agent_id", params.get("agent_name", params.get("new_agent_id"))),
+                    "name": params.get("name", params.get("agent_name", params.get("agent_id")))
                 }
             }, idem_key=idem, req_id=f"{flow_id}-exec")
             task_id = r.get("task_id")
@@ -108,7 +108,7 @@ async def execute_plan(plan: dict, flow_id: str) -> dict:
             idem = f"orch-val-{flow_id}"
             r = await call("POST", "/agents/validate", {
                 "action_type": "validate_agent",
-                "parameters": {"agent_id": params.get("agent_id")}
+                "parameters": {"agent_id": params.get("agent_id", params.get("agent_name"))}
             }, idem_key=idem, req_id=f"{flow_id}-val")
             task_id = r.get("task_id")
             result = await wait_task(task_id, flow_id)
@@ -118,7 +118,7 @@ async def execute_plan(plan: dict, flow_id: str) -> dict:
             idem = f"orch-act-{flow_id}"
             r = await call("POST", "/agents/activate", {
                 "action_type": "activate_agent",
-                "parameters": {"agent_id": params.get("agent_id")}
+                "parameters": {"agent_id": params.get("agent_id", params.get("agent_name"))}
             }, idem_key=idem, req_id=f"{flow_id}-act")
             task_id = r.get("task_id")
             result = await wait_task(task_id, flow_id)
@@ -137,7 +137,7 @@ async def execute_plan(plan: dict, flow_id: str) -> dict:
 async def validate_result(exec_result: dict) -> dict:
     if exec_result.get("status") == "succeeded":
         return {"valid": True, "score": 1.0}
-    return {"valid": False, "score": 0.0, "reason": exec_result.get("result", {}).get("error", "unknown")}
+    return {"valid": False, "score": 0.0, "reason": (exec_result or {}).get("result", {}).get("error", "unknown") if exec_result else "exec_result_none"}
 
 async def register_audit(flow_id, plan, exec_result, validation):
     audit_path = Path("/home/jod_robo/JOD_ROBO/memory/audit_flow.jsonl")

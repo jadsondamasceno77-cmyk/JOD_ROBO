@@ -3,10 +3,22 @@
   "name": "Agente Browser",
   "specialty": "executor",
   "entrypoint": "main.py",
-  "allowed_actions": ["navigate", "click", "extract_text", "screenshot", "form_fill"],
-  "allowed_paths": ["/home/jod_robo/JOD_ROBO/memory"],
-  "allowed_hosts": ["*"],
-  "required_env": ["BROWSER_TARGET_URL"],
+  "allowed_actions": [
+    "navigate",
+    "click",
+    "extract_text",
+    "screenshot",
+    "form_fill"
+  ],
+  "allowed_paths": [
+    "/home/jod_robo/JOD_ROBO/memory"
+  ],
+  "allowed_hosts": [
+    "*"
+  ],
+  "required_env": [
+    "BROWSER_TARGET_URL"
+  ],
   "version": "1.0.0",
-  "status": "draft"
+  "status": "active"
 }
