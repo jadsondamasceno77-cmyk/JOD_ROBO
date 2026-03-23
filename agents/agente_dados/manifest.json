@@ -1,0 +1,12 @@
+{
+  "agent_id": "agente_dados",
+  "name": "Agente Dados",
+  "specialty": "executor",
+  "entrypoint": "main.py",
+  "allowed_actions": ["select", "insert", "update", "delete"],
+  "allowed_paths": [],
+  "allowed_hosts": ["*.supabase.co"],
+  "required_env": ["SUPABASE_URL", "SUPABASE_KEY"],
+  "version": "1.0.0",
+  "status": "draft"
+}

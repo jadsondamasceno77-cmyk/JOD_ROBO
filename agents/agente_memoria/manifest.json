@@ -1,0 +1,12 @@
+{
+  "agent_id": "agente_memoria",
+  "name": "Agente Memoria",
+  "specialty": "analyzer",
+  "entrypoint": "main.py",
+  "allowed_actions": ["store", "search", "list", "delete"],
+  "allowed_paths": ["/home/jod_robo/JOD_ROBO/memory"],
+  "allowed_hosts": [],
+  "required_env": [],
+  "version": "1.0.0",
+  "status": "draft"
+}
