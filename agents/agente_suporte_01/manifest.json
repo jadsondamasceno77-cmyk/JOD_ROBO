@@ -1,0 +1,12 @@
+{
+  "agent_id": "agente_suporte_01",
+  "name": "Agente Suporte 01",
+  "specialty": "support",
+  "entrypoint": "main.py",
+  "allowed_actions": [],
+  "allowed_paths": [],
+  "allowed_hosts": [],
+  "required_env": [],
+  "version": "1.0.0",
+  "status": "draft"
+}
