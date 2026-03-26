@@ -80,6 +80,7 @@ JOD_ROBO/
 | SecurityError: Path traversal | LLM gerou path inválido — revise o prompt |
 | Git push falhou | Verifique credenciais git e conexão |
 | Timeout no loop | Aumente --interval ou verifique rede |
+| OpenClaw travado | Veja [TROUBLESHOOTING.md](TROUBLESHOOTING.md) e rode `./fix_openclaw.sh` |
 
 ## LLM
 
