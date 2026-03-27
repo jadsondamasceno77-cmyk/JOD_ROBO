@@ -1,0 +1,9 @@
+FROM python:3.10-slim
+WORKDIR /app
+RUN apt-get update && apt-get install -y git curl gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+COPY requirements.railway.txt .
+RUN pip install --no-cache-dir -r requirements.railway.txt
+COPY . .
+RUN mkdir -p memory outputs
+EXPOSE 37779
+CMD ["python3", "robo_mae_api.py"]
