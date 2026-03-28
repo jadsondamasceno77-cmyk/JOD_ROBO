@@ -80,6 +80,12 @@
 - Endpoints: `POST /memory/reflect/run`, `GET /agents/{id}/build-context`
 - Decisão: D-039
 
+## Infraestrutura — OpenClaw & LLM
+- **ESTABILIZADO** — 2026-03-18
+- `jod_brain/llm/__init__.py`: timeout do Ollama aumentado para 300s (evita hangs)
+- `TROUBLESHOOTING.md`: documentação do erro "Unrecognized key: enabled" (OpenClaw 2026.x)
+- `fix_openclaw.sh`: script de correção automatizada (`gateway.auth.mode none`)
+
 ## MACROBLOCO D — Watchdog
 - **IMPLEMENTADO E APROVADO** — 2026-03-18
 - Módulo: `robo_mae/watchdog.py` (WatchdogResult, WatchdogScanner, scan_once, run_loop)
