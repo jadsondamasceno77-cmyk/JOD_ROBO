@@ -19,6 +19,10 @@
 ### Fases concluídas nesta sessão
 - ✅ MVP do Robô-mãe — 5/5 passed, regressão 58/58 verde (D-033)
 
+### Fases concluídas nesta sessão
+- ✅ Infraestrutura OpenClaw: Restauração de `TROUBLESHOOTING.md` e `fix_openclaw.sh`
+- ✅ LLM Fallback: Timeout do Ollama aumentado para 300s em `jod_brain/llm/__init__.py`
+
 ### Próximas etapas recomendadas (sem ordem obrigatória definida pelo usuário)
 1. Endurecimento pós-MVP: serialização por target_path no executor
 2. Reconciliação automática pós-os.replace (crash recovery de missão)
