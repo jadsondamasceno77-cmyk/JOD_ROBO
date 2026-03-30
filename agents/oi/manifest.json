@@ -3,9 +3,29 @@
   "name": "",
   "specialty": "executor",
   "entrypoint": "main.py",
-  "allowed_actions": [],
-  "allowed_paths": [],
-  "allowed_hosts": [],
+  "allowed_actions": [
+    "http_request",
+    "file_read",
+    "file_write",
+    "n8n_execute",
+    "browser_navigate",
+    "screenshot",
+    "shell_command",
+    "memory_read",
+    "memory_write",
+    "agent_call",
+    "webhook_trigger"
+  ],
+  "allowed_paths": [
+    "/home/jod_robo/JOD_ROBO/",
+    "/tmp/"
+  ],
+  "allowed_hosts": [
+    "localhost",
+    "api.groq.com",
+    "openrouter.ai",
+    "railway.app"
+  ],
   "required_env": [],
   "version": "1.0.0",
   "status": "draft"
