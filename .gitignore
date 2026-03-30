@@ -15,3 +15,5 @@ maes_envs/
 *.png
 social_sessions/
 nohup.out
+memory/conversations.jsonl
+memory/
