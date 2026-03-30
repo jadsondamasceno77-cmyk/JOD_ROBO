@@ -1,0 +1,54 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ELI v5.0</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#00ff88;font-family:'Courier New',monospace;height:100vh;display:flex;flex-direction:column}
+header{padding:16px 24px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between}
+header h1{font-size:18px}
+header span{font-size:11px;color:#555}
+#st{font-size:10px;padding:4px 24px;background:#111;color:#444;border-bottom:1px solid #1a1a1a}
+#chat{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
+.msg{max-width:82%;padding:12px 16px;border-radius:8px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.user{background:#1a1a2e;border:1px solid #333;align-self:flex-end;color:#fff}
+.bot{background:#0a1a0a;border:1px solid #00ff8833;align-self:flex-start}
+.bot .sq{font-size:10px;color:#00ff8866;margin-bottom:6px}
+.bot .tx{color:#ccc}
+footer{padding:16px 24px;border-top:1px solid #1a1a1a;display:flex;gap:12px}
+#inp{flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px 16px;border-radius:8px;font-family:inherit;font-size:14px;outline:none}
+#inp:focus{border-color:#00ff88}
+#btn{background:#00ff88;color:#000;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:bold;font-family:inherit}
+#btn:hover{background:#00cc66}
+</style></head>
+<body>
+<header><h1>⚡ ELI v5.0</h1><span id="hd">13 squads · 162 agentes · Fases 1+2+3</span></header>
+<div id="st">Conectando...</div>
+<div id="chat"></div>
+<footer><input id="inp" placeholder="Ex: crie estratégia de tráfego pago, quero um brandbook, crie workflow n8n..."/><button id="btn">Enviar</button></footer>
+<script>
+const TOKEN='jod_robo_trust_2026_secure';
+const sid='sess-'+Math.random().toString(36).substr(2,8);
+const chat=document.getElementById('chat'),inp=document.getElementById('inp'),btn=document.getElementById('btn'),st=document.getElementById('st');
+function add(text,type,sq){
+  const d=document.createElement('div');d.className='msg '+type;
+  if(type==='bot'){d.innerHTML='<div class="sq">['+sq+']</div><div class="tx">'+text.replace(/\*\*(.*?)\*\*/g,'<b>$1</b>').replace(/`(.*?)`/g,'<code style="background:#111;padding:2px 4px;border-radius:3px">$1</code>').replace(/\n/g,'<br>')+'</div>'}
+  else{d.textContent=text}
+  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d
+}
+fetch('/health').then(r=>r.json()).then(d=>{
+  st.textContent='✅ API v'+d.version+' · '+d.squads+' squads · '+d.agentes+' agentes · sessão: '+sid;
+  st.style.color='#00ff8866'
+}).catch(()=>{st.textContent='⚠ API offline';st.style.color='#ff4444'});
+async function send(){
+  const msg=inp.value.trim();if(!msg)return;
+  inp.value='';add(msg,'user','');
+  const t=add('processando...','bot','...');
+  try{
+    const r=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json','x-jod-token':TOKEN},body:JSON.stringify({message:msg,session_id:sid})});
+    if(r.status===401){chat.removeChild(t);add('❌ Token inválido','bot','auth');return}
+    const d=await r.json();chat.removeChild(t);
+    add(d.response,'bot',d.squad+' → '+d.chief)
+  }catch(e){chat.removeChild(t);add('Erro: '+e.message,'bot','erro')}
+}
+btn.onclick=send;
+inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
+add('Olá! Sou a ELI v5.0.\n\nPosso:\n• Consultar 162 especialistas (tráfego, copy, brand, n8n, design...)\n• Criar workflows no n8n\n• Navegar em sites e tirar screenshots\n• Gerar e salvar arquivos\n• Executar tarefas autônomas\n\nComo posso ajudar?','bot','eli → sistema');
+</script></body></html>

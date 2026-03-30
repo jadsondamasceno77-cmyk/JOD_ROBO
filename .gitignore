@@ -4,3 +4,4 @@ __pycache__/
 node_modules/
 venv/
 *.log
+n8n_vault/

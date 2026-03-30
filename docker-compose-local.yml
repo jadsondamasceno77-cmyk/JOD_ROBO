@@ -1,0 +1,262 @@
+version: "3.9"
+# ─── 10 Robôs Mãe rodando LOCALMENTE esta noite ──────────────────────────────
+# Sem Oracle, sem cloud — roda agora no seu servidor
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: jod_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: jod_robo
+      POSTGRES_USER: jod
+      POSTGRES_PASSWORD: jod_secure_2026
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jod"]
+      interval: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: jod_redis
+    restart: always
+    volumes:
+      - redis_data:/data
+
+  # ── MAE-001: Fitness / Brasil ─────────────────────────────────────────────
+  mae_001:
+    image: python:3.10-slim
+    container_name: jod_mae_001
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-001:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-001
+      - NICHE=fitness
+      - COUNTRY=BR
+      - LANG=pt-BR
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-002: Yoga / India ─────────────────────────────────────────────────
+  mae_002:
+    image: python:3.10-slim
+    container_name: jod_mae_002
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-002:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-002
+      - NICHE=yoga
+      - COUNTRY=IN
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-003: Running / Alemanha ───────────────────────────────────────────
+  mae_003:
+    image: python:3.10-slim
+    container_name: jod_mae_003
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-003:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-003
+      - NICHE=running
+      - COUNTRY=DE
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-004: Personal Branding / UK ──────────────────────────────────────
+  mae_004:
+    image: python:3.10-slim
+    container_name: jod_mae_004
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-004:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-004
+      - NICHE=personal_branding
+      - COUNTRY=GB
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-005: Marketing Digital / Brasil ───────────────────────────────────
+  mae_005:
+    image: python:3.10-slim
+    container_name: jod_mae_005
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-005:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-005
+      - NICHE=marketing_digital
+      - COUNTRY=BR
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-006: Crossfit / USA ───────────────────────────────────────────────
+  mae_006:
+    image: python:3.10-slim
+    container_name: jod_mae_006
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-006:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-006
+      - NICHE=crossfit
+      - COUNTRY=US
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-007: Skincare / Korea ─────────────────────────────────────────────
+  mae_007:
+    image: python:3.10-slim
+    container_name: jod_mae_007
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-007:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-007
+      - NICHE=skincare
+      - COUNTRY=KR
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-008: Tecnologia / Singapura ──────────────────────────────────────
+  mae_008:
+    image: python:3.10-slim
+    container_name: jod_mae_008
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-008:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-008
+      - NICHE=inteligencia_artificial
+      - COUNTRY=SG
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-009: Design Gráfico / Brasil ──────────────────────────────────────
+  mae_009:
+    image: python:3.10-slim
+    container_name: jod_mae_009
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-009:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-009
+      - NICHE=design_grafico
+      - COUNTRY=BR
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+  # ── MAE-010: Empreendedorismo / Portugal ──────────────────────────────────
+  mae_010:
+    image: python:3.10-slim
+    container_name: jod_mae_010
+    restart: always
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./sessions/mae-010:/app/sessions
+    environment:
+      - INSTANCE_ID=mae-010
+      - NICHE=empreendedorismo
+      - COUNTRY=PT
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=jod_robo_trust_2026_secure
+      - ELI_URL=http://jod_eli:37779
+      - REDIS_URL=redis://jod_redis:6379
+      - MAX_WORKERS=5
+    command: >
+      sh -c "pip install -q instagrapi httpx apscheduler &&
+             python3 instagram_worker.py"
+    depends_on: [redis]
+
+volumes:
+  postgres_data:
+  redis_data:

@@ -1,0 +1,88 @@
+{
+  "name": "N8N AUTO MOTHER v3.0 — Agent OS",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "t1",
+      "name": "Executar AUTO MOTHER",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:37779/agent-os",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-jod-token",
+              "value": "jod_robo_trust_2026_secure"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"task\":\"={{ $json.task || $json.query || 'status geral do sistema' }}\",\"session_id\":\"n8n-mother\"}"
+      },
+      "id": "t10",
+      "name": "AGENT_OS",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:37779/social",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-jod-token", "value": "jod_robo_trust_2026_secure"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"task\":\"={{ $json.task || $json.query }}\",\"session_id\":\"={{ $json.session_id || 'social-default' }}\"}"
+      },
+      "id": "t11",
+      "name": "SOCIAL_AGENT",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [480, 500]
+    },
+    {
+      "parameters": {
+        "jsCode": "try{\n  const r = $input.first().json;\n  return [{\n    json: {\n      ok: r.is_valid ?? true,\n      content: r.content,\n      attempts: r.attempts,\n      revision_notes: r.revision_notes,\n      history: r.history,\n      ts: new Date().toISOString(),\n      src: 'N8N_AUTO_MOTHER_v3_AgentOS'\n    }\n  }];\n} catch(e) {\n  return [{ json: { ok: false, error: e.message } }];\n} finally {\n  console.log('[AGENT OS] ciclo concluído');\n}"
+      },
+      "id": "t6",
+      "name": "CODE_SENIOR",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 300]
+    }
+  ],
+  "connections": {
+    "Executar AUTO MOTHER": {
+      "main": [
+        [{"node": "AGENT_OS", "type": "main", "index": 0}]
+      ]
+    },
+    "AGENT_OS": {
+      "main": [
+        [{"node": "CODE_SENIOR", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

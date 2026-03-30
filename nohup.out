@@ -1,0 +1,1727 @@
+INFO:     Started server process [742]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:37778 (Press CTRL+C to quit)
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:34146 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34146 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:34152 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:34162 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:56398 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:37844 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:58808 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:44792 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:57340 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:45844 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:58368 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:59720 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:57066 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:52376 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:60418 - "GET /ui HTTP/1.1" 200 OK
+ERROR:JOD_VIEWER:Factory offline: All connection attempts failed
+INFO:     127.0.0.1:47162 - "GET /ui HTTP/1.1" 200 OK
+INFO:     Started server process [1047]
+INFO:     Waiting for application startup.
+2026-03-24 13:42:49,953 [INFO] JOD_FACTORY - JOD_FACTORY UP.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:37777 (Press CTRL+C to quit)
+INFO:     127.0.0.1:45224 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45234 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51356 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45268 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45270 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59450 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45278 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45290 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52574 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33090 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33094 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60968 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59460 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59474 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53012 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53024 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53028 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53030 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53032 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53036 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53052 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53058 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53060 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53062 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43728 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43734 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43748 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43760 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60970 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50080 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50086 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59992 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33090 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33092 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43760 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48706 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48716 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45126 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48062 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48072 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50538 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48080 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48090 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49106 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54566 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54578 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49112 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43280 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43296 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54618 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43056 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43072 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39922 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57674 - "GET /agents HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:57676 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57690 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51192 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43634 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43650 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59556 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41194 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41204 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52480 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36062 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36070 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54056 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35208 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35212 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41614 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34078 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34088 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46360 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35944 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35948 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41250 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46932 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46938 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48358 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40056 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40072 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58626 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57386 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57388 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40648 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39544 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39560 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39448 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47990 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47992 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34712 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39686 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39698 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57438 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39626 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39642 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55416 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35616 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35628 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33130 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39274 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39276 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39282 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46488 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45764 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45768 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45390 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39238 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39254 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58840 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38814 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38818 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58846 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55384 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55388 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58854 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60768 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60780 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47030 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36440 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36446 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52452 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48122 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48130 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:37260 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48144 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48160 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48718 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38150 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38166 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39924 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60056 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39926 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39866 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39880 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33852 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52412 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52418 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59616 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52200 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52204 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38308 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54330 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54344 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39154 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44750 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44766 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60502 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42210 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42216 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33086 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42386 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42390 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59234 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40346 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40360 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54964 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46458 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46466 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53966 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42956 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42960 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:37634 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59328 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59336 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57280 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39884 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39890 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36244 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33646 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33656 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45702 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59996 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60012 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43576 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52402 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52404 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38052 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39372 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39374 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41418 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53184 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53196 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50536 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34048 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34056 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44836 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42968 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42972 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40960 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48192 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48206 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56662 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48222 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48236 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59452 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53846 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53854 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38296 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57200 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57208 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38304 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54462 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54470 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56542 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57424 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57434 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49490 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53948 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53952 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60710 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38910 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38918 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33832 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49194 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49202 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36780 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55186 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55196 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36326 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60300 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60308 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56116 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40402 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40414 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33014 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58472 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58478 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41044 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53340 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53346 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41574 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35660 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35672 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46804 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48614 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48624 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53760 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51376 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51386 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58942 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49450 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49454 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59190 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55400 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55412 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41056 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48226 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48228 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50640 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39766 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39776 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52770 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44038 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44046 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34262 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37242 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:37244 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41002 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43148 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43154 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47816 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44746 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44748 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39190 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44754 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44758 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44564 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49272 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49288 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44576 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57700 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57714 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59618 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34002 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34004 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48926 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41600 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41614 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56570 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44666 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44674 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57344 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55874 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55890 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:45548 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50400 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50416 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50550 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34666 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34682 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59276 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47388 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47390 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39534 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44296 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44302 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59416 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52682 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52698 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33294 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41734 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41746 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41500 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48140 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48150 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39494 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41048 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41058 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56146 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44072 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44078 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55018 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33344 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33354 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52670 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41578 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41588 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43018 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60822 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60832 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35566 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50304 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50314 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49134 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60108 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60112 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40590 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56020 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56022 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36134 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53218 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53232 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33536 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48384 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48390 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43862 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35302 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35312 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36052 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38688 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38696 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60384 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34522 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34530 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39374 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46926 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46942 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48180 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60878 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60882 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36380 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44796 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44810 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52494 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44826 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44830 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35286 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38164 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38180 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35294 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38056 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38066 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54440 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59640 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59650 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42086 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54204 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54214 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48882 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59492 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59502 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33686 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38968 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38982 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57766 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51890 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51902 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38012 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36758 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36764 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47524 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44784 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44794 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40966 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60488 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60502 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36170 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56600 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56610 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49874 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52850 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52858 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41036 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52186 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52200 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51254 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59586 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59590 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39514 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52836 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52852 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57762 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52928 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52940 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49684 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57608 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57624 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42204 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36864 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36876 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53364 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56910 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:56918 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60730 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49142 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49144 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59626 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50970 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50986 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:58098 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41856 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41868 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60450 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36216 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36228 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54060 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41206 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41220 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:50578 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48844 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48846 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34894 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40982 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40998 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55362 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40696 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40706 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39614 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43950 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43966 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53962 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52890 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:52900 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55582 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41488 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41492 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48266 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59324 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59340 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51730 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59342 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59350 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:37036 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42070 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42084 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:37044 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59626 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59636 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47412 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49558 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49562 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33780 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36740 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36752 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33780 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36760 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36772 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53692 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49160 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49164 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38980 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35788 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35790 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34804 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35798 - "POST /agents/create-from-template HTTP/1.1" 202 Accepted
+INFO:httpx:HTTP Request: POST http://localhost:37777/agents/create-from-template "HTTP/1.1 202 Accepted"
+INFO:     127.0.0.1:35802 - "GET /tasks/446c3f71-53d5-47af-93de-324e757f771e HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/tasks/446c3f71-53d5-47af-93de-324e757f771e "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:34816 - "GET /ui/create?agent_id=oi&name=&template=executor HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41344 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41348 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51880 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38392 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:38398 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:51880 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48888 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:48896 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46636 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49442 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:49458 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46636 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42614 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42618 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46648 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32812 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:32828 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39814 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53116 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53122 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41780 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53190 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:53202 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40068 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57388 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57390 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:41244 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36202 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36212 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:57982 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47596 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47612 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:55542 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42078 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42094 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:59464 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42108 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:42120 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44390 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33984 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:33986 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:44396 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36092 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:36100 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60552 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47264 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:47272 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:35828 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60840 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:60844 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:40448 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46010 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:46014 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:39268 - "GET /ui HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43134 - "GET /agents HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/agents "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:43140 - "GET /audit HTTP/1.1" 200 OK
+INFO:httpx:HTTP Request: GET http://localhost:37777/audit "HTTP/1.1 200 OK"
+INFO:     127.0.0.1:54316 - "GET /ui HTTP/1.1" 200 OK
+INFO:     Started server process [1209]
+INFO:     Waiting for application startup.
+2026-03-24 20:45:10,366 [INFO] JOD_FACTORY - JOD_FACTORY UP.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:37777 (Press CTRL+C to quit)
+INFO:     127.0.0.1:34356 - "GET /templates HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 116, in app
+    response = await f(request)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 453, in app
+    solved_result = await solve_dependencies(
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/dependencies/utils.py", line 675, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "/home/jod_robo/JOD_ROBO/main.py", line 86, in get_validated_headers
+    h = RequestHeaders(x_trust_token=x_trust_token, x_request_id=x_request_id, x_idempotency_key=x_idempotency_key)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/pydantic/main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for RequestHeaders
+x_request_id
+  String should have at least 8 characters [type=string_too_short, input_value='t001', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_too_short
+x_idempotency_key
+  String should have at least 8 characters [type=string_too_short, input_value='t001', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_too_short
+INFO:     127.0.0.1:37170 - "GET /templates HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 416, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/applications.py", line 1160, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 680, in app
+    await route.handle(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/routing.py", line 276, in handle
+    await self.app(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 130, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 116, in app
+    response = await f(request)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/routing.py", line 453, in app
+    solved_result = await solve_dependencies(
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/fastapi/dependencies/utils.py", line 675, in solve_dependencies
+    solved = await call(**solved_result.values)
+  File "/home/jod_robo/JOD_ROBO/main.py", line 86, in get_validated_headers
+    h = RequestHeaders(x_trust_token=x_trust_token, x_request_id=x_request_id, x_idempotency_key=x_idempotency_key)
+  File "/home/jod_robo/.local/lib/python3.10/site-packages/pydantic/main.py", line 250, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+pydantic_core._pydantic_core.ValidationError: 2 validation errors for RequestHeaders
+x_request_id
+  String should have at least 8 characters [type=string_too_short, input_value='t001', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_too_short
+x_idempotency_key
+  String should have at least 8 characters [type=string_too_short, input_value='t001', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/string_too_short
+INFO:     127.0.0.1:38848 - "GET /templates HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53746 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42614 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42626 - "POST /agents/activate HTTP/1.1" 202 Accepted
+2026-03-24 21:00:05,851 [ERROR] JOD_FACTORY - Erro Task ed596dec-0e6f-4a7d-89a4-5d3d03d5c9e5: ('invalid_state', 'Status: active. Rode validate_agent primeiro.', 403)
+INFO:     127.0.0.1:42630 - "GET /tasks/ed596dec-0e6f-4a7d-89a4-5d3d03d5c9e5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36378 - "POST /agents/create-from-template HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:36386 - "GET /tasks/67dc3440-9a5f-4200-af2e-0b604781967f HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54262 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54272 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54278 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54292 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36482 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36492 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47542 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47552 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56856 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56858 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43176 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43192 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46950 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46954 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57542 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57552 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39804 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39816 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47880 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47884 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35552 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35566 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50426 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50442 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57644 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57648 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59948 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59954 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40312 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40324 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38640 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38644 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38398 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38408 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54538 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54544 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36190 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36202 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54588 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54590 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37720 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37722 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46196 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46204 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60306 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60314 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57542 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57552 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34824 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34830 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45852 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45854 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40098 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40112 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33442 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33452 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60062 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60066 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36244 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36260 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54394 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54404 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54416 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55664 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55680 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55682 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50298 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50302 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54440 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54454 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45514 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45518 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41672 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41674 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51804 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51812 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36326 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36332 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46078 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46082 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45186 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45196 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33364 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33374 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38254 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38260 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33098 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33106 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51654 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51668 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58612 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36622 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36634 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48122 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48132 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42424 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42434 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33390 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33394 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53370 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53382 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48384 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48390 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43044 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43048 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52024 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52036 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56388 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56390 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56392 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56394 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59470 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59482 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59488 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59502 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40814 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40830 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43802 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43804 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43820 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43826 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36576 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36578 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44526 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44540 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33638 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33644 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44396 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44398 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45374 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45386 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33528 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33542 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45466 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45482 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36348 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36350 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37822 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37832 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42326 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42342 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60738 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60750 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41420 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41424 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33678 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33692 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56100 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56114 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56128 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56136 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56140 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56146 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47532 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47546 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33152 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33160 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37128 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37130 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36892 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36904 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39278 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39294 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40434 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40444 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41594 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41608 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40896 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40902 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54422 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54432 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46836 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46844 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48576 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48592 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48596 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48612 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59038 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59048 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56312 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56318 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41296 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41312 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33290 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33306 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40340 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40348 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35580 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35588 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57940 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57944 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57958 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48644 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48656 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48670 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59526 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59530 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42904 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42914 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42860 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42868 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60392 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60408 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54756 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54768 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47428 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47430 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47860 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47872 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59576 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59582 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45920 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45930 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46876 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46878 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45214 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45224 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57956 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57966 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44092 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44102 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54706 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54714 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41276 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41286 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40718 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40728 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59740 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59756 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40794 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40800 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40806 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40814 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44698 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44714 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58036 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58052 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46796 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46808 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55994 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56008 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35768 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35780 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50014 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50020 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37114 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37120 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40650 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40656 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39198 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39206 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48102 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48116 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48128 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48136 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34814 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34820 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38004 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38016 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55548 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55558 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50304 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50320 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50326 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50336 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54880 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54896 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36296 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36308 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57424 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57434 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36494 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36510 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54864 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54866 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43336 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43346 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40890 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40898 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58656 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58666 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40002 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40008 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48884 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48900 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35148 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35158 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37710 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37722 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52134 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52150 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38446 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38454 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50176 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48638 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48640 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35968 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35974 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39628 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39642 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41846 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41854 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54310 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54314 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48212 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48228 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55968 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55970 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52864 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52876 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41028 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41044 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52746 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39150 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39162 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42780 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42784 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39858 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39868 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43336 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43340 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40882 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40898 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44726 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44728 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49654 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49660 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50886 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50890 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44048 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44060 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44074 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44088 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47182 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47188 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60920 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60936 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53022 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53028 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34836 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34846 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39194 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39198 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48246 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48250 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48328 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48338 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41630 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41638 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51094 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51102 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40300 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40316 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33722 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33734 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50088 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50104 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49656 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49664 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53988 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54000 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43904 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43914 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59668 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59674 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44626 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44640 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54808 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54824 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40718 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40728 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59666 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59668 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34982 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34988 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47566 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47574 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36936 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36942 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57676 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57686 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60838 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60854 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49082 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49092 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58236 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58252 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50016 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50024 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36306 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36310 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49346 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49358 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47124 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47134 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57620 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57632 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33498 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33500 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44426 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44436 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33848 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33852 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46454 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46470 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32954 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32970 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60622 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60634 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46662 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46668 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56622 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56630 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39958 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39960 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41878 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41882 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55748 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55760 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38934 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38944 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58592 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58598 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36572 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36582 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49546 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49554 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33982 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33994 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37780 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37786 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37794 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37810 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52000 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52014 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34720 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34730 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47764 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47778 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50456 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50460 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54220 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54230 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46472 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46476 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58860 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58872 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33120 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33122 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51526 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51532 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54720 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54726 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46952 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46968 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50638 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50644 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51928 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51932 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35466 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35482 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40202 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40210 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57510 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57522 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55698 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55708 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54020 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54028 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48268 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48274 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40582 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40590 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48090 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48092 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59552 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59562 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48780 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48784 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46384 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46396 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34306 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34310 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36258 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36272 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60098 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60102 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34686 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34698 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36224 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36226 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60762 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60776 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42438 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42444 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48708 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48710 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52494 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52498 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38486 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38502 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41090 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41098 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44894 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44902 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42684 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42686 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42688 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42690 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47866 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47870 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54114 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54130 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40908 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40912 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38864 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38880 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39524 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39534 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46070 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46086 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49138 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49146 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34072 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34088 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49912 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49924 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56666 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56672 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44172 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44180 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44814 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44824 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32836 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32846 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39194 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39208 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36090 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36102 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58966 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58972 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54628 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54630 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45980 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45994 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42648 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42664 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40506 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40522 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43326 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43330 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59920 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59934 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58260 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58266 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47084 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47098 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58536 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58540 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54840 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54856 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54858 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54862 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36022 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36024 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33076 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33082 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39700 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39704 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40910 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40916 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39786 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39788 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41870 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41884 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58872 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58878 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39370 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39380 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51892 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51902 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50362 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50370 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37686 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37694 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59794 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59800 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39924 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39936 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49716 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49728 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38206 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38208 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41758 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41770 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53910 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53916 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60188 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60196 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36772 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36782 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39950 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39966 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33824 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33836 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50734 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50746 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36104 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36108 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53092 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53094 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39992 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39996 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34412 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34420 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47500 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47514 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55256 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55268 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46812 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46822 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38622 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38624 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34154 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34166 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35048 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35060 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35072 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32952 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32958 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:32974 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56778 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56786 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51156 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51172 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38062 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38078 - "GET /audit HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38302 - "GET /agents HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38308 - "GET /audit HTTP/1.1" 200 OK
+INFO:     Started server process [4650]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:37779 (Press CTRL+C to quit)
+INFO:     127.0.0.1:34968 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34968 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49498 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40688 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58160 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33436 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33440 - "POST /chat HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33446 - "POST /chat HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [4650]
+nohup: ignoring input
+INFO:     Started server process [11563]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:37779 (Press CTRL+C to quit)
+INFO:     127.0.0.1:49890 - "POST /chat HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11563]

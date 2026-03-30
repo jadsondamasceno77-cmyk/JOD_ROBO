@@ -1,0 +1,131 @@
+version: "3.9"
+
+# ─── JOD_ROBO Stack — 1 Robô Mãe Completo ───────────────────────────────────
+# Roda em qualquer Oracle Cloud ARM (24GB RAM) — $0/mês para sempre
+# Uso: docker compose up -d
+
+services:
+
+  # ── Banco de dados central ─────────────────────────────────────────────────
+  postgres:
+    image: postgres:15-alpine
+    container_name: jod_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: jod_robo
+      POSTGRES_USER: jod
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-jod_secure_2026}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jod"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Redis (fila de tarefas) ────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: jod_redis
+    restart: always
+    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru
+    volumes:
+      - redis_data:/data
+
+  # ── n8n (orquestrador visual) ──────────────────────────────────────────────
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: jod_n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-jod_n8n_2026}
+      - N8N_HOST=${PUBLIC_IP:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://${PUBLIC_IP:-localhost}:5678/
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=jod_robo
+      - DB_POSTGRESDB_USER=jod
+      - DB_POSTGRESDB_PASSWORD=${DB_PASSWORD:-jod_secure_2026}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY:-jod_encrypt_key_2026}
+      - EXECUTIONS_PROCESS=main
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+    volumes:
+      - n8n_data:/home/node/.n8n
+      - ./n8n_vault:/home/node/vault
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # ── ELI API — Robô Mãe (188 agentes) ──────────────────────────────────────
+  eli_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jod_eli
+    restart: always
+    ports:
+      - "37779:37779"
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - JOD_TRUST_MANIFEST=${JOD_TRUST_MANIFEST:-jod_robo_trust_2026_secure}
+      - N8N_URL=http://n8n:5678
+      - N8N_API_KEY=${N8N_API_KEY}
+      - DATABASE_URL=postgresql://jod:${DB_PASSWORD:-jod_secure_2026}@postgres/jod_robo
+      - REDIS_URL=redis://redis:6379
+      - NICHE=${NICHE:-geral}
+      - COUNTRY=${COUNTRY:-BR}
+      - INSTANCE_ID=${INSTANCE_ID:-mae-1}
+    volumes:
+      - ./sessions:/app/sessions
+      - ./media:/app/media
+      - ./memory:/app/memory
+      - kokoro_models:/app/models
+    depends_on:
+      - postgres
+      - redis
+      - n8n
+
+  # ── Instagrapi Worker (engajamento Instagram) ──────────────────────────────
+  instagram_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: jod_instagram
+    restart: always
+    environment:
+      - ELI_URL=http://eli_api:37779
+      - JOD_TRUST_MANIFEST=${JOD_TRUST_MANIFEST:-jod_robo_trust_2026_secure}
+      - REDIS_URL=redis://redis:6379
+      - NICHE=${NICHE:-geral}
+      - COUNTRY=${COUNTRY:-BR}
+      - MAX_WORKERS=${MAX_WORKERS:-10}
+    volumes:
+      - ./sessions:/app/sessions
+    depends_on:
+      - eli_api
+      - redis
+
+  # ── Monitor (saúde do sistema) ─────────────────────────────────────────────
+  monitor:
+    image: louislam/uptime-kuma:1
+    container_name: jod_monitor
+    restart: always
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptime_data:/app/data
+
+volumes:
+  postgres_data:
+  redis_data:
+  n8n_data:
+  uptime_data:
+  kokoro_models:

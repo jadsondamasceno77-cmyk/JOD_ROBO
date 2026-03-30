@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>JOD_ROBO Dashboard</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0a0a;color:#e0e0e0;font-family:'Courier New',monospace;padding:24px}h1{color:#00ff88;margin-bottom:20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}.card{background:#111;border:1px solid #222;border-radius:8px;padding:14px}.card h3{font-size:10px;color:#555;margin-bottom:6px}.card .val{font-size:26px;color:#00ff88;font-weight:bold}.sec{background:#111;border:1px solid #222;border-radius:8px;padding:14px;margin-bottom:12px}.sec h2{color:#00ff88;font-size:12px;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:11px}th{color:#555;text-align:left;padding:5px;border-bottom:1px solid #222}td{padding:5px;color:#ccc;border-bottom:1px solid #111}.ok{color:#00ff88}.warn{color:#ffaa00}.err{color:#ff4444}button{background:#00ff88;color:#000;border:none;padding:8px 16px;border-radius:4px;cursor:pointer;font-family:inherit;margin-bottom:16px}</style></head>
+<body><h1>⚡ JOD_ROBO Dashboard</h1><button onclick="load()">↻ Atualizar</button>
+<div class="grid" id="cards"></div>
+<div class="sec"><h2>Serviços</h2><div id="svcs"></div></div>
+<div class="sec"><h2>Performance por Squad</h2><div id="perf"></div></div>
+<script>
+const T='jod_robo_trust_2026_secure';
+async function load(){
+try{
+const h=await fetch('/health').then(r=>r.json());
+document.getElementById('cards').innerHTML=`<div class="card"><h3>Versão</h3><div class="val">v${h.version||'?'}</div></div><div class="card"><h3>Squads</h3><div class="val">${h.squads||0}</div></div><div class="card"><h3>Agentes</h3><div class="val">${h.agentes||0}</div></div><div class="card"><h3>Status</h3><div class="val ok">${h.status||'?'}</div></div>`;
+const a=await fetch('/audit',{headers:{'x-jod-token':T}}).then(r=>r.json()).catch(()=>({}));
+document.getElementById('cards').innerHTML+=`<div class="card"><h3>Sessões</h3><div class="val">${a.sessions||0}</div></div><div class="card"><h3>Decisões</h3><div class="val">${a.decisions||0}</div></div>`;
+const svcs=[['ELI API','/health'],['N8N Agent','http://localhost:37780/health']];
+let s='<table><tr><th>Serviço</th><th>Status</th></tr>';
+for(const[n,u]of svcs){try{await fetch(u);s+=`<tr><td>${n}</td><td class="ok">✅ online</td></tr>`}catch{s+=`<tr><td>${n}</td><td class="err">❌ offline</td></tr>`}}
+document.getElementById('svcs').innerHTML=s+'</table>';
+if(a.perf){const p=a.perf;let t='<table><tr><th>Squad</th><th>Calls</th><th>Score</th></tr>';
+Object.entries(p).sort((a,b)=>b[1].avg_score-a[1].avg_score).forEach(([sq,d])=>{const c=d.avg_score>=8?'ok':d.avg_score>=6?'warn':'err';t+=`<tr><td>${sq}</td><td>${d.calls||0}</td><td class="${c}">${(d.avg_score||7).toFixed(1)}</td></tr>`});
+document.getElementById('perf').innerHTML=t+'</table>';}
+}catch(e){console.error(e)}}
+load();setInterval(load,30000);
+</script></body></html>

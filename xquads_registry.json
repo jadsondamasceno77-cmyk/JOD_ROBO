@@ -1,0 +1,242 @@
+{
+  "advisory-board": {
+    "chief": "yvon-chouinard",
+    "agents": [
+      "yvon-chouinard",
+      "naval-ravikant",
+      "brene-brown",
+      "derek-sivers",
+      "peter-thiel",
+      "ray-dalio",
+      "reid-hoffman",
+      "board-chair",
+      "simon-sinek",
+      "charlie-munger",
+      "patrick-lencioni"
+    ],
+    "count": 11,
+    "path": "/home/jod_robo/.claude/agents/advisory-board",
+    "source": "xquads"
+  },
+  "brand-squad": {
+    "chief": "brand-chief",
+    "agents": [
+      "marty-neumeier",
+      "kevin-keller",
+      "emily-heyward",
+      "domain-scout",
+      "denise-yohn",
+      "jean-noel-kapferer",
+      "alina-wheeler",
+      "byron-sharp",
+      "donald-miller",
+      "brand-chief",
+      "david-aaker",
+      "al-ries",
+      "naming-strategist",
+      "miller-sticky-brand",
+      "archetype-consultant"
+    ],
+    "count": 15,
+    "path": "/home/jod_robo/.claude/agents/brand-squad",
+    "source": "xquads"
+  },
+  "c-level-squad": {
+    "chief": "vision-chief",
+    "agents": [
+      "cio-engineer",
+      "caio-architect",
+      "coo-orchestrator",
+      "cto-architect",
+      "cmo-architect",
+      "vision-chief"
+    ],
+    "count": 6,
+    "path": "/home/jod_robo/.claude/agents/c-level-squad",
+    "source": "xquads"
+  },
+  "claude-code-mastery": {
+    "chief": "claude-mastery-chief",
+    "agents": [
+      "project-integrator",
+      "mcp-integrator",
+      "skill-craftsman",
+      "hooks-architect",
+      "config-engineer",
+      "swarm-orchestrator",
+      "claude-mastery-chief",
+      "roadmap-sentinel"
+    ],
+    "count": 8,
+    "path": "/home/jod_robo/.claude/agents/claude-code-mastery",
+    "source": "xquads"
+  },
+  "copy-squad": {
+    "chief": "copy-chief",
+    "agents": [
+      "dan-koe",
+      "robert-collier",
+      "clayton-makepeace",
+      "frank-kern",
+      "andre-chaperon",
+      "copy-chief",
+      "david-ogilvy",
+      "ben-settle",
+      "parris-lampropoulos",
+      "joe-sugarman",
+      "gary-halbert",
+      "ry-schwartz",
+      "john-carlton",
+      "jim-rutz",
+      "gary-bencivenga",
+      "russell-brunson",
+      "stefan-georgi",
+      "dan-kennedy",
+      "todd-brown",
+      "david-deutsch",
+      "claude-hopkins",
+      "eugene-schwartz",
+      "jon-benson"
+    ],
+    "count": 23,
+    "path": "/home/jod_robo/.claude/agents/copy-squad",
+    "source": "xquads"
+  },
+  "cybersecurity": {
+    "chief": "cyber-chief",
+    "agents": [
+      "jim-manico",
+      "shannon-runner",
+      "rogue",
+      "georgia-weidman",
+      "cyber-chief",
+      "dirber",
+      "cartographer",
+      "chris-sanders",
+      "busterer",
+      "command-generator",
+      "peter-kim",
+      "fuzzer",
+      "ripper",
+      "marcus-carey",
+      "omar-santos"
+    ],
+    "count": 15,
+    "path": "/home/jod_robo/.claude/agents/cybersecurity",
+    "source": "xquads"
+  },
+  "data-squad": {
+    "chief": "data-chief",
+    "agents": [
+      "nick-mehta",
+      "sean-ellis",
+      "avinash-kaushik",
+      "david-spinks",
+      "wes-kao",
+      "peter-fader",
+      "data-chief"
+    ],
+    "count": 7,
+    "path": "/home/jod_robo/.claude/agents/data-squad",
+    "source": "xquads"
+  },
+  "design-squad": {
+    "chief": "design-chief",
+    "agents": [
+      "visual-generator",
+      "dave-malouf",
+      "brad-frost",
+      "ui-engineer",
+      "design-system-architect",
+      "dan-mall",
+      "ux-designer",
+      "design-chief"
+    ],
+    "count": 8,
+    "path": "/home/jod_robo/.claude/agents/design-squad",
+    "source": "xquads"
+  },
+  "hormozi-squad": {
+    "chief": "hormozi-chief",
+    "agents": [
+      "hormozi-scale",
+      "hormozi-launch",
+      "hormozi-workshop",
+      "hormozi-closer",
+      "hormozi-advisor",
+      "hormozi-models",
+      "hormozi-retention",
+      "hormozi-ads",
+      "hormozi-pricing",
+      "hormozi-chief",
+      "hormozi-copy",
+      "hormozi-leads",
+      "hormozi-audit",
+      "hormozi-offers",
+      "hormozi-hooks",
+      "hormozi-content"
+    ],
+    "count": 16,
+    "path": "/home/jod_robo/.claude/agents/hormozi-squad",
+    "source": "xquads"
+  },
+  "movement": {
+    "chief": "movement-chief",
+    "agents": [
+      "movement-chief",
+      "fenomenologo",
+      "manifestador",
+      "estrategista-de-ciclo",
+      "movement-architect",
+      "identitario",
+      "analista-de-impacto"
+    ],
+    "count": 7,
+    "path": "/home/jod_robo/.claude/agents/movement",
+    "source": "xquads"
+  },
+  "storytelling": {
+    "chief": "story-chief",
+    "agents": [
+      "matthew-dicks",
+      "nancy-duarte",
+      "joseph-campbell",
+      "shawn-coyne",
+      "story-chief",
+      "park-howell",
+      "keith-johnstone",
+      "marshall-ganz",
+      "dan-harmon",
+      "oren-klaff",
+      "blake-snyder",
+      "kindra-hall"
+    ],
+    "count": 12,
+    "path": "/home/jod_robo/.claude/agents/storytelling",
+    "source": "xquads"
+  },
+  "traffic-masters": {
+    "chief": "traffic-chief",
+    "agents": [
+      "molly-pittman",
+      "depesh-mandalia",
+      "pedro-sobral",
+      "pixel-specialist",
+      "tom-breeze",
+      "kasim-aslam",
+      "creative-analyst",
+      "performance-analyst",
+      "media-buyer",
+      "ad-midas",
+      "scale-optimizer",
+      "ads-analyst",
+      "nicholas-kusmich",
+      "ralph-burns",
+      "traffic-chief",
+      "fiscal"
+    ],
+    "count": 16,
+    "path": "/home/jod_robo/.claude/agents/traffic-masters",
+    "source": "xquads"
+  }
+}

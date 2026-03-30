@@ -1,0 +1,502 @@
+[
+  {
+    "id": "mae-001",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-001 --niche fitness --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-002",
+    "region": "ap-mumbai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-002 --niche yoga --country IN --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-003",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-003 --niche running --country DE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-004",
+    "region": "mx-queretaro-1",
+    "command": "bash setup_oracle.sh --instance-id mae-004 --niche nutricao --country MX --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-005",
+    "region": "ca-toronto-1",
+    "command": "bash setup_oracle.sh --instance-id mae-005 --niche saude_mental --country CA --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-006",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-006 --niche crossfit --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-007",
+    "region": "eu-madrid-1",
+    "command": "bash setup_oracle.sh --instance-id mae-007 --niche pilates --country ES --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-008",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-008 --niche meditacao --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-009",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-009 --niche emagrecimento --country AR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-010",
+    "region": "af-johannesburg-1",
+    "command": "bash setup_oracle.sh --instance-id mae-010 --niche bodybuilding --country NG --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-011",
+    "region": "us-phoenix-1",
+    "command": "bash setup_oracle.sh --instance-id mae-011 --niche empreendedorismo --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-012",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-012 --niche marketing_digital --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-013",
+    "region": "uk-london-1",
+    "command": "bash setup_oracle.sh --instance-id mae-013 --niche personal_branding --country GB --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-014",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-014 --niche lideranca --country DE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-015",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-015 --niche produtividade --country AU --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-016",
+    "region": "ap-singapore-1",
+    "command": "bash setup_oracle.sh --instance-id mae-016 --niche financas_pessoais --country SG --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-017",
+    "region": "ap-seoul-1",
+    "command": "bash setup_oracle.sh --instance-id mae-017 --niche investimentos --country KR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-018",
+    "region": "ap-jakarta-1",
+    "command": "bash setup_oracle.sh --instance-id mae-018 --niche ecommerce --country ID --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-019",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-019 --niche vendas --country CO --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-020",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-020 --niche negocios_digitais --country PT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-021",
+    "region": "ap-seoul-1",
+    "command": "bash setup_oracle.sh --instance-id mae-021 --niche skincare --country KR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-022",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-022 --niche maquiagem --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-023",
+    "region": "eu-paris-1",
+    "command": "bash setup_oracle.sh --instance-id mae-023 --niche moda_feminina --country FR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-024",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-024 --niche cabelos --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-025",
+    "region": "us-sanjose-1",
+    "command": "bash setup_oracle.sh --instance-id mae-025 --niche unhas --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-026",
+    "region": "eu-amsterdam-1",
+    "command": "bash setup_oracle.sh --instance-id mae-026 --niche moda_sustentavel --country NL --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-027",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-027 --niche streetwear --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-028",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-028 --niche moda_masculina --country IT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-029",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-029 --niche beleza_natural --country AU --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-030",
+    "region": "me-dubai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-030 --niche perfumaria --country AE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-031",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-031 --niche receitas --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-032",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-032 --niche vegano --country DE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-033",
+    "region": "eu-paris-1",
+    "command": "bash setup_oracle.sh --instance-id mae-033 --niche confeitaria --country FR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-034",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-034 --niche churrasco --country AR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-035",
+    "region": "us-phoenix-1",
+    "command": "bash setup_oracle.sh --instance-id mae-035 --niche comida_saudavel --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-036",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-036 --niche barista --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-037",
+    "region": "ap-singapore-1",
+    "command": "bash setup_oracle.sh --instance-id mae-037 --niche comida_de_rua --country TH --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-038",
+    "region": "mx-queretaro-1",
+    "command": "bash setup_oracle.sh --instance-id mae-038 --niche drinks --country MX --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-039",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-039 --niche paes --country PT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-040",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-040 --niche gastronomia_gourmet --country IT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-041",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-041 --niche inteligencia_artificial --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-042",
+    "region": "ap-mumbai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-042 --niche programacao --country IN --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-043",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-043 --niche cyberseguranca --country DE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-044",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-044 --niche gadgets --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-045",
+    "region": "ap-seoul-1",
+    "command": "bash setup_oracle.sh --instance-id mae-045 --niche games --country KR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-046",
+    "region": "uk-london-1",
+    "command": "bash setup_oracle.sh --instance-id mae-046 --niche automacao --country GB --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-047",
+    "region": "ap-singapore-1",
+    "command": "bash setup_oracle.sh --instance-id mae-047 --niche blockchain --country SG --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-048",
+    "region": "us-sanjose-1",
+    "command": "bash setup_oracle.sh --instance-id mae-048 --niche saas --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-049",
+    "region": "eu-amsterdam-1",
+    "command": "bash setup_oracle.sh --instance-id mae-049 --niche design_ux --country NL --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-050",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-050 --niche no_code --country AU --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-051",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-051 --niche mochileiro --country AU --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-052",
+    "region": "me-dubai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-052 --niche viagem_luxo --country AE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-053",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-053 --niche viagem_familia --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-054",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-054 --niche nomade_digital --country PT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-055",
+    "region": "eu-paris-1",
+    "command": "bash setup_oracle.sh --instance-id mae-055 --niche fotografia_viagem --country FR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-056",
+    "region": "us-phoenix-1",
+    "command": "bash setup_oracle.sh --instance-id mae-056 --niche van_life --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-057",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-057 --niche aventura --country NZ --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-058",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-058 --niche viagem_solo --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-059",
+    "region": "ca-toronto-1",
+    "command": "bash setup_oracle.sh --instance-id mae-059 --niche camping --country CA --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-060",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-060 --niche cruzeiros --country IT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-061",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-061 --niche ingles --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-062",
+    "region": "ap-mumbai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-062 --niche cursos_online --country IN --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-063",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-063 --niche desenvolvimento_pessoal --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-064",
+    "region": "uk-london-1",
+    "command": "bash setup_oracle.sh --instance-id mae-064 --niche carreira --country GB --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-065",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-065 --niche parentalidade --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-066",
+    "region": "ca-montreal-1",
+    "command": "bash setup_oracle.sh --instance-id mae-066 --niche psicologia --country CA --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-067",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-067 --niche coach --country DE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-068",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-068 --niche estudo --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-069",
+    "region": "eu-paris-1",
+    "command": "bash setup_oracle.sh --instance-id mae-069 --niche idiomas --country FR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-070",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-070 --niche filosofia --country GR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-071",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-071 --niche fotografia --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-072",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-072 --niche design_grafico --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-073",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-073 --niche ilustracao --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-074",
+    "region": "us-phoenix-1",
+    "command": "bash setup_oracle.sh --instance-id mae-074 --niche musica --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-075",
+    "region": "uk-london-1",
+    "command": "bash setup_oracle.sh --instance-id mae-075 --niche escrita --country GB --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-076",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-076 --niche video --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-077",
+    "region": "eu-frankfurt-1",
+    "command": "bash setup_oracle.sh --instance-id mae-077 --niche arquitetura --country IT --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-078",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-078 --niche artesanato --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-079",
+    "region": "us-sanjose-1",
+    "command": "bash setup_oracle.sh --instance-id mae-079 --niche animacao --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-080",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-080 --niche tatuagem --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-081",
+    "region": "ap-tokyo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-081 --niche minimalismo --country JP --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-082",
+    "region": "eu-amsterdam-1",
+    "command": "bash setup_oracle.sh --instance-id mae-082 --niche sustentabilidade --country SE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-083",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-083 --niche decoracao --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-084",
+    "region": "eu-amsterdam-1",
+    "command": "bash setup_oracle.sh --instance-id mae-084 --niche jardinagem --country NL --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-085",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-085 --niche pets --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-086",
+    "region": "me-dubai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-086 --niche luxo --country AE --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-087",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-087 --niche relacionamentos --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-088",
+    "region": "ap-mumbai-1",
+    "command": "bash setup_oracle.sh --instance-id mae-088 --niche autoconhecimento --country IN --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-089",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-089 --niche van_life_br --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-090",
+    "region": "us-sanjose-1",
+    "command": "bash setup_oracle.sh --instance-id mae-090 --niche biohacking --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-091",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-091 --niche futebol --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-092",
+    "region": "us-ashburn-1",
+    "command": "bash setup_oracle.sh --instance-id mae-092 --niche basquete --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-093",
+    "region": "uk-london-1",
+    "command": "bash setup_oracle.sh --instance-id mae-093 --niche tenis --country GB --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-094",
+    "region": "ap-sydney-1",
+    "command": "bash setup_oracle.sh --instance-id mae-094 --niche natacao --country AU --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-095",
+    "region": "eu-amsterdam-1",
+    "command": "bash setup_oracle.sh --instance-id mae-095 --niche ciclismo --country NL --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-096",
+    "region": "sa-saopaulo-1",
+    "command": "bash setup_oracle.sh --instance-id mae-096 --niche artes_marciais --country BR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-097",
+    "region": "ap-seoul-1",
+    "command": "bash setup_oracle.sh --instance-id mae-097 --niche esports --country KR --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-098",
+    "region": "us-phoenix-1",
+    "command": "bash setup_oracle.sh --instance-id mae-098 --niche golfe --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-099",
+    "region": "us-sanjose-1",
+    "command": "bash setup_oracle.sh --instance-id mae-099 --niche skate --country US --groq-key $GROQ_API_KEY"
+  },
+  {
+    "id": "mae-100",
+    "region": "af-johannesburg-1",
+    "command": "bash setup_oracle.sh --instance-id mae-100 --niche atletismo --country KE --groq-key $GROQ_API_KEY"
+  }
+]
