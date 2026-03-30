@@ -5,3 +5,13 @@ node_modules/
 venv/
 *.log
 n8n_vault/
+kokoro-v1.0.onnx
+voices-v1.0.bin
+sessions/
+ruflo/
+maes_envs/
+*.mp4
+*.mp3
+*.png
+social_sessions/
+nohup.out
