@@ -26,14 +26,29 @@ def _check(token):
         raise HTTPException(status_code=401,detail="Token invalido")
 @app.get("/health")
 async def health():
-    import sqlite3, pathlib
-    db = pathlib.Path(__file__).resolve().parent / "jod_robo.db"
-    try:
-        conn = sqlite3.connect(str(db))
-        total = conn.execute("SELECT COUNT(*) FROM agents WHERE status='active'").fetchone()[0]
-        conn.close()
-    except Exception:
-        total = len(SQUADS) * 12
+    import os
+    db_url = os.getenv("DATABASE_URL","")
+    total = 0
+    if db_url:
+        try:
+            import asyncpg, asyncio
+            async def _count():
+                conn = await asyncpg.connect(db_url)
+                r = await conn.fetchval("SELECT COUNT(*) FROM agents WHERE status=$1","active")
+                await conn.close()
+                return r or 0
+            total = asyncio.get_event_loop().run_until_complete(_count())
+        except Exception:
+            total = len(SQUADS) * 12
+    else:
+        import sqlite3, pathlib
+        db = pathlib.Path(__file__).resolve().parent / "jod_robo.db"
+        try:
+            conn = sqlite3.connect(str(db))
+            total = conn.execute("SELECT COUNT(*) FROM agents WHERE status='active'").fetchone()[0]
+            conn.close()
+        except Exception:
+            total = len(SQUADS) * 12
     return{"status":"ok","version":"2.0","squads":len(SQUADS),"agentes":total}
 @app.post("/chat")
 async def chat(req:ChatRequest,x_jod_token:Optional[str]=Header(None)):
