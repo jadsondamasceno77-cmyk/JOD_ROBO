@@ -1,0 +1,12 @@
+{
+  "agent_id": "agente_d23667",
+  "name": "agente_d23667",
+  "specialty": "crawler",
+  "entrypoint": "main.py",
+  "allowed_actions": [],
+  "allowed_paths": [],
+  "allowed_hosts": [],
+  "required_env": [],
+  "version": "1.0.0",
+  "status": "draft"
+}

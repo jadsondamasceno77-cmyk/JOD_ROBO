@@ -1,0 +1,12 @@
+{
+  "agent_id": "robo_n8n_01",
+  "name": "Robo N8N Master",
+  "specialty": "executor",
+  "entrypoint": "main.py",
+  "allowed_actions": [],
+  "allowed_paths": [],
+  "allowed_hosts": [],
+  "required_env": [],
+  "version": "1.0.0",
+  "status": "active"
+}

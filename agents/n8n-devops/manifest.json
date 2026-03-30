@@ -1,0 +1,12 @@
+{
+  "agent_id": "n8n-devops",
+  "name": "Infraestrutura n8n",
+  "specialty": "executor",
+  "entrypoint": "main.py",
+  "allowed_actions": [],
+  "allowed_paths": [],
+  "allowed_hosts": [],
+  "required_env": [],
+  "version": "1.0.0",
+  "status": "active"
+}
