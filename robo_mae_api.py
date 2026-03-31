@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 import uvicorn
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from x-mom import process,SQUADS
+from robo_mae import process,SQUADS
 app=FastAPI(title="ELI API",version="2.0")
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_methods=["*"],allow_headers=["*"])
 class ChatRequest(BaseModel):
