@@ -1,3 +1,8 @@
+import os as _os
+from groq import Groq as _Groq
+import json as _json
+_groq_client = _Groq(api_key=_os.getenv("GROQ_API_KEY",""))
+
 #!/usr/bin/env python3
 """
 JOD_ROBO — Agente N8N v2.0
@@ -279,30 +284,57 @@ return [{json: {
 
 # ─── ROTEAMENTO POR DESCRIÇÃO ────────────────────────────────────────────────────
 
+import re as _re
+
+SYSTEM_AUTOMACAO = """Você é um arquiteto expert de automações n8n faixa preta.
+Dado um objetivo, retorne APENAS JSON puro do workflow n8n completo e funcional.
+REGRAS:
+- JSON puro sem markdown, sem explicação
+- Nodes completos: id, name, type, typeVersion, position, parameters
+- Connections corretas entre todos os nodes
+- Types válidos: n8n-nodes-base.webhook, n8n-nodes-base.code, n8n-nodes-base.httpRequest, n8n-nodes-base.set, n8n-nodes-base.scheduleTrigger, n8n-nodes-base.manualTrigger, n8n-nodes-base.respondToWebhook, n8n-nodes-base.telegram, n8n-nodes-base.emailSend
+- Posições: x começa em 250, incrementa 250 por node, y=300
+- JavaScript nos code nodes deve ser real e funcional
+- Workflow funciona de ponta a ponta sem modificação
+ESTRUTURA: {"name":"...","nodes":[...],"connections":{...},"settings":{"executionOrder":"v1"}}"""
+
+async def arquitetar_workflow(descricao: str) -> dict:
+    """LLM arquiteta o workflow completo baseado na descrição em linguagem natural."""
+    resp = _groq_client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[
+            {"role": "system", "content": SYSTEM_AUTOMACAO},
+            {"role": "user", "content": f"Crie workflow n8n completo e funcional para: {descricao}"}
+        ],
+        temperature=0.1,
+        max_tokens=4096
+    )
+    raw = resp.choices[0].message.content.strip()
+    raw = _re.sub(r'```json\n?', '', raw)
+    raw = _re.sub(r'```\n?', '', raw)
+    raw = raw.strip()
+    return _json.loads(raw)
+
 async def create_from_description(description: str) -> dict:
-    """Cria o workflow mais adequado baseado na descrição."""
-    desc = description.lower()
+    """Motor Universal: LLM arquiteta + n8n executa. Funciona para qualquer cenário."""
+    try:
+        wf_data = await arquitetar_workflow(description)
+        wf_data["name"] = wf_data.get("name", f"ELI — {description[:50]}")
+        result = await n8n_post("/workflows", wf_data)
+        wf_id = result.get("id")
+        return {
+            "id": wf_id,
+            "name": result.get("name"),
+            "url": f"{N8N_URL}/workflow/{wf_id}",
+            "status": "created",
+            "nodes": len(wf_data.get("nodes", []))
+        }
+    except Exception as e:
+        # Fallback para template manual se LLM falhar
+        result = await create_manual_code(name=f"ELI — {description[:40]}")
+        wf_id = result.get("id")
+        return {"id": wf_id, "name": result.get("name"), "url": f"{N8N_URL}/workflow/{wf_id}", "status": "fallback", "error": str(e)}
 
-    if "webhook" in desc and ("code" in desc or "javascript" in desc or "js" in desc):
-        result = await create_webhook_code()
-    elif "webhook" in desc and ("http" in desc or "api" in desc or "request" in desc):
-        result = await create_webhook_http()
-    elif "schedule" in desc or "agendado" in desc or "cron" in desc or "diario" in desc:
-        result = await create_schedule_http()
-    elif "erro" in desc or "error" in desc or "falha" in desc or "handler" in desc:
-        result = await create_error_handler()
-    elif "teste" in desc or "test" in desc or "manual" in desc:
-        result = await create_manual_code()
-    else:
-        result = await create_manual_code(name=f"Workflow — {description[:40]}")
-
-    wf_id = result.get("id")
-    return {
-        "id": wf_id,
-        "name": result.get("name"),
-        "url": f"{N8N_URL}/workflow/{wf_id}",
-        "status": "created"
-    }
 
 if __name__ == "__main__":
     async def test():
