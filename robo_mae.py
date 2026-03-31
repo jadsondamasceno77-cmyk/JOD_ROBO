@@ -224,6 +224,12 @@ def detect_intent(message: str) -> dict:
     if any(p in ml for p in ["salve","salvar","gere um arquivo","criar arquivo","exportar","save this","baixar","download o resultado"]):
         return {"intent":"save_file"}
 
+    # CRIAR PERFIS NAS REDES
+    perfil_kw = ["perfil","perfis","redes sociais","criar conta","bio para","username para","presenca digital","identidade nas redes"]
+    perfil_action = ["cri","monta","gera","faz","configur","estrutur"]
+    if any(k in ml for k in perfil_kw) and any(a in ml for a in perfil_action):
+        return {"intent":"criar_perfis","description":message}
+
     return {"intent":"consult"}
 
 
@@ -316,6 +322,21 @@ async def execute_intent(intent: dict, message: str, session_id: str) -> dict:
         return {"squad":squad_name,"chief":SQUADS[squad_name]["chief"],
                 "response":f"Arquivo salvo em:\n`{path}`\n\n---\n{content}"}
 
+    elif i == "criar_perfis":
+        import re
+        desc = intent.get("description","")
+        # Extrai marca, nicho, site, email da mensagem
+        m_marca = re.search(r'(?:para|de|da|do|:)\s+([A-Za-zÀ-ú][A-Za-zÀ-ú\s]{1,40}?)(?=\s+nicho|\s+site|\s+email|\s+no\s|\s+em\s|\s+nas\s|$)', desc, re.I)
+        m_nicho = re.search(r'nicho\s+([A-Za-zÀ-ú\s]{2,30}?)(?=\s+site|\s+email|$)', desc, re.I)
+        m_site  = re.search(r'site\s+(\S+)', desc, re.I)
+        m_email = re.search(r'email\s+(\S+)', desc, re.I)
+        marca_nome = m_marca.group(1).strip() if m_marca else "Sua Marca"
+        nicho_nome = m_nicho.group(1).strip() if m_nicho else "Negocio Digital"
+        site_url   = m_site.group(1).strip() if m_site else ""
+        email_val  = m_email.group(1).strip() if m_email else ""
+        resultado = criar_perfis_redes(marca_nome, nicho_nome, site=site_url, email=email_val)
+        save_memory(session_id, "brand-squad", "brand-chief", message, resultado)
+        return {"squad":"brand-squad","chief":"brand-chief","response":resultado}
     # Fallback: consulta LLM
     return None
 
@@ -600,3 +621,20 @@ async def evaluate_output(objective, output, squad):
         return json.loads(raw)
     except Exception:
         return {"score": 7, "reason": "avaliacao indisponivel", "improvement": "mais detalhes praticos"}
+
+# ─── TOOL: CRIAR PERFIS ──────────────────────────────────────────────────────
+def criar_perfis_redes(marca, nicho, tom="profissional", site="", email=""):
+    redes = [
+        {"rede":"Instagram","user":marca.lower().replace(" ","."),"bio":f"{marca} | {nicho}\n{tom}\n{site}","dica":"Emojis, hashtag no comentario, link na bio"},
+        {"rede":"TikTok","user":marca.lower().replace(" ","_"),"bio":f"{marca} | {nicho}\n{site}","dica":"Bio curta, CTA direto"},
+        {"rede":"LinkedIn","user":marca.lower().replace(" ","-"),"bio":f"{marca} - {nicho}. {tom}. {email}","dica":"Descricao completa, especialidades, site"},
+        {"rede":"YouTube","user":marca.lower().replace(" ",""),"bio":f"Canal de {marca}. {nicho}.\n{email}\n{site}","dica":"About detalhado, links, email comercial"},
+        {"rede":"Facebook","user":marca.lower().replace(" ",""),"bio":f"{marca} - {nicho}. {tom}.","dica":"Pagina comercial, categoria, CTA"},
+        {"rede":"Twitter/X","user":marca.lower().replace(" ",""),"bio":f"{marca} | {nicho} | {site}","dica":"Bio objetiva, fixar tweet de apresentacao"},
+        {"rede":"Pinterest","user":marca.lower().replace(" ",""),"bio":f"{marca} | {nicho} | {tom}","dica":"Conta comercial, boards por tema"},
+        {"rede":"Threads","user":marca.lower().replace(" ","."),"bio":f"{marca} | {nicho}\n{site}","dica":"Conectado ao Instagram, bio identica"},
+    ]
+    rel = f"# Perfis — {marca}\n\n"
+    for r in redes:
+        rel += f"## {r['rede']}\n- **@{r['user']}**\n- Bio: {r['bio']}\n- Dica: {r['dica']}\n\n"
+    return rel

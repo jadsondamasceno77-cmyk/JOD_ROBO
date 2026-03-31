@@ -11,7 +11,7 @@ import httpx
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv(Path(__file__).resolve().parent.parent / ".env")
+load_dotenv(Path(__file__).resolve().parent / ".env")
 
 N8N_URL = os.getenv("N8N_URL", "http://localhost:5678")
 N8N_KEY = os.getenv("N8N_API_KEY", "")
@@ -32,6 +32,11 @@ async def n8n_post(path, payload):
             raise Exception(f"n8n API error {r.status_code}: {r.text}")
         return r.json()
 
+async def n8n_put(path, payload):
+    async with httpx.AsyncClient(timeout=30) as c:
+        r = await c.put(f"{N8N_URL}/api/v1{path}", headers=HEADERS, json=payload)
+        r.raise_for_status()
+        return r.json()
 async def n8n_patch(path, payload):
     async with httpx.AsyncClient(timeout=15) as c:
         r = await c.patch(f"{N8N_URL}/api/v1{path}", headers=HEADERS, json=payload)
