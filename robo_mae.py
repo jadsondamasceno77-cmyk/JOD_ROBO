@@ -521,7 +521,7 @@ async def process(message, session_id, force_squad=None):
 async def chat():
     session_id = str(uuid.uuid4())[:8]
     print(f"\n{'='*60}")
-    print(f"  ELI v4.0 | Sessao {session_id}")
+    print(f"  X-Mom.0 | Sessao {session_id}")
     print(f"  CAMADA 1: Factory + Browser (execucao real)")
     print(f"  CAMADA 2: 152 consultores LLM")
     print(f"  Comandos: sair | squads | agentes | @squad msg")

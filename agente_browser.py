@@ -131,7 +131,7 @@ async def run_browser_task(steps):
     finally:
         await agent.stop()
 
-# Compatibilidade com robo_mae.py (browser_navigate / browser_screenshot)
+# Compatibilidade com x-mom.py (browser_navigate / browser_screenshot)
 async def navigate(url):
     agent = BrowserAgent()
     await agent.start()

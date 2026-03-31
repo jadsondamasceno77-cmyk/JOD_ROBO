@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from typing import Optional, List
 import uvicorn
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from robo_mae import process,SQUADS
+from x-mom import process,SQUADS
 app=FastAPI(title="ELI API",version="2.0")
 app.add_middleware(CORSMiddleware,allow_origins=["*"],allow_methods=["*"],allow_headers=["*"])
 class ChatRequest(BaseModel):
@@ -61,7 +61,7 @@ async def squads():
     return[{"id":k,"chief":v["chief"]}for k,v in SQUADS.items()]
 @app.get("/",response_class=HTMLResponse)
 async def ui():
-    return open(Path(__file__).resolve().parent/"ui.html",encoding="utf-8").read() if (Path(__file__).resolve().parent/"ui.html").exists() else "<h1>ELI v5.0</h1><p>ui.html não encontrado</p>"
+    return open(Path(__file__).resolve().parent/"ui.html",encoding="utf-8").read() if (Path(__file__).resolve().parent/"ui.html").exists() else "<h1>X-Mom v5.0</h1><p>ui.html não encontrado</p>"
 
 
 import subprocess as _sp

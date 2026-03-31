@@ -63,7 +63,7 @@ async def on_message(u,c):
             if n8n_result and not n8n_result.startswith("❌"):
                 r["response"] = n8n_result
         sq=r.get("squad","?"); ch=r.get("chief","?"); resp=r.get("response","")
-        prefix="🤖 ROBÔ-MÃE" if mode=="mae" else "⚡ ELI"
+        prefix="🤖 X-Mom" if mode=="mae" else "⚡ X-Mom"
         reply=f"{prefix} [{sq} → {ch}]\n\n{resp}"
         if len(reply)>4000: reply=reply[:3990]+"\n\n[truncado]"
         await u.message.reply_text(reply)
