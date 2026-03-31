@@ -139,7 +139,7 @@ class SnapshotDB(Base):
     id = Column(String, primary_key=True); agent_id = Column(String); filepath = Column(String)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
-engine = create_async_engine(f"sqlite+aiosqlite:///{DB_PATH}", echo=False)
+import os as _os; _db_url = _os.getenv("DATABASE_URL", "").replace("postgresql://", "postgresql+asyncpg://") if _os.getenv("DATABASE_URL") else f"sqlite+aiosqlite:///{DB_PATH}"; engine = create_async_engine(_db_url, echo=False)
 AsyncSessionLocal = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 class DomainError(Exception):
