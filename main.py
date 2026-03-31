@@ -375,4 +375,9 @@ async def list_audit(limit: int=10, h: RequestHeaders=Depends(get_validated_head
 async def health_live(): return {"status": "alive"}
 
 @app.get("/health/ready")
-async def health_ready(): return {"status": "ready", "queue_size": state.queue.qsize(), "db_path": str(DB_PATH)}
+async def health_ready(): return {"status": "ready", "db": "ok", "ts": datetime.now(timezone.utc).isoformat()}
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)

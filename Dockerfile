@@ -1,19 +1,10 @@
-FROM python:3.10-slim
-
+FROM python:3.11-slim
 WORKDIR /app
-
 RUN apt-get update && apt-get install -y \
-    git curl ffmpeg libsm6 libxext6 \
+    git curl \
     && rm -rf /var/lib/apt/lists/*
-
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
-
-# Playwright
-RUN playwright install chromium --with-deps 2>/dev/null || playwright install chromium
-
 COPY . .
-
-EXPOSE 37779
-
-CMD ["python3", "robo_mae_api.py"]
+EXPOSE 8000
+CMD ["python3", "main.py"]
