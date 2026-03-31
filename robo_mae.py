@@ -166,81 +166,66 @@ def save_output(filename: str, content: str) -> str:
 # ─── DETECTOR DE INTENÇÃO ───────────────────────────────────────────────────────
 
 def detect_intent(message: str) -> dict:
+    import re
     ml = message.lower().strip()
 
-    # BROWSER — navegar
-    nav_patterns = ["abra o site","navegar para","acesse o site","abre o site","navega para","visitar","abrir url","navegar url"]
-    for p in nav_patterns:
-        if p in ml:
-            # Extrai URL
-            words = message.split()
-            url = next((w for w in words if w.startswith("http")), None)
-            if not url:
-                url = next((w for w in words if "." in w and len(w) > 4), None)
-            if url and not url.startswith("http"):
-                url = "https://" + url
-            return {"intent":"browser_navigate","url": url or "https://example.com"}
-
     # BROWSER — screenshot
-    shot_patterns = ["screenshot","print da tela","captura de tela","tire um print","foto do site"]
-    for p in shot_patterns:
-        if p in ml:
-            words = message.split()
-            url = next((w for w in words if w.startswith("http")), None)
-            if url:
-                return {"intent":"browser_screenshot","url":url}
-            return {"intent":"browser_screenshot","url":"https://example.com"}
+    shot_patterns = ["screenshot","print da tela","captura de tela","tire um print","foto do site","printscreen","print screen"]
+    if any(p in ml for p in shot_patterns):
+        url_m = re.search(r'https?://\S+|www\.\S+', message)
+        return {"intent":"browser_screenshot","url": url_m.group(0) if url_m else "https://example.com"}
 
-    # FACTORY — listar agentes
-    if any(p in ml for p in ["liste os agentes","listar agentes","agentes ativos","quais agentes","ver agentes","agentes do factory","mostrar agentes"]):
+    # BROWSER — navegar
+    url_m = re.search(r'https?://\S+|www\.\S+', message)
+    nav_patterns = ["abra","abrir","acesse","acessar","navegue","navegar","vai para","vá para","abra o site","abra a url","visite","visita","abre o","pesquise","pesquisar","busque","buscar na web","procure na web"]
+    if any(p in ml for p in nav_patterns) and url_m:
+        return {"intent":"browser_navigate","url": url_m.group(0)}
+    if any(p in ml for p in ["abra o site","abra a url","acesse o site","visite o site"]):
+        return {"intent":"browser_navigate","url": url_m.group(0) if url_m else "https://example.com"}
+
+    # FACTORY — listar
+    if any(p in ml for p in ["liste os agentes","listar agentes","quais agentes","agentes ativos","ver agentes","mostre os agentes"]):
         return {"intent":"factory_list"}
 
-    # FACTORY — ativar
-    for p in ["ative o","ativar o","ative agente","ativar agente"]:
-        if p in ml:
-            for a in FACTORY_AGENTS:
-                if a in ml:
-                    return {"intent":"factory_activate","agent_id":a}
-            return {"intent":"factory_activate","agent_id":None}
+    # FACTORY — ativar agente
+    m = re.search(r'(ativ[ae]|start|inicie)\s+(o\s+)?agente[_\s]?(\w+)', ml, re.I)
+    if m:
+        return {"intent":"factory_activate","agent_id": m.group(3)}
 
-    # FACTORY — validar
-    for p in ["valide o","validar o","valide agente","validar agente"]:
-        if p in ml:
-            for a in FACTORY_AGENTS:
-                if a in ml:
-                    return {"intent":"factory_validate","agent_id":a}
-            return {"intent":"factory_validate","agent_id":None}
+    # FACTORY — validar agente
+    m = re.search(r'(valid[ae]|test[ae]|chequ[ae])\s+(o\s+)?agente[_\s]?(\w+)', ml, re.I)
+    if m:
+        return {"intent":"factory_validate","agent_id": m.group(3)}
 
-    # FACTORY — criar
-    for p in ["crie um agente","criar agente","novo agente","criar um agente"]:
-        if p in ml:
-            template = next((t for t in FACTORY_TEMPLATES if t in ml), "executor")
-            agent_id = f"agente_{str(uuid.uuid4())[:6]}"
-            return {"intent":"factory_create","template":template,"agent_id":agent_id,"name":agent_id}
+    # FACTORY — criar agente
+    m = re.search(r'(cri[ae]|build|make|faz[er]*)\s+.*(agente|agent)\s*(\w+)?', ml, re.I)
+    if m:
+        aid = m.group(3) or "custom"
+        return {"intent":"factory_create","template":"custom","agent_id":aid,"name":aid}
 
-    # N8N — criar workflow
-    n8n_create = ["crie um workflow","criar workflow","novo workflow","make a workflow","build a workflow","automatizar com n8n","criar automacao no n8n"]
-    for p in n8n_create:
-        if p in ml:
-            return {"intent":"n8n_create","description":message}
+    # N8N — criar workflow (padrão amplo com LLM fallback)
+    n8n_kw = ["workflow","automac","integrac","pipeline","fluxo n8n","webhook","schedule","agendamento","notificac","disparo automát","cron","trigger","n8n"]
+    action_kw = ["cri","build","make","faz","constru","monta","desenvolv","implement","automat","configur","quero um","preciso de um","gera","gerar"]
+    has_n8n = any(k in ml for k in n8n_kw)
+    has_action = any(k in ml for k in action_kw)
+    if has_n8n and has_action:
+        return {"intent":"n8n_create","description":message}
 
-    # N8N — listar workflows
-    if any(p in ml for p in ["liste os workflows","listar workflows","workflows existentes","meus workflows","ver workflows"]):
+    # N8N — listar
+    if any(p in ml for p in ["liste os workflows","listar workflows","workflows existentes","meus workflows","ver workflows","quais workflows","mostre os workflows","show workflows"]):
         return {"intent":"n8n_list"}
 
-    # N8N — ativar workflow
-    if any(p in ml for p in ["ative o workflow","ativar workflow","activate workflow"]):
-        wf_id = next((w for w in message.split() if w.isalnum() and len(w) > 5), None)
-        return {"intent":"n8n_activate","workflow_id":wf_id}
+    # N8N — ativar
+    m = re.search(r'(ativ[ae]|enable|ligu[ae])\s+(o\s+)?workflow[_\s]?(\w+)?', ml, re.I)
+    if m:
+        return {"intent":"n8n_activate","workflow_id": m.group(3)}
 
-    # SALVAR ARQUIVO
-    for p in ["salve","salvar","gere um arquivo","criar arquivo","exportar","save"]:
-        if p in ml:
-            return {"intent":"save_file"}
+    # SALVAR
+    if any(p in ml for p in ["salve","salvar","gere um arquivo","criar arquivo","exportar","save this","baixar","download o resultado"]):
+        return {"intent":"save_file"}
 
     return {"intent":"consult"}
 
-# ─── EXECUTOR DE INTENÇÕES ───────────────────────────────────────────────────────
 
 async def execute_intent(intent: dict, message: str, session_id: str) -> dict:
     i = intent["intent"]
