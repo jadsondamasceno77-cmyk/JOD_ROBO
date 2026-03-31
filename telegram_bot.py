@@ -22,7 +22,7 @@ async def cmd_mae(u,c):
     await u.message.reply_text("🤖 Modo *ROBÔ\-MÃE* ativado\.",parse_mode=ParseMode.MARKDOWN_V2)
 async def cmd_status(u,c):
     import httpx
-    svcs=[("Factory","http://localhost:37777/health"),("ELI API","http://localhost:37779/health"),("N8N","http://localhost:5678/healthz")]
+    svcs=[("Factory","http://localhost:37777/health"),("ELI API","http://localhost:37778/health"),("N8N","http://localhost:5678/healthz")]
     lines=[]
     async with httpx.AsyncClient(timeout=4.0) as cl:
         for n,url in svcs:
@@ -31,6 +31,24 @@ async def cmd_status(u,c):
     await u.message.reply_text("\n".join(lines))
 async def cmd_squads(u,c):
     await u.message.reply_text("\n".join([f"• {k}" for k in SQUADS]))
+
+import httpx as _httpx_n8n
+
+async def executar_n8n(task: str, session_id: str) -> str:
+    try:
+        async with _httpx_n8n.AsyncClient(timeout=60) as cli:
+            r = await cli.post("http://localhost:37780/execute", json={
+                "task": task, "session_id": session_id, "channel": "telegram"
+            })
+            data = r.json()
+            summary = data.get("summary", "")
+            status = data.get("status", "")
+            if status == "completed" and summary:
+                return f"✅ {summary}"
+            return str(data)[:400]
+    except Exception as e:
+        return f"❌ Erro n8n: {e}"
+
 async def on_message(u,c):
     msg=u.message.text.strip()
     cid=u.effective_chat.id
@@ -40,7 +58,10 @@ async def on_message(u,c):
     try:
         force="c-level-squad" if mode=="mae" else None
         r=await process(msg,session,force)
-        if r.get("response"): r["response"] = await executar_n8n(r["response"], session) if any(w in r["response"].lower() for w in ["criar","executar","listar","ativar","workflow","n8n"]) else r["response"]
+        if any(w in msg.lower() for w in ["criar workflow","executar workflow","listar workflow","ativar workflow","n8n","automação","automatizar","disparar","webhook"]):
+            n8n_result = await executar_n8n(msg, session)
+            if n8n_result and not n8n_result.startswith("❌"):
+                r["response"] = n8n_result
         sq=r.get("squad","?"); ch=r.get("chief","?"); resp=r.get("response","")
         prefix="🤖 ROBÔ-MÃE" if mode=="mae" else "⚡ ELI"
         reply=f"{prefix} [{sq} → {ch}]\n\n{resp}"
@@ -60,17 +81,3 @@ def main():
     print("⚡ Bot Telegram JOD_ROBO iniciado — @jodrobo_bot")
     app.run_polling(drop_pending_updates=True)
 if __name__=="__main__": main()
-import httpx, asyncio
-
-async def executar_n8n(task: str, session_id: str) -> str:
-    try:
-        async with httpx.AsyncClient(timeout=60) as c:
-            r = await c.post("http://localhost:37780/execute", json={
-                "task": task,
-                "session_id": session_id,
-                "channel": "telegram"
-            })
-            data = r.json()
-            return data.get("summary", str(data))
-    except Exception as e:
-        return f"Erro n8n: {e}"
