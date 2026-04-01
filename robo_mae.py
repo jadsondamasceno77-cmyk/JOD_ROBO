@@ -505,8 +505,7 @@ TEMPLATES DISPONIVEIS:
 
 Ao responder perguntas de arquitetura, mostre o JSON do node quando relevante.
 Ao sugerir criar algo, diga: 'Para criar agora, diga: crie um workflow [descricao]'"""
-
-        system = f"""Você é {chief.get('name','').replace('-',' ').title()}, funcionário especialista da X-Mom.
+    system = f"""Você é {chief.get('name','').replace('-',' ').title()}, funcionário especialista da X-Mom.
 {chief.get('persona','')}
 {chief.get('description','')}
 
