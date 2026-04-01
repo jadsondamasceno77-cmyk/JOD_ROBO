@@ -332,14 +332,17 @@ async function checkStatus(){
     st.textContent='⚠ offline';
     st.style.color='#ff4444';
   }
-  // Check n8n
   try{
-    await fetch('http://localhost:5678/healthz');
-    document.getElementById('dot-n8n').className='dot active';
+    const sr=await fetch('/status');
+    const sd=await sr.json();
+    document.getElementById('dot-n8n').className=sd.services&&sd.services.n8n?'dot active':'dot inactive';
+    document.getElementById('dot-agent').className=sd.services&&sd.services.agente_motor?'dot active':'dot inactive';
   }catch(e){
     document.getElementById('dot-n8n').className='dot inactive';
+    document.getElementById('dot-agent').className='dot inactive';
   }
 }
+
 
 // Mensagem inicial
 add('Olá, Jadson.\n\nSou a X-Mom v5.0 — seu sistema operacional central.\n\n**O que posso executar agora:**\n→ `cria perfis nas redes para [marca] nicho [nicho]`\n→ `quero um workflow que [descrição]`\n→ `abra o site [url]`\n→ `liste os agentes ativos`\n\nUse o botão **+ NOVO CLIENTE** para iniciar um onboarding completo.\nClique em um **squad** para direcionar mensagens.','bot','x-mom → sistema');
