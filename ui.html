@@ -1,56 +1,351 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>X-Mom v5.0</title>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>X-Mom v5.0</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0d0d;color:#00ff88;font-family:'Courier New',monospace;height:100vh;display:flex;flex-direction:column}
-header{padding:16px 24px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between}
-header h1{font-size:18px}
-header span{font-size:11px;color:#555}
-#st{font-size:10px;padding:4px 24px;background:#111;color:#444;border-bottom:1px solid #1a1a1a}
-#chat{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:16px}
-.msg{max-width:82%;padding:12px 16px;border-radius:8px;line-height:1.6;white-space:pre-wrap;word-break:break-word}
-.user{background:#1a1a2e;border:1px solid #333;align-self:flex-end;color:#fff}
-.bot{background:#0a1a0a;border:1px solid #00ff8833;align-self:flex-start}
-.bot .sq{font-size:10px;color:#00ff8866;margin-bottom:6px}
-.bot .tx{color:#ccc}
-footer{padding:16px 24px;border-top:1px solid #1a1a1a;display:flex;gap:12px}
-#inp{flex:1;background:#111;border:1px solid #333;color:#fff;padding:12px 16px;border-radius:8px;font-family:inherit;font-size:14px;outline:none}
-#inp:focus{border-color:#00ff88}
-#btn{background:#00ff88;color:#000;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-weight:bold;font-family:inherit}
-#btn:hover{background:#00cc66}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Courier New',monospace}
+body{background:#0a0a0a;color:#e0e0e0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* HEADER */
+header{padding:12px 24px;border-bottom:1px solid #1a1a1a;display:flex;align-items:center;justify-content:space-between;background:#0d0d0d;flex-shrink:0}
+.logo{display:flex;align-items:center;gap:12px}
+.logo h1{font-size:20px;letter-spacing:2px;color:#fff}
+.logo h1 span{color:#00ff88}
+.logo .ver{font-size:10px;color:#444;margin-top:2px}
+.status-bar{display:flex;gap:16px;align-items:center}
+.pill{font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid;letter-spacing:1px}
+.pill.green{color:#00ff88;border-color:#00ff8833;background:#00ff8808}
+.pill.gray{color:#555;border-color:#222}
+.pill.red{color:#ff4444;border-color:#ff444433}
+
+/* MAIN LAYOUT */
+.main{display:flex;flex:1;overflow:hidden}
+
+/* SIDEBAR */
+.sidebar{width:240px;border-right:1px solid #1a1a1a;display:flex;flex-direction:column;background:#0d0d0d;flex-shrink:0;overflow-y:auto}
+.sidebar-section{padding:12px 16px;border-bottom:1px solid #111}
+.sidebar-section h3{font-size:9px;color:#333;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.service-item{display:flex;align-items:center;justify-content:space-between;padding:6px 0;font-size:11px;color:#666}
+.service-item .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dot.active{background:#00ff88;box-shadow:0 0 6px #00ff88}
+.dot.inactive{background:#333}
+.service-item .name{flex:1;margin-left:8px}
+.service-item .port{color:#333;font-size:10px}
+
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.stat-box{background:#111;border:1px solid #1a1a1a;border-radius:6px;padding:8px;text-align:center}
+.stat-box .num{font-size:18px;color:#00ff88;font-weight:bold}
+.stat-box .lbl{font-size:9px;color:#444;margin-top:2px;letter-spacing:1px}
+
+.onboarding-btn{margin:8px 16px;padding:8px;background:#00ff8810;border:1px solid #00ff8830;border-radius:6px;color:#00ff88;font-size:11px;cursor:pointer;text-align:center;letter-spacing:1px;transition:all 0.2s}
+.onboarding-btn:hover{background:#00ff8820}
+
+.squad-item{font-size:10px;color:#444;padding:3px 0;cursor:pointer;transition:color 0.15s;letter-spacing:0.5px}
+.squad-item:hover{color:#00ff88}
+.squad-item.active-squad{color:#00ff8888}
+
+/* CHAT */
+.chat-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#chat{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:12px}
+#chat::-webkit-scrollbar{width:4px}
+#chat::-webkit-scrollbar-track{background:#0a0a0a}
+#chat::-webkit-scrollbar-thumb{background:#1a1a1a;border-radius:2px}
+
+.msg{max-width:80%;display:flex;flex-direction:column;gap:4px}
+.msg.user{align-self:flex-end}
+.msg.bot{align-self:flex-start}
+.msg .sq{font-size:9px;color:#333;letter-spacing:1px;padding:0 4px}
+.msg.user .sq{text-align:right;color:#00ff8844}
+.msg .tx{padding:12px 16px;border-radius:8px;font-size:13px;line-height:1.6}
+.msg.user .tx{background:#00ff8815;border:1px solid #00ff8830;color:#e0e0e0}
+.msg.bot .tx{background:#111;border:1px solid #1a1a1a;color:#ccc}
+.msg.bot .tx b{color:#00ff88}
+.msg.bot .tx code{background:#0a0a0a;padding:2px 6px;border-radius:3px;color:#00ff88;font-size:12px}
+
+/* ONBOARDING PANEL */
+.panel{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#0a0a0aee;z-index:100;align-items:center;justify-content:center}
+.panel.open{display:flex}
+.panel-box{background:#0d0d0d;border:1px solid #00ff8830;border-radius:12px;padding:32px;width:520px;max-height:80vh;overflow-y:auto}
+.panel-box h2{font-size:16px;color:#00ff88;letter-spacing:2px;margin-bottom:24px}
+.form-group{margin-bottom:16px}
+.form-group label{font-size:10px;color:#555;letter-spacing:1px;display:block;margin-bottom:6px}
+.form-group input{width:100%;background:#111;border:1px solid #1a1a1a;border-radius:6px;padding:10px 12px;color:#e0e0e0;font-size:13px;font-family:monospace;outline:none;transition:border-color 0.15s}
+.form-group input:focus{border-color:#00ff8850}
+.form-group .hint{font-size:10px;color:#333;margin-top:4px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-primary{width:100%;padding:12px;background:#00ff8820;border:1px solid #00ff8840;border-radius:6px;color:#00ff88;font-size:12px;cursor:pointer;letter-spacing:2px;margin-top:8px;transition:all 0.2s}
+.btn-primary:hover{background:#00ff8830}
+.btn-close{background:none;border:none;color:#333;font-size:18px;cursor:pointer;float:right;margin-top:-8px}
+
+/* EXECUTION LOG */
+.exec-log{width:280px;border-left:1px solid #1a1a1a;background:#0d0d0d;display:flex;flex-direction:column;flex-shrink:0}
+.exec-log h3{font-size:9px;color:#333;letter-spacing:2px;padding:12px 16px;border-bottom:1px solid #111}
+#log-items{flex:1;overflow-y:auto;padding:8px}
+.log-item{font-size:10px;color:#444;padding:6px 8px;border-left:2px solid #1a1a1a;margin-bottom:4px;border-radius:0 4px 4px 0}
+.log-item.success{border-color:#00ff8840;color:#00ff8888}
+.log-item.error{border-color:#ff444440;color:#ff444488}
+.log-item.running{border-color:#ffaa0040;color:#ffaa0088}
+.log-time{font-size:9px;color:#333;display:block;margin-bottom:2px}
+
+/* FOOTER */
+footer{padding:12px 24px;border-top:1px solid #1a1a1a;display:flex;gap:10px;align-items:flex-end;background:#0d0d0d;flex-shrink:0}
+#inp{flex:1;background:#111;border:1px solid #1a1a1a;border-radius:8px;padding:12px 16px;color:#F1F1F2;font-size:16px;font-family:monospace;outline:none;resize:none;transition:border-color 0.15s;line-height:1.5}
+#inp:focus{border-color:#00ff8840}
+#inp::placeholder{color:#2a2a2a}
+#btn{padding:12px 20px;background:#00ff8820;border:1px solid #00ff8840;border-radius:8px;color:#00ff88;font-size:12px;cursor:pointer;letter-spacing:1px;white-space:nowrap;transition:all 0.2s;align-self:flex-end}
+#btn:hover{background:#00ff8830}
+#st{font-size:10px;color:#333;align-self:flex-end;padding-bottom:14px;white-space:nowrap}
 </style></head>
 <body>
-<header><h1><span style="color:#00ff88">✕</span>-Mom <span style="font-size:14px;opacity:0.6">v5.0</span></h1><span id="hd">13 squads · 162 agentes · Fases 1+2+3</span></header>
-<div id="st">Conectando...</div>
-<div id="chat"></div>
-<footer><textarea id="inp" placeholder="Ex: crie perfis nas redes para [marca] / quero workflow que [descrição] / me ajuda com [objetivo]..." rows="6" style="resize:none;flex:1;padding:12px;font-size:22px;border-radius:8px;border:1px solid #333;background:#111;color:#F1F1F2;font-family:monospace;outline:none;"></textarea><button id="btn">Enviar</button></footer>
+
+<header>
+  <div class="logo">
+    <div>
+      <h1><span>✕</span>-Mom</h1>
+      <div class="ver">SISTEMA OPERACIONAL v5.0</div>
+    </div>
+  </div>
+  <div class="status-bar">
+    <span class="pill green" id="api-pill">⬤ API ONLINE</span>
+    <span class="pill gray">13 SQUADS</span>
+    <span class="pill gray">188 AGENTES</span>
+    <span class="pill gray" id="groq-pill">GROQ OK</span>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <h3>Serviços</h3>
+      <div class="service-item"><div class="dot active"></div><span class="name">X-Mom API</span><span class="port">:37779</span></div>
+      <div class="service-item"><div class="dot" id="dot-n8n"></div><span class="name">n8n</span><span class="port">:5678</span></div>
+      <div class="service-item"><div class="dot" id="dot-agent"></div><span class="name">Agente Motor</span><span class="port">:37780</span></div>
+      <div class="service-item"><div class="dot active"></div><span class="name">Telegram Bot</span><span class="port">ativo</span></div>
+      <div class="service-item"><div class="dot active"></div><span class="name">Railway</span><span class="port">24/7</span></div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Métricas</h3>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="num" id="m-agents">188</div><div class="lbl">AGENTES</div></div>
+        <div class="stat-box"><div class="num" id="m-squads">13</div><div class="lbl">SQUADS</div></div>
+        <div class="stat-box"><div class="num" id="m-workflows">6</div><div class="lbl">WORKFLOWS</div></div>
+        <div class="stat-box"><div class="num" id="m-executions">0</div><div class="lbl">EXECUÇÕES</div></div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Onboarding</h3>
+      <div class="onboarding-btn" onclick="openOnboarding()">+ NOVO CLIENTE</div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3>Squads</h3>
+      <div id="squad-list">
+        <div class="squad-item" onclick="setSquad('traffic-masters')">→ traffic-masters</div>
+        <div class="squad-item" onclick="setSquad('copy-squad')">→ copy-squad</div>
+        <div class="squad-item" onclick="setSquad('brand-squad')">→ brand-squad</div>
+        <div class="squad-item" onclick="setSquad('n8n-squad')">→ n8n-squad</div>
+        <div class="squad-item" onclick="setSquad('hormozi-squad')">→ hormozi-squad</div>
+        <div class="squad-item" onclick="setSquad('design-squad')">→ design-squad</div>
+        <div class="squad-item" onclick="setSquad('data-squad')">→ data-squad</div>
+        <div class="squad-item" onclick="setSquad('c-level-squad')">→ c-level-squad</div>
+        <div class="squad-item" onclick="setSquad('storytelling')">→ storytelling</div>
+        <div class="squad-item" onclick="setSquad('cybersecurity')">→ cybersecurity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="chat-area">
+    <div id="chat"></div>
+  </div>
+
+  <!-- EXECUTION LOG -->
+  <div class="exec-log">
+    <h3>LOG DE EXECUÇÃO</h3>
+    <div id="log-items"></div>
+  </div>
+
+</div>
+
+<!-- ONBOARDING PANEL -->
+<div class="panel" id="onboarding-panel">
+  <div class="panel-box">
+    <button class="btn-close" onclick="closeOnboarding()">✕</button>
+    <h2>NOVO CLIENTE</h2>
+    <div class="form-group">
+      <label>NOME DA EMPRESA</label>
+      <input type="text" id="ob-nome" placeholder="Ex: Clínica Aurora">
+      <div class="hint">Nome que aparecerá nos perfis e materiais</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>NICHO</label>
+        <input type="text" id="ob-nicho" placeholder="Ex: Estética">
+      </div>
+      <div class="form-group">
+        <label>CIDADE</label>
+        <input type="text" id="ob-cidade" placeholder="Ex: Fortaleza-CE">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>SITE</label>
+      <input type="text" id="ob-site" placeholder="Ex: clinicaaurora.com.br">
+    </div>
+    <div class="form-group">
+      <label>EMAIL PRINCIPAL</label>
+      <input type="text" id="ob-email" placeholder="Ex: contato@clinicaaurora.com.br">
+    </div>
+    <div class="form-group">
+      <label>PÚBLICO-ALVO</label>
+      <input type="text" id="ob-publico" placeholder="Ex: Mulheres 25-45 anos, classe B/C">
+    </div>
+    <div class="form-group">
+      <label>TOM DE VOZ</label>
+      <input type="text" id="ob-tom" placeholder="Ex: Elegante, sofisticado e acolhedor">
+    </div>
+    <button class="btn-primary" onclick="executarOnboarding()">⚡ EXECUTAR ONBOARDING COMPLETO</button>
+  </div>
+</div>
+
+<footer>
+  <textarea id="inp" rows="3" placeholder="Ex: cria perfis para [marca] / quero workflow que [descrição] / me ajuda com [objetivo]..."></textarea>
+  <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
+    <span id="st">⬤ online</span>
+    <button id="btn">ENVIAR</button>
+  </div>
+</footer>
+
 <script>
 const TOKEN='jod_robo_trust_2026_secure';
-const sid='sess-'+Math.random().toString(36).substr(2,8);
-const chat=document.getElementById('chat'),inp=document.getElementById('inp'),btn=document.getElementById('btn'),st=document.getElementById('st');
-function add(text,type,sq){
-  const d=document.createElement('div');d.className='msg '+type;
-  if(type==='bot'){d.innerHTML='<div class="sq">['+sq+']</div><div class="tx">'+text.replace(/\*\*(.*?)\*\*/g,'<b>$1</b>').replace(/`(.*?)`/g,'<code style="background:#111;padding:2px 4px;border-radius:3px">$1</code>').replace(/\n/g,'<br>')+'</div>'}
-  else{d.textContent=text}
-  chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d
-}
-fetch('/health').then(r=>r.json()).then(d=>{
-  st.textContent='✅ API v'+d.version+' · '+d.squads+' squads · '+d.agentes+' agentes · sessão: '+sid;
-  st.style.color='#00ff8866'
-}).catch(()=>{st.textContent='⚠ API offline';st.style.color='#ff4444'});
-async function send(){
-  const msg=inp.value.trim();if(!msg)return;
-  inp.value='';add(msg,'user','');
-  const t=add('processando...','bot','...');
-  try{
-    const r=await fetch('/chat',{method:'POST',headers:{'Content-Type':'application/json','x-jod-token':TOKEN},body:JSON.stringify({message:msg,session_id:sid})});
-    if(r.status===401){chat.removeChild(t);add('❌ Token inválido','bot','auth');return}
-    const d=await r.json();chat.removeChild(t);
-    add(d.response,'bot',d.squad+' → '+d.chief)
-  }catch(e){chat.removeChild(t);add('Erro: '+e.message,'bot','erro')}
-}
-btn.onclick=send;
-inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
-add('Olá! Sou a X-Mom v5.0 — sistema operacional central da agência ELI.
+const sid='sess-'+Math.random().toString(36).slice(2,8);
+const chat=document.getElementById('chat');
+const inp=document.getElementById('inp');
+const btn=document.getElementById('btn');
+const st=document.getElementById('st');
+const logItems=document.getElementById('log-items');
+let execCount=0;
+let forceSquad=null;
 
-Existo para CUIDAR e EXECUTAR.\n\nPosso:\n• Consultar 162 especialistas (tráfego, copy, brand, n8n, design...)\n• Criar workflows no n8n\n• Navegar em sites e tirar screenshots\n• Gerar e salvar arquivos\n• Executar tarefas autônomas\n\nComo posso ajudar?','bot','eli → sistema');
-</script></body></html>
+function addLog(msg, type='running'){
+  const now=new Date().toLocaleTimeString('pt-BR');
+  const d=document.createElement('div');
+  d.className='log-item '+type;
+  d.innerHTML='<span class="log-time">'+now+'</span>'+msg;
+  logItems.insertBefore(d, logItems.firstChild);
+  if(logItems.children.length>50) logItems.removeChild(logItems.lastChild);
+}
+
+function add(text, type, sq){
+  const d=document.createElement('div');
+  d.className='msg '+type;
+  const fmt=text.replace(/\*\*(.*?)\*\*/g,'<b>$1</b>')
+    .replace(/`(.*?)`/g,'<code>$1</code>')
+    .replace(/^#{1,3}\s(.+)/gm,'<b style="color:#00ff88">$1</b>')
+    .replace(/\n/g,'<br>');
+  d.innerHTML=(sq?'<div class="sq">['+sq+']</div>':'')+'<div class="tx">'+fmt+'</div>';
+  chat.appendChild(d);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function setSquad(squad){
+  forceSquad=squad;
+  document.querySelectorAll('.squad-item').forEach(el=>el.classList.remove('active-squad'));
+  event.target.classList.add('active-squad');
+  add('Squad ativo: '+squad,'bot','x-mom → sistema');
+  addLog('Squad selecionado: '+squad,'success');
+}
+
+async function send(){
+  const msg=inp.value.trim();
+  if(!msg)return;
+  inp.value='';
+  add(msg,'user','você');
+  addLog('Processando: '+msg.slice(0,40)+'...','running');
+  execCount++;
+  document.getElementById('m-executions').textContent=execCount;
+
+  const t=document.createElement('div');
+  t.className='msg bot';
+  t.innerHTML='<div class="tx" style="color:#333">processando...</div>';
+  chat.appendChild(t);
+  chat.scrollTop=chat.scrollHeight;
+
+  try{
+    const body={message:msg,session_id:sid};
+    if(forceSquad) body.force_squad=forceSquad;
+    const r=await fetch('/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-jod-token':TOKEN},
+      body:JSON.stringify(body)
+    });
+    if(r.status===401){chat.removeChild(t);add('❌ Token inválido','bot','auth');return}
+    const data=await r.json();
+    chat.removeChild(t);
+    add(data.response||JSON.stringify(data),'bot',data.squad+'→'+data.chief);
+    addLog('✓ '+data.squad+' → '+data.chief,'success');
+  }catch(e){
+    chat.removeChild(t);
+    add('❌ Erro: '+e.message,'bot','sistema');
+    addLog('Erro: '+e.message,'error');
+  }
+}
+
+inp.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};
+btn.onclick=send;
+
+// Onboarding
+function openOnboarding(){document.getElementById('onboarding-panel').classList.add('open')}
+function closeOnboarding(){document.getElementById('onboarding-panel').classList.remove('open')}
+
+async function executarOnboarding(){
+  const nome=document.getElementById('ob-nome').value.trim();
+  const nicho=document.getElementById('ob-nicho').value.trim();
+  const cidade=document.getElementById('ob-cidade').value.trim();
+  const site=document.getElementById('ob-site').value.trim();
+  const email=document.getElementById('ob-email').value.trim();
+  const publico=document.getElementById('ob-publico').value.trim();
+  const tom=document.getElementById('ob-tom').value.trim();
+  if(!nome||!nicho){alert('Nome e nicho são obrigatórios');return}
+  closeOnboarding();
+  const msg=`execute onboarding completo para: marca="${nome}" nicho="${nicho}" cidade="${cidade}" site="${site}" email="${email}" publico="${publico}" tom="${tom}"`;
+  inp.value=msg;
+  addLog('Onboarding iniciado: '+nome,'running');
+  send();
+}
+
+// Status check
+async function checkStatus(){
+  try{
+    const r=await fetch('/health');
+    const d=await r.json();
+    document.getElementById('api-pill').textContent='⬤ API ONLINE';
+    document.getElementById('api-pill').className='pill green';
+    if(d.agentes) document.getElementById('m-agents').textContent=d.agentes;
+    if(d.squads) document.getElementById('m-squads').textContent=d.squads;
+    st.textContent='⬤ online';
+    st.style.color='#00ff8866';
+  }catch(e){
+    document.getElementById('api-pill').textContent='⬤ OFFLINE';
+    document.getElementById('api-pill').className='pill red';
+    st.textContent='⚠ offline';
+    st.style.color='#ff4444';
+  }
+  // Check n8n
+  try{
+    await fetch('http://localhost:5678/healthz');
+    document.getElementById('dot-n8n').className='dot active';
+  }catch(e){
+    document.getElementById('dot-n8n').className='dot inactive';
+  }
+}
+
+// Mensagem inicial
+add('Olá, Jadson.\n\nSou a X-Mom v5.0 — seu sistema operacional central.\n\n**O que posso executar agora:**\n→ `cria perfis nas redes para [marca] nicho [nicho]`\n→ `quero um workflow que [descrição]`\n→ `abra o site [url]`\n→ `liste os agentes ativos`\n\nUse o botão **+ NOVO CLIENTE** para iniciar um onboarding completo.\nClique em um **squad** para direcionar mensagens.','bot','x-mom → sistema');
+addLog('X-Mom v5.0 iniciada','success');
+
+checkStatus();
+setInterval(checkStatus,30000);
+</script>
+</body></html>
