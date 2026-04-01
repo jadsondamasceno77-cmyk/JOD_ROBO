@@ -14,6 +14,28 @@ from groq import Groq
 from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
+
+# ─── IDENTIDADE X-Mom ────────────────────────────────────────────────────────
+XMOM_SYSTEM = """Você é X-Mom v5.0 — sistema operacional central da agência ELI.
+Você existe para CUIDAR e EXECUTAR. Não apenas responder — agir.
+
+CAPACIDADES REAIS (execute quando solicitado):
+- Criar workflows n8n em linguagem natural
+- Navegar em sites e tirar screenshots (Playwright)
+- Criar perfis em 8 redes sociais (Instagram, TikTok, LinkedIn, YouTube, Facebook, Twitter/X, Pinterest, Threads)
+- Listar, ativar e criar agentes
+- Salvar arquivos e relatórios
+
+SQUADS DISPONÍVEIS: traffic-masters, copy-squad, brand-squad, data-squad, design-squad, hormozi-squad, storytelling, movement, cybersecurity, claude-code-mastery, c-level-squad, advisory-board, n8n-squad
+
+REGRAS:
+- Sempre execute antes de explicar
+- Nunca diga que não pode fazer algo sem tentar
+- Responda em português
+- Seja direto e acionável
+- Você cuida do operador — antecipe necessidades
+
+Operador: Jadson Damasceno — 26 anos de experiência, solo founder, Fortaleza-CE"""
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def _llm_call(messages, temperature=0.7, max_tokens=1024):
@@ -177,7 +199,7 @@ def detect_intent(message: str) -> dict:
 
     # BROWSER — navegar
     url_m = re.search(r'https?://\S+|www\.\S+', message)
-    nav_patterns = ["abra","abrir","acesse","acessar","navegue","navegar","vai para","vá para","abra o site","abra a url","visite","visita","abre o","pesquise","pesquisar","busque","buscar na web","procure na web"]
+    nav_patterns = ["abra","abrir","acesse","acessar","navegue","navegar","vai para","vá para","abra o site","abra a url","visite","visita","abre o","pesquise","pesquisar","busque","buscar na web","procure na web","entra no site","abre","mostra o site","veja o site","olha o site"]
     if any(p in ml for p in nav_patterns) and url_m:
         return {"intent":"browser_navigate","url": url_m.group(0)}
     if any(p in ml for p in ["abra o site","abra a url","acesse o site","visite o site"]):
@@ -225,7 +247,7 @@ def detect_intent(message: str) -> dict:
         return {"intent":"save_file"}
 
     # CRIAR PERFIS NAS REDES
-    perfil_kw = ["perfil","perfis","redes sociais","criar conta","bio para","username para","presenca digital","identidade nas redes"]
+    perfil_kw = ["perfil","perfis","redes sociais","criar conta","bio para","username para","presenca digital","identidade nas redes","presença online","marca nas redes","conta nas redes","setup das redes","configurar redes","criar nas redes","todas as redes"]
     perfil_action = ["cri","monta","gera","faz","configur","estrutur"]
     if any(k in ml for k in perfil_kw) and any(a in ml for a in perfil_action):
         return {"intent":"criar_perfis","description":message}
@@ -463,7 +485,7 @@ TEMPLATES DISPONIVEIS:
 Ao responder perguntas de arquitetura, mostre o JSON do node quando relevante.
 Ao sugerir criar algo, diga: 'Para criar agora, diga: crie um workflow [descricao]'"""
 
-    system = f"""Voce e {chief.get('name','chief').replace('-',' ').title()}.
+    system = XMOM_SYSTEM + f"""\n\nAgora você está atuando como {chief.get('name','chief').replace('-',' ').title()}.
 {chief.get('persona','')}
 {chief.get('description','')}
 

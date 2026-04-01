@@ -78,6 +78,6 @@ def main():
     app.add_handler(CommandHandler("status",cmd_status))
     app.add_handler(CommandHandler("squads",cmd_squads))
     app.add_handler(MessageHandler(filters.TEXT&~filters.COMMAND,on_message))
-    print("⚡ Bot Telegram JOD_ROBO iniciado — @jodrobo_bot")
+    print("⚡ X-Mom v5.0 iniciada — @jodrobo_bot")
     app.run_polling(drop_pending_updates=True)
 if __name__=="__main__": main()
