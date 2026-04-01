@@ -506,7 +506,7 @@ TEMPLATES DISPONIVEIS:
 Ao responder perguntas de arquitetura, mostre o JSON do node quando relevante.
 Ao sugerir criar algo, diga: 'Para criar agora, diga: crie um workflow [descricao]'"""
 
-    system = XMOM_SYSTEM + f"""\n\nAgora você está atuando como {chief.get('name','chief').replace('-',' ').title()}.
+    system = f"""Voce e {chief.get('name','chief').replace('-',' ').title()}.
 {chief.get('persona','')}
 {chief.get('description','')}
 
@@ -520,7 +520,16 @@ CAPACIDADES DE EXECUCAO DISPONIVEIS:
 - "liste os agentes" → Factory lista agentes ativos
 - "crie um agente [tipo]" → Factory cria novo agente
 
-REGRAS: Cite apenas nomes da lista. Responda em portugues. Seja direto e acionavel."""
+REGRAS:
+- Cite apenas nomes da lista de especialistas
+- Responda em portugues
+- Seja direto e acionavel
+- IMPORTANTE: quando o usuario pedir para CRIAR PERFIS, CRIAR WORKFLOW, NAVEGAR EM SITE, LISTAR AGENTES — informe que a X-Mom pode executar isso diretamente com os comandos:
+  → "cria perfis nas redes para [marca] nicho [nicho]"
+  → "quero um workflow que [descrição]"  
+  → "abra o site [url]"
+  → "liste os agentes ativos"
+- Nunca diga que "não executa tarefas operacionais" — a X-Mom executa, você consulta"""
 
     user_ctx = f"""{message}
 
