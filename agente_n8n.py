@@ -301,7 +301,7 @@ ESTRUTURA: {"name":"...","nodes":[...],"connections":{...},"settings":{"executio
 async def arquitetar_workflow(descricao: str) -> dict:
     """LLM arquiteta o workflow completo baseado na descrição em linguagem natural."""
     resp = _groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
+        model="llama-3.3-70b-versatile"  # melhor modelo disponível,
         messages=[
             {"role": "system", "content": SYSTEM_AUTOMACAO},
             {"role": "user", "content": f"Crie workflow n8n completo e funcional para: {descricao}"}
@@ -310,6 +310,9 @@ async def arquitetar_workflow(descricao: str) -> dict:
         max_tokens=4096
     )
     raw = resp.choices[0].message.content.strip()
+    raw = raw.strip()
+    if raw.startswith("```"): raw = raw.split("```")[1]
+    if raw.startswith("json"): raw = raw[4:]
     raw = _re.sub(r'```json\n?', '', raw)
     raw = _re.sub(r'```\n?', '', raw)
     raw = raw.strip()

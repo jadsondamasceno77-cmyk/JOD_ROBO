@@ -48,67 +48,47 @@ REGRAS DE OURO:
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def _llm_call(messages, temperature=0.7, max_tokens=1024):
-    """Circuit breaker: Groq -> OpenRouter x3 -> fallback."""
-    try:
-        r=client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=messages,temperature=temperature,max_tokens=max_tokens)
-        return r.choices[0].message.content.strip()
-    except Exception as e:
-        if "429" not in str(e) and "rate_limit" not in str(e).lower():
-            raise
-    import httpx as _hx, time as _t
-    or_key=os.getenv("OPENROUTER_API_KEY","")
+    """Circuit breaker: Groq → OpenRouter x3 → fallback keyword."""
+    import time
+    # Tentativa 1 — Groq
+    for attempt in range(2):
+        try:
+            r = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                timeout=15
+            )
+            return r.choices[0].message.content
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "rate_limit" in err.lower():
+                break  # Rate limit — vai pro OpenRouter
+            if attempt == 0:
+                time.sleep(1)
+                continue
+            break
+    # Tentativa 2 — OpenRouter
+    import httpx as _hx
+    or_key = os.getenv("OPENROUTER_API_KEY", "")
     if or_key:
-        for attempt in range(3):
+        for model in ["meta-llama/llama-3.1-8b-instruct:free", "mistralai/mistral-7b-instruct:free"]:
             try:
-                r=_hx.post("https://openrouter.ai/api/v1/chat/completions",
-                    headers={"Authorization":f"Bearer {or_key}","Content-Type":"application/json"},
-                    json={"model":"meta-llama/llama-3.3-70b-instruct","messages":messages,"temperature":temperature,"max_tokens":max_tokens},
-                    timeout=30.0)
-                if r.status_code == 200:
-                    return r.json()["choices"][0]["message"]["content"].strip()
-            except Exception as e2:
-                _t.sleep(2)
-    try:
-        r=client.chat.completions.create(
-            model="llama-3.1-8b-instant",
-            messages=messages,temperature=temperature,max_tokens=max_tokens)
-        return r.choices[0].message.content.strip()
-    except Exception:
-        pass
-    return "ELI processando. Tente novamente."
+                r = _hx.post(
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    headers={"Authorization": f"Bearer {or_key}", "Content-Type": "application/json"},
+                    json={"model": model, "messages": messages, "temperature": temperature, "max_tokens": max_tokens},
+                    timeout=20
+                )
+                data = r.json()
+                if "choices" in data:
+                    return data["choices"][0]["message"]["content"]
+            except Exception:
+                continue
+    # Fallback final — resposta genérica
+    return "Estou processando sua solicitação. Por favor, tente novamente em alguns instantes."
 
-DB_PATH = Path(__file__).resolve().parent / "jod_robo.db"
-MEMORY_PATH = Path(__file__).resolve().parent / "memory"
-OUTPUT_PATH = Path(__file__).resolve().parent / "outputs"
-MEMORY_PATH.mkdir(exist_ok=True)
-OUTPUT_PATH.mkdir(exist_ok=True)
-
-# ─── FACTORY ────────────────────────────────────────────────────────────────────
-FACTORY_URL = "http://localhost:37779"
-TRUST_TOKEN = os.getenv("JOD_TRUST_MANIFEST", "jod_robo_trust_2026_secure")
-FACTORY_AGENTS = ["agente_finalizador","agente_guardiao","agente_planner",
-                  "agente_suporte_01","agente_browser","agente_memoria","agente_dados"]
-FACTORY_TEMPLATES = ["support","executor","scheduler","analyzer","crawler"]
-
-SQUADS = {
-    "traffic-masters": {"chief":"traffic-chief","keywords":["trafego","traffic","anuncio","ads","facebook ads","google ads","meta","campanha","cpa","roas","midia paga"]},
-    "copy-squad":      {"chief":"copy-chief","keywords":["copy","copywriting","texto","headline","email","carta de vendas","persuasao","script","roteiro","vsl","landing page"]},
-    "brand-squad":     {"chief":"brand-chief","keywords":["marca","brand","branding","posicionamento","identidade","logo","naming","arquetipo","brandbook","brand book","guia de marca","manual de marca","identidade visual","tom de voz"]},
-    "data-squad":      {"chief":"data-chief","keywords":["dados","analytics","metricas","kpi","growth","retencao","churn","clv","ltv","cohort","north star","pmf"]},
-    "design-squad":    {"chief":"design-chief","keywords":["design","ui","ux","interface","figma","prototipo","wireframe","design system"]},
-    "hormozi-squad":   {"chief":"hormozi-chief","keywords":["oferta","offer","precificacao","preco","hormozi","grand slam","value stack","garantia","bonus"]},
-    "storytelling":    {"chief":"story-chief","keywords":["historia","story","narrativa","storytelling","jornada","heroi","arco","campbell"]},
-    "movement":        {"chief":"movement-chief","keywords":["movimento","proposito","missao","manifesto","ritual","simbolo"]},
-    "cybersecurity":   {"chief":"cyber-chief","keywords":["seguranca","security","pentest","vulnerabilidade","hacking","owasp","incidente"]},
-    "claude-code-mastery":{"chief":"claude-mastery-chief","keywords":["claude code","mcp","hooks","automacao","prompt engineering"]},
-    "c-level-squad":   {"chief":"vision-chief","keywords":["estrategia","ceo","coo","cto","cmo","visao","okr","planejamento","fundraising","pitch"]},
-    "advisory-board":  {"chief":"board-chair","keywords":["conselho","advisory","decisao","mental model","dalio","munger","thiel","naval","principios"]},
-    "n8n-squad":       {"chief":"n8n-chief","keywords":["n8n","workflow","automacao","webhook","node","integracao","http request","schedule","trigger","code node","langchain","ai node","subworkflow","error handling","docker n8n","postgres n8n","redis n8n","queue mode","oauth","api integration","automatizar","criar workflow","novo workflow"]},
-}
-
-# ─── FACTORY CALLS ──────────────────────────────────────────────────────────────
 
 async def factory_call(method, path, payload=None):
     headers = {
@@ -226,7 +206,7 @@ def detect_intent(message: str) -> dict:
 
     # BROWSER — navegar
     url_m = re.search(r'https?://\S+|www\.\S+', message)
-    nav_patterns = ["abra","abrir","acesse","acessar","navegue","navegar","vai para","vá para","abra o site","abra a url","visite","visita","abre o","pesquise","pesquisar","busque","buscar na web","procure na web","entra no site","abre","mostra o site","veja o site","olha o site"]
+    nav_patterns = ["abra","abrir","acesse","acessar","navegue","navegar","vai para","vá para","abra o site","abra a url","visite","visita","abre o","pesquise","pesquisar","busque","buscar na web","procure na web","entra no site","abre","mostra o site","veja o site","olha o site","pesquisa na web","encontra na internet","busca online","acha na web","verifica o site","testa o site","checa o site"]
     if any(p in ml for p in nav_patterns) and url_m:
         return {"intent":"browser_navigate","url": url_m.group(0)}
     if any(p in ml for p in ["abra o site","abra a url","acesse o site","visite o site"]):
@@ -253,7 +233,7 @@ def detect_intent(message: str) -> dict:
         return {"intent":"factory_create","template":"custom","agent_id":aid,"name":aid}
 
     # N8N — criar workflow (padrão amplo com LLM fallback)
-    n8n_kw = ["workflow","automac","integrac","pipeline","fluxo n8n","webhook","schedule","agendamento","notificac","disparo automát","cron","trigger","n8n"]
+    n8n_kw = ["workflow","automac","integrac","pipeline","fluxo n8n","webhook","schedule","agendamento","notificac","disparo automát","cron","trigger","n8n","automatizar","criar fluxo","novo fluxo","disparar","conectar sistemas","integrar","quando chegar","quando receber","toda vez que","cada vez que","monitorar","alertar","sincronizar"]
     action_kw = ["cri","build","make","faz","constru","monta","desenvolv","implement","automat","configur","quero um","preciso de um","gera","gerar"]
     has_n8n = any(k in ml for k in n8n_kw)
     has_action = any(k in ml for k in action_kw)
@@ -270,7 +250,7 @@ def detect_intent(message: str) -> dict:
         return {"intent":"n8n_activate","workflow_id": m.group(3)}
 
     # SALVAR
-    if any(p in ml for p in ["salve","salvar","gere um arquivo","criar arquivo","exportar","save this","baixar","download o resultado"]):
+    if any(p in ml for p in ["salve","salvar","gere um arquivo","criar arquivo","exportar","save this","baixar","download o resultado","gera um doc","cria um doc","escreva um arquivo","registre","documente"]):
         return {"intent":"save_file"}
 
     # CRIAR PERFIS NAS REDES
@@ -413,7 +393,7 @@ def save_memory(session_id, squad, agent, user_msg, response):
         f.write(json.dumps({"session_id":session_id,"timestamp":datetime.now(timezone.utc).isoformat(),
                             "squad":squad,"agent":agent,"user":user_msg,"response":response},ensure_ascii=False)+"\n")
 
-def load_memory(session_id, limit=4):
+def load_memory(session_id, limit=6):
     mf = MEMORY_PATH/"conversations.jsonl"
     if not mf.exists(): return []
     entries = []
@@ -435,43 +415,34 @@ def route(message):
     return best, scores[best]
 
 async def route_llm(message):
-    """Classifica mensagem no squad correto via LLM. Fallback: c-level-squad para perguntas gerais."""
-    kw_hint = "\n".join([
-        f"- {k}: {', '.join(data['keywords'][:4])}"
-        for k, data in SQUADS.items()
-    ])
-    r = client.chat.completions.create(
-        model="llama-3.3-70b-versatile",
-        messages=[
-            {"role":"system","content":(
-                "Voce e um classificador de intencoes. "
-                "Dado uma mensagem, retorne APENAS o slug exato do squad mais adequado.\n"
-                "Slugs validos e suas palavras-chave:\n" + kw_hint + "\n"
-                "REGRA: mensagens curtas, pings, testes, saudacoes → c-level-squad.\n"
-                "Retorne SOMENTE o slug, sem explicacao, sem markdown."
-            )},
-            {"role":"user","content":message}
-        ],
-        temperature=0.0, max_tokens=24
-    )
-    sq = r.choices[0].message.content.strip().lower().strip("`").strip()
-    # Valida slug exato
-    if sq in SQUADS:
-        return sq
-    # Tenta match parcial
-    for slug in SQUADS:
-        if slug in sq or sq in slug:
-            return slug
-    # Fallback inteligente por tamanho
-    return "c-level-squad" if len(message.split()) <= 3 else "advisory-board"
+    """Classifica mensagem no squad correto — usa circuit breaker Groq→OpenRouter."""
+    kw_hint = "\n".join([f"- {k}: {', '.join(data['keywords'][:4])}" for k, data in SQUADS.items()])
+    msgs = [
+        {"role":"system","content":(
+            "Classificador de squads. Retorne APENAS o slug do squad mais adequado.\n"
+            "Slugs: " + ", ".join(SQUADS.keys()) + "\n"
+            "REGRA: saudacoes/curtas → c-level-squad. Retorne SOMENTE o slug."
+        )},
+        {"role":"user","content":message}
+    ]
+    try:
+        raw = _llm_call(msgs, temperature=0.0, max_tokens=24)
+        slug = raw.strip().lower().split()[0] if raw else "c-level-squad"
+        return slug if slug in SQUADS else "c-level-squad"
+    except Exception:
+        # Fallback inteligente por keywords
+        ml = message.lower()
+        for squad, data in SQUADS.items():
+            if any(kw in ml for kw in data["keywords"]):
+                return squad
+        return "c-level-squad"
 
-# ─── CONSULTA LLM ────────────────────────────────────────────────────────────────
 
 async def consult(squad_name, message, session_memory):
     chief_name = SQUADS[squad_name]["chief"]
     chief = get_agent_data(chief_name)
     specialists = get_specialists(squad_name)
-    spec_list = "\n".join([f"- {n}: {d}" for n,d in specialists]) if specialists else "nenhum"
+    spec_list = "\n".join([f"- {n}" for n,d in specialists[:8]]) if specialists else "nenhum"
 
     brandbook = ""
     if squad_name == "brand-squad":
@@ -673,6 +644,19 @@ async def evaluate_output(objective, output, squad):
 
 # ─── TOOL: CRIAR PERFIS ──────────────────────────────────────────────────────
 def criar_perfis_redes(marca, nicho, tom="profissional", site="", email=""):
+    # Tom automático por nicho se não especificado
+    if tom == "profissional":
+        nicho_l = nicho.lower()
+        if any(k in nicho_l for k in ["estetica","beleza","saude","clinica","spa"]):
+            tom = "elegante, sofisticado e acolhedor"
+        elif any(k in nicho_l for k in ["tech","tecnologia","software","digital"]):
+            tom = "inovador, técnico e moderno"
+        elif any(k in nicho_l for k in ["moda","fashion","roupa","vestuario"]):
+            tom = "estiloso, moderno e exclusivo"
+        elif any(k in nicho_l for k in ["aliment","comida","restaurante","food"]):
+            tom = "saboroso, aconchegante e artesanal"
+        elif any(k in nicho_l for k in ["fitness","academia","sport","esporte"]):
+            tom = "energético, motivador e desafiador"
     redes = [
         {"rede":"Instagram","user":marca.lower().replace(" ","."),"bio":f"{marca} | {nicho}\n{tom}\n{site}","dica":"Emojis, hashtag no comentario, link na bio"},
         {"rede":"TikTok","user":marca.lower().replace(" ","_"),"bio":f"{marca} | {nicho}\n{site}","dica":"Bio curta, CTA direto"},
