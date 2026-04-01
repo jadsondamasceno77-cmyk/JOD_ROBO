@@ -319,7 +319,7 @@ async def create_from_description(description: str) -> dict:
     """Motor Universal: LLM arquiteta + n8n executa. Funciona para qualquer cenário."""
     try:
         wf_data = await arquitetar_workflow(description)
-        wf_data["name"] = wf_data.get("name", f"ELI — {description[:50]}")
+        wf_data["name"] = wf_data.get("name", f"X-Mom — {description[:50]}")
         result = await n8n_post("/workflows", wf_data)
         wf_id = result.get("id")
         return {
@@ -331,7 +331,7 @@ async def create_from_description(description: str) -> dict:
         }
     except Exception as e:
         # Fallback para template manual se LLM falhar
-        result = await create_manual_code(name=f"ELI — {description[:40]}")
+        result = await create_manual_code(name=f"X-Mom — {description[:40]}")
         wf_id = result.get("id")
         return {"id": wf_id, "name": result.get("name"), "url": f"{N8N_URL}/workflow/{wf_id}", "status": "fallback", "error": str(e)}
 

@@ -17,25 +17,34 @@ load_dotenv(Path(__file__).resolve().parent / ".env")
 
 # ─── IDENTIDADE X-Mom ────────────────────────────────────────────────────────
 XMOM_SYSTEM = """Você é X-Mom v5.0 — sistema operacional central da agência ELI.
-Você existe para CUIDAR e EXECUTAR. Não apenas responder — agir.
+Criada por Jadson Damasceno, 26 anos de experiência em marketing e negócios.
+Você existe para CUIDAR e EXECUTAR com excelência.
 
-CAPACIDADES REAIS (execute quando solicitado):
-- Criar workflows n8n em linguagem natural
-- Navegar em sites e tirar screenshots (Playwright)
-- Criar perfis em 8 redes sociais (Instagram, TikTok, LinkedIn, YouTube, Facebook, Twitter/X, Pinterest, Threads)
-- Listar, ativar e criar agentes
-- Salvar arquivos e relatórios
+COMANDOS QUE EXECUTAM DE VERDADE (use quando solicitado):
+→ "cria perfis nas redes para [marca] nicho [nicho] site [site]" — cria perfis em 8 redes
+→ "crie um workflow que [descrição]" — cria workflow funcional no n8n
+→ "abra o site [url]" — navega e retorna conteúdo
+→ "screenshot de [url]" — tira print da tela
+→ "liste os agentes" — lista agentes ativos
+→ "salve [resultado]" — salva em arquivo .md
 
-SQUADS DISPONÍVEIS: traffic-masters, copy-squad, brand-squad, data-squad, design-squad, hormozi-squad, storytelling, movement, cybersecurity, claude-code-mastery, c-level-squad, advisory-board, n8n-squad
+SQUADS ESPECIALIZADOS (188 agentes):
+→ traffic-masters: tráfego pago, Meta Ads, Google Ads
+→ copy-squad: copywriting, VSL, email marketing
+→ brand-squad: branding, identidade visual, naming
+→ n8n-squad: automações, workflows, integrações
+→ hormozi-squad: ofertas, precificação, value stack
+→ design-squad: UI/UX, Figma, design system
+→ data-squad: analytics, métricas, growth
+→ c-level-squad: estratégia, visão, OKRs
 
-REGRAS:
-- Sempre execute antes de explicar
-- Nunca diga que não pode fazer algo sem tentar
-- Responda em português
-- Seja direto e acionável
-- Você cuida do operador — antecipe necessidades
+REGRAS DE OURO:
+1. Execute PRIMEIRO, explique depois
+2. Nunca diga "não posso" sem tentar
+3. Sempre responda em português
+4. Seja direto e acionável — zero enrolação
+5. Antecipe a próxima necessidade do operador"""
 
-Operador: Jadson Damasceno — 26 anos de experiência, solo founder, Fortaleza-CE"""
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def _llm_call(messages, temperature=0.7, max_tokens=1024):
@@ -77,7 +86,7 @@ MEMORY_PATH.mkdir(exist_ok=True)
 OUTPUT_PATH.mkdir(exist_ok=True)
 
 # ─── FACTORY ────────────────────────────────────────────────────────────────────
-FACTORY_URL = "http://localhost:37777"
+FACTORY_URL = "http://localhost:37779"
 TRUST_TOKEN = os.getenv("JOD_TRUST_MANIFEST", "jod_robo_trust_2026_secure")
 FACTORY_AGENTS = ["agente_finalizador","agente_guardiao","agente_planner",
                   "agente_suporte_01","agente_browser","agente_memoria","agente_dados"]
@@ -126,8 +135,26 @@ async def factory_wait(task_id, tries=20):
     return {"status":"timeout"}
 
 async def factory_list():
-    try: return await factory_call("GET", "/agents")
-    except: return []
+    """Lista agentes — tenta API, fallback para SQLite."""
+    import sqlite3
+    try:
+        async with httpx.AsyncClient(timeout=3.0) as c:
+            r = await c.get(f"{FACTORY_URL}/agents", headers={"X-Trust-Token": TRUST_TOKEN, "X-Request-Id": "factory-list-001", "X-Idempotency-Key": "factory-list-001"})
+            if r.status_code == 200:
+                return r.json()
+    except:
+        pass
+    # Fallback: ler direto do SQLite
+    try:
+        conn = sqlite3.connect(str(DB_PATH))
+        cur = conn.cursor()
+        cur.execute("SELECT name, squad, status FROM agents WHERE status='active' LIMIT 20")
+        rows = cur.fetchall()
+        conn.close()
+        return [{"id": r[0], "name": r[0], "squad": r[1], "status": r[2]} for r in rows]
+    except Exception as e:
+        return [{"id": "erro", "status": "Factory indisponível: " + str(e)}]
+
 
 async def factory_create(template, agent_id, name):
     r = await factory_call("POST", "/agents/create-from-template", {
@@ -511,7 +538,7 @@ REGRAS: Cite apenas nomes da lista. Responda em portugues. Seja direto e acionav
         msgs.append({"role":"assistant","content":mem["response"]})
     msgs.append({"role":"user","content":user_ctx})
 
-    return _llm_call(msgs, temperature=0.9, max_tokens=2048)
+    return _llm_call(msgs, temperature=0.7, max_tokens=1024)
 
 # ─── PROCESSAMENTO PRINCIPAL ─────────────────────────────────────────────────────
 
