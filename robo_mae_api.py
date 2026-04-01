@@ -228,6 +228,23 @@ async def scheduler_stop(x_jod_token: Optional[str] = Header(None)):
     stop_scheduler()
     return {"status": "stopped"}
 
+
+@app.get("/status")
+async def get_status():
+    import httpx
+    services = {}
+    checks = [
+        ("n8n", "http://localhost:5678/healthz"),
+        ("agente_motor", "http://localhost:37780/health"),
+    ]
+    async with httpx.AsyncClient(timeout=2.0) as c:
+        for name, url in checks:
+            try:
+                r = await c.get(url)
+                services[name] = r.status_code < 400
+            except:
+                services[name] = False
+    return {"services": services}
 @app.on_event("startup")
 async def startup_scheduler():
     from brand_db import init_db
