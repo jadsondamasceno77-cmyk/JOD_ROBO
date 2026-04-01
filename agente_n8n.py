@@ -301,7 +301,7 @@ ESTRUTURA: {"name":"...","nodes":[...],"connections":{...},"settings":{"executio
 async def arquitetar_workflow(descricao: str) -> dict:
     """LLM arquiteta o workflow completo baseado na descrição em linguagem natural."""
     resp = _groq_client.chat.completions.create(
-        model="llama-3.3-70b-versatile"  # melhor modelo disponível,
+        model="llama-3.3-70b-versatile",
         messages=[
             {"role": "system", "content": SYSTEM_AUTOMACAO},
             {"role": "user", "content": f"Crie workflow n8n completo e funcional para: {descricao}"}

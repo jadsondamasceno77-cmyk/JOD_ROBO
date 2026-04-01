@@ -15,6 +15,13 @@ from dotenv import load_dotenv
 
 load_dotenv(Path(__file__).resolve().parent / ".env")
 
+BASE_DIR = Path(__file__).resolve().parent
+DB_PATH = BASE_DIR / "jod_robo.db"
+MEMORY_PATH = BASE_DIR / "memory"
+MEMORY_PATH.mkdir(exist_ok=True)
+FACTORY_URL = os.getenv("FACTORY_URL", "http://localhost:37779")
+TRUST_TOKEN = os.getenv("JOD_TRUST_MANIFEST", "jod_robo_trust_2026_secure")
+
 # ─── IDENTIDADE X-Mom ────────────────────────────────────────────────────────
 XMOM_SYSTEM = """Você é X-Mom v5.0 — sistema operacional central da agência ELI.
 Criada por Jadson Damasceno, 26 anos de experiência em marketing e negócios.
@@ -46,6 +53,22 @@ REGRAS DE OURO:
 5. Antecipe a próxima necessidade do operador"""
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+
+SQUADS = {
+    "traffic-masters": {"chief":"traffic-chief","keywords":["trafego","traffic","anuncio","ads","facebook ads","google ads","meta","campanha","cpa","roas","midia paga"]},
+    "copy-squad":      {"chief":"copy-chief","keywords":["copy","copywriting","texto","headline","email","carta de vendas","persuasao","script","roteiro","vsl","landing page"]},
+    "brand-squad":     {"chief":"brand-chief","keywords":["marca","brand","branding","posicionamento","identidade","logo","naming","arquetipo","brandbook","brand book","guia de marca","manual de marca","identidade visual","tom de voz"]},
+    "data-squad":      {"chief":"data-chief","keywords":["dados","analytics","metricas","kpi","growth","retencao","churn","clv","ltv","cohort","north star","pmf"]},
+    "design-squad":    {"chief":"design-chief","keywords":["design","ui","ux","interface","figma","prototipo","wireframe","design system"]},
+    "hormozi-squad":   {"chief":"hormozi-chief","keywords":["oferta","offer","precificacao","preco","hormozi","grand slam","value stack","garantia","bonus"]},
+    "storytelling":    {"chief":"story-chief","keywords":["historia","story","narrativa","storytelling","jornada","heroi","arco","campbell"]},
+    "movement":        {"chief":"movement-chief","keywords":["movimento","proposito","missao","manifesto","ritual","simbolo"]},
+    "cybersecurity":   {"chief":"cyber-chief","keywords":["seguranca","security","pentest","vulnerabilidade","hacking","owasp","incidente"]},
+    "claude-code-mastery":{"chief":"claude-mastery-chief","keywords":["claude code","mcp","hooks","automacao","prompt engineering"]},
+    "c-level-squad":   {"chief":"vision-chief","keywords":["estrategia","ceo","coo","cto","cmo","visao","okr","planejamento","fundraising","pitch"]},
+    "advisory-board":  {"chief":"board-chair","keywords":["conselho","advisory","decisao","mental model","dalio","munger","thiel","naval","principios"]},
+    "n8n-squad":       {"chief":"n8n-chief","keywords":["n8n","workflow","automacao","webhook","node","integracao","http request","schedule","trigger","code node","langchain","ai node","subworkflow","error handling","automatizar","criar workflow","novo workflow","quando chegar","quando receber","toda vez que","cada vez que","monitorar","alertar","sincronizar","conectar sistemas","integrar"]},
+}
 
 def _llm_call(messages, temperature=0.7, max_tokens=1024):
     """Circuit breaker: Groq → OpenRouter x3 → fallback keyword."""
