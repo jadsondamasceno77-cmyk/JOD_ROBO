@@ -82,6 +82,97 @@ robo_mae_api.py  (FastAPI :37779)
 
 ---
 
+## Skills Marketplace (LobeHub) — 2026-04-03
+
+**Instaladas via:** `npx -y @lobehub/market-cli skills install <skill> --agent claude-code`
+**Diretório:** `.claude/skills/`
+**Device ID:** `jod-robo-xmom-DESKTOP-SAS2R1U` | Client: `cli_dpFgUPIKmAYpsAR4vANv1ZM5dlNVknJp`
+
+### ✅ Instaladas com sucesso (52/56)
+
+| Skill | Binários setup | Env vars necessários |
+|-------|---------------|---------------------|
+| openclaw-openclaw-1password | `op` (brew, macOS only) | — |
+| openclaw-openclaw-acp-router | — | — |
+| openclaw-openclaw-blogwatcher | `blogwatcher` (go, requer go>=1.24) | — |
+| openclaw-openclaw-blucli | `blu` (go, requer go>=1.24) | — |
+| openclaw-openclaw-canvas | — | — |
+| openclaw-openclaw-clawhub | ✅ `clawhub` instalado (npm) | — |
+| openclaw-openclaw-coding-agent | ✅ `claude` disponível | — |
+| openclaw-openclaw-diffs | — | — |
+| openclaw-openclaw-discord | — | `channels.discord.token` (openclaw config) |
+| openclaw-openclaw-gemini | `gemini` (brew, macOS only) | — |
+| openclaw-openclaw-gh-issues | ✅ `gh` + `curl` + `git` instalados | `GH_TOKEN` (adicionar ao .env) |
+| openclaw-openclaw-github | ✅ `gh` instalado | `gh auth login` pendente |
+| openclaw-openclaw-goplaces | `goplaces` (brew, macOS only) | `GOOGLE_PLACES_API_KEY` ⚠️ |
+| openclaw-openclaw-healthcheck | — | — |
+| openclaw-openclaw-himalaya | `himalaya` (brew, macOS only) | — |
+| openclaw-openclaw-imsg | `imsg` (brew, macOS only) | — |
+| openclaw-openclaw-lobster | — | — |
+| openclaw-openclaw-local-places | ✅ `uv` instalado | `GOOGLE_PLACES_API_KEY` ⚠️ |
+| openclaw-openclaw-mcporter | ✅ `mcporter` instalado (npm) | — |
+| openclaw-openclaw-model-usage | `codexbar` (brew cask, macOS only) | — |
+| openclaw-openclaw-nano-banana-pro | ✅ `uv` instalado | `GEMINI_API_KEY` ⚠️ |
+| openclaw-openclaw-nano-pdf | ✅ `nano-pdf` instalado (pip) | — |
+| openclaw-openclaw-node-connect | — | — |
+| openclaw-openclaw-notion | — | `NOTION_API_KEY` ⚠️ |
+| openclaw-openclaw-obsidian | `obsidian-cli` (brew, macOS only) | — |
+| openclaw-openclaw-openai-image-gen | ✅ `python3` disponível | `OPENAI_API_KEY` ⚠️ |
+| openclaw-openclaw-openai-whisper | ✅ `whisper` instalado (pip) | — |
+| openclaw-openclaw-openclaw-ghsa-maintainer | — | — |
+| openclaw-openclaw-openclaw-parallels-smoke | — | — |
+| openclaw-openclaw-openclaw-pr-maintainer | — | — |
+| openclaw-openclaw-openclaw-release-maintainer | — | — |
+| openclaw-openclaw-openclaw-test-heap-leaks | — | — |
+| openclaw-openclaw-ordercli | `ordercli` (fonte desconhecida) | — |
+| openclaw-openclaw-parallels-discord-roundtrip | — | — |
+| openclaw-openclaw-peekaboo | `peekaboo` (brew, macOS only) | — |
+| openclaw-openclaw-prose | — | — |
+| openclaw-openclaw-sag | `sag` (bin pendente) | `ELEVENLABS_API_KEY` ⚠️ |
+| openclaw-openclaw-security-triage | — | — |
+| openclaw-openclaw-session-logs | ✅ `jq` + `rg` instalados | — |
+| openclaw-openclaw-sherpa-onnx-tts | — | `SHERPA_ONNX_RUNTIME_DIR` + `SHERPA_ONNX_MODEL_DIR` ⚠️ |
+| openclaw-openclaw-skill-creator | — | — |
+| openclaw-openclaw-slack | — | `channels.slack` (openclaw config) |
+| openclaw-openclaw-sonoscli | `sonos` (fonte pendente) | — |
+| openclaw-openclaw-spotify-player | `spogo` (fonte pendente) | — |
+| openclaw-openclaw-summarize | `summarize` (fonte pendente) | — |
+| openclaw-openclaw-tmux | ✅ `tmux` já instalado | — |
+| openclaw-openclaw-trello | ✅ `jq` instalado | `TRELLO_API_KEY` + `TRELLO_TOKEN` ⚠️ |
+| openclaw-openclaw-video-frames | ✅ `ffmpeg` instalado | — |
+| openclaw-openclaw-voice-call | — | `plugins.entries.voice-call.enabled` (openclaw config) |
+| openclaw-openclaw-wacli | `wacli` (fonte pendente) | — |
+| openclaw-openclaw-weather | ✅ `curl` disponível | — |
+| openclaw-openclaw-xurl | `xurl` (fonte pendente) | — |
+
+### ❌ Falhou — Skill not found no marketplace (4/56)
+
+| Skill | Motivo |
+|-------|--------|
+| openclaw-openclaw-pr-maintainer | Removida do marketplace (use `openclaw-openclaw-openclaw-pr-maintainer`) |
+| openclaw-openclaw-release-maintainer | Removida do marketplace (use `openclaw-openclaw-openclaw-release-maintainer`) |
+| openclaw-openclaw-ghsa-maintainer | Removida do marketplace (use `openclaw-openclaw-openclaw-ghsa-maintainer`) |
+| openclaw-openclaw-openclaw-sag | Removida do marketplace (use `openclaw-openclaw-sag`) |
+
+> As 4 skills com falha têm equivalentes instalados: os prefixos `openclaw-openclaw-openclaw-*` são as versões correntes.
+
+### ⚠️ Env vars pendentes (adicionar ao .env)
+
+```bash
+# Adicionar em /home/jod_robo/XMOM_V5/.env conforme disponível:
+GOOGLE_PLACES_API_KEY=   # goplaces + local-places
+GEMINI_API_KEY=          # nano-banana-pro
+NOTION_API_KEY=          # notion
+OPENAI_API_KEY=          # openai-image-gen
+TRELLO_API_KEY=          # trello
+TRELLO_TOKEN=            # trello
+ELEVENLABS_API_KEY=      # sag (voice synthesis)
+GH_TOKEN=                # gh-issues (GitHub Personal Access Token)
+# SHERPA_ONNX_RUNTIME_DIR + SHERPA_ONNX_MODEL_DIR — instalar sherpa-onnx manualmente
+```
+
+---
+
 ## Outputs Gerados
 
 - Arquivos em /home/jod_robo/outputs/: 5 arquivos
