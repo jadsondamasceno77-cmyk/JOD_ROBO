@@ -1,7 +1,7 @@
 {
   "sessions": {
     "slo_monitor": {
-      "turns": 105,
+      "turns": 122,
       "squads": [
         "c-level-squad",
         "cybersecurity"
@@ -132,7 +132,7 @@
       "last_squad": "c-level-squad"
     },
     "test-eval-sess": {
-      "turns": 4,
+      "turns": 8,
       "squads": [
         "c-level-squad"
       ],
@@ -140,7 +140,7 @@
       "last_squad": "c-level-squad"
     },
     "test-eval-sess2": {
-      "turns": 4,
+      "turns": 8,
       "squads": [
         "c-level-squad"
       ],
@@ -148,7 +148,7 @@
       "last_squad": "c-level-squad"
     },
     "test-sess-save": {
-      "turns": 5,
+      "turns": 9,
       "squads": [
         "brand-squad"
       ],
@@ -156,246 +156,23 @@
       "last_squad": "brand-squad"
     },
     "test-api-ok": {
-      "turns": 3,
+      "turns": 6,
       "squads": [
         "c-level-squad"
       ],
       "started": "2026-04-02T22:44:18.233826+00:00",
       "last_squad": "c-level-squad"
+    },
+    "test-ci-check": {
+      "turns": 1,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-03T14:12:51.716066+00:00",
+      "last_squad": "c-level-squad"
     }
   },
   "decisions": [
-    {
-      "ts": "2026-04-02T18:06:12.229044+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:08:09.825313+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:10:09.997750+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:12:11.521653+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:14:10.300981+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:16:54.024901+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:18:11.042136+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:20:12.220647+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:22:11.088276+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:24:10.119797+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:26:12.023428+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:28:11.266747+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:30:12.207746+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:32:13.614029+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:34:12.396877+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:36:13.278622+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:38:11.858284+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:40:13.294943+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:42:13.773789+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:44:09.944459+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:46:12.737154+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:48:14.208874+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:50:14.815075+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:52:12.105853+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:55:10.289050+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:56:14.490541+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:58:09.505160+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:00:10.460200+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:02:13.571195+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:04:09.889987+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:06:14.592560+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:08:11.143232+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T19:10:11.690315+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
     {
       "ts": "2026-04-02T19:12:12.529153+00:00",
       "session": "slo_monitor",
@@ -864,6 +641,237 @@
       "squad": "c-level-squad",
       "score": 7,
       "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:42:57.167850+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T03:43:01.930118+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T03:43:02.816955+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T03:43:03.577415+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-03T03:43:07.249710+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T03:43:09.403040+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T03:43:10.039174+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T03:43:10.741761+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-03T03:44:05.127386+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:46:42.582110+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:48:05.399442+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:50:07.682659+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:52:06.041134+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:54:07.361226+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:56:04.797827+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:58:08.108454+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T04:00:07.899884+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T04:02:07.772824+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T12:06:57.998713+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T12:07:04.174307+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 8,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T12:07:07.407312+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T14:00:12.568308+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 8,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:02:11.291727+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 8,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:04:11.321681+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 8,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:06:39.930834+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:08:08.928528+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:10:05.629215+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:12:09.692714+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T14:12:51.716114+00:00",
+      "session": "test-ci-check",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo visao"
+    },
+    {
+      "ts": "2026-04-03T14:12:55.596575+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T14:12:58.301310+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T14:12:59.119457+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T14:12:59.944826+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
     }
   ],
   "deliverables": [
@@ -908,12 +916,60 @@
       "squad": "brand-squad",
       "score": 8.0,
       "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T03:42:57.167862+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T03:43:07.249725+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T12:06:57.998739+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T12:07:04.174359+00:00",
+      "squad": "c-level-squad",
+      "score": 8,
+      "preview": "Olá! Estou aqui para ajudar. Você é um membro do time de especialistas em estratégia executiva, incluindo caio-architect, cio-engineer, cmo-architect, coo-orchestrator e cto-architect. Como posso ajud"
+    },
+    {
+      "ts": "2026-04-03T14:00:12.568345+00:00",
+      "squad": "c-level-squad",
+      "score": 8,
+      "preview": "Entendo melhor agora. 'slo_probe' parece se referir a uma abordagem de monitoramento e avaliação de desempenho de serviços, provavelmente relacionada a Service Level Objectives (SLOs) e Service Level "
+    },
+    {
+      "ts": "2026-04-03T14:02:11.291763+00:00",
+      "squad": "c-level-squad",
+      "score": 8,
+      "preview": "Para abordar 'slo_probe', recomendo consultar os seguintes especialistas:\n\n* caio-architect\n* cio-engineer\n* cmo-architect\n* coo-orchestrator\n* cto-architect\n\nEsses especialistas podem ajudar a defini"
+    },
+    {
+      "ts": "2026-04-03T14:04:11.321717+00:00",
+      "squad": "c-level-squad",
+      "score": 8,
+      "preview": "Para abordar 'slo_probe', recomendo consultar os seguintes especialistas:\n\n* caio-architect\n* cio-engineer\n* cmo-architect\n* coo-orchestrator\n* cto-architect\n\nEsses especialistas têm expertise em estr"
+    },
+    {
+      "ts": "2026-04-03T14:12:55.596596+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
     }
   ],
   "squad_preferences": {
     "c-level-squad": {
-      "calls": 119,
-      "avg_score": 6.949579831932773
+      "calls": 148,
+      "avg_score": 6.986486486486487
     },
     "cybersecurity": {
       "calls": 2,
@@ -940,10 +996,10 @@
       "avg_score": 7.0
     },
     "brand-squad": {
-      "calls": 5,
+      "calls": 9,
       "avg_score": 8.0
     }
   },
   "created_at": "2026-04-02T16:30:10.176847+00:00",
-  "updated_at": "2026-04-03T03:32:04.867135+00:00"
+  "updated_at": "2026-04-03T14:12:59.944861+00:00"
 }

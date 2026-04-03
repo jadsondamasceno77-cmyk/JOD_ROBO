@@ -1,0 +1,46 @@
+name: X-Mom v5 CI
+
+on:
+  push:
+    branches:
+      - v5-aos
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Instala dependências
+        run: |
+          pip install --upgrade pip
+          pip install fastapi uvicorn httpx groq openai pydantic starlette python-dotenv
+
+      - name: Roda test_suite.py
+        id: tests
+        run: |
+          cd $GITHUB_WORKSPACE
+          python3 test_suite.py 2>&1 | tee test_output.txt
+          SCORE=$(grep -oP 'Total: \K[0-9]+/[0-9]+' test_output.txt | tail -1)
+          NORMALIZED=$(grep -oP '→\s+\K[0-9]+/100' test_output.txt | tail -1)
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+          echo "normalized=$NORMALIZED" >> $GITHUB_OUTPUT
+          # Falha se score < 100/100
+          if [[ "$NORMALIZED" != "100/100" ]]; then
+            echo "❌ Score $NORMALIZED — esperado 100/100"
+            exit 1
+          fi
+
+      - name: Notifica Telegram
+        if: success()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          COMMIT="${{ github.sha }}"
+          SCORE="${{ steps.tests.outputs.normalized }}"
+          MSG="✅ X-Mom v5 CI — Score ${SCORE}%0ACommit: ${COMMIT}%0ABranch: v5-aos%0ARepo: ${{ github.repository }}"
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${TELEGRAM_CHAT_ID}&text=${MSG}"
