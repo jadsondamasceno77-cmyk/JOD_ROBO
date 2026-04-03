@@ -1,7 +1,7 @@
 {
   "sessions": {
     "slo_monitor": {
-      "turns": 90,
+      "turns": 105,
       "squads": [
         "c-level-squad",
         "cybersecurity"
@@ -165,111 +165,6 @@
     }
   },
   "decisions": [
-    {
-      "ts": "2026-04-02T17:44:11.270027+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:46:08.590871+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:48:11.864395+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:50:09.906051+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:51:16.868139+00:00",
-      "session": "demo-CLIENTET-145115",
-      "squad": "social-squad",
-      "score": 7.0,
-      "summary": "crie um post para instagram de teste com foco em engajamento e hashtags relevantes"
-    },
-    {
-      "ts": "2026-04-02T17:51:16.878394+00:00",
-      "session": "demo-CLIENTET-145115",
-      "squad": "social-squad",
-      "score": 7.0,
-      "summary": "crie um post para instagram de teste com foco em engajamento e hashtags relevantes"
-    },
-    {
-      "ts": "2026-04-02T17:51:21.792146+00:00",
-      "session": "demo-CLIENTET-145115",
-      "squad": "copy-squad",
-      "score": 7.0,
-      "summary": "escreva uma copy curta de vendas para teste focada em transformação e resultado"
-    },
-    {
-      "ts": "2026-04-02T17:51:27.237509+00:00",
-      "session": "demo-CLIENTET-145115",
-      "squad": "social-squad",
-      "score": 7.0,
-      "summary": "crie uma legenda para stories do instagram de teste com call-to-action direto"
-    },
-    {
-      "ts": "2026-04-02T17:52:11.818764+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:54:11.485660+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:56:10.254044+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T17:58:10.805498+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:00:10.867159+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:02:11.386106+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
-    {
-      "ts": "2026-04-02T18:04:09.987633+00:00",
-      "session": "slo_monitor",
-      "squad": "c-level-squad",
-      "score": 7.0,
-      "summary": "slo_probe"
-    },
     {
       "ts": "2026-04-02T18:06:12.229044+00:00",
       "session": "slo_monitor",
@@ -864,6 +759,111 @@
       "squad": "c-level-squad",
       "score": 7,
       "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-03T03:02:04.820041+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:04:07.588962+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:06:05.875779+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:08:05.887857+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:10:06.030353+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:12:07.982507+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:14:05.404937+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:16:55.099544+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:18:07.237449+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:20:08.049233+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:22:06.269971+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:24:07.529659+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:28:03.971454+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:30:06.899529+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:32:04.867113+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
     }
   ],
   "deliverables": [
@@ -912,8 +912,8 @@
   ],
   "squad_preferences": {
     "c-level-squad": {
-      "calls": 104,
-      "avg_score": 6.9423076923076925
+      "calls": 119,
+      "avg_score": 6.949579831932773
     },
     "cybersecurity": {
       "calls": 2,
@@ -945,5 +945,5 @@
     }
   },
   "created_at": "2026-04-02T16:30:10.176847+00:00",
-  "updated_at": "2026-04-03T03:01:20.464325+00:00"
+  "updated_at": "2026-04-03T03:32:04.867135+00:00"
 }

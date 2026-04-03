@@ -1,5 +1,5 @@
 # CONTEXT.md — X-Mom v5.0 (documento vivo)
-**Atualizado:** 2026-04-03 00:00:04
+**Atualizado:** 2026-04-03 00:33:42
 **Script:** update_context.sh
 
 ---
@@ -38,7 +38,7 @@ robo_mae_api.py  (FastAPI :37779)
        ├── xmom_bus.py     roteamento local + pub/sub task queue
        ├── xmom_state.py   key-value SQLite
        ├── xmom_semantic.py feed + search semantic_memory (GAP 2)
-       └── jod_robo.db     agents(201) | agent_performance | semantic_memory(40)
+       └── jod_robo.db     agents(201) | agent_performance | semantic_memory(68)
 ```
 
 ---
@@ -48,12 +48,12 @@ robo_mae_api.py  (FastAPI :37779)
 | Tabela | Registros |
 |--------|-----------|
 | agents | 201 |
-| semantic_memory | 40 |
+| semantic_memory | 68 |
 | agent_performance | (ver abaixo) |
 | xmom_events (pending) | 0 |
 
 **Top squads por score:**
-  brand-squad: score=8.0 calls=3
+  brand-squad: score=8.0 calls=5
   copy-squad: score=7.5 calls=2
   traffic-masters: score=7.0 calls=0
   data-squad: score=7.0 calls=0
@@ -92,20 +92,18 @@ robo_mae_api.py  (FastAPI :37779)
 ## Git Log (últimos 10)
 
 ```
+f6990a8 X-Mom v5.0 AOS — score 100/100
 d798812 
 ```
 
 ## Arquivos modificados recentemente
 
 ```
-.gitignore
-agente_browser.py
-agente_n8n.py
-agente_n8n_externo.py
+__pycache__/robo_mae_api.cpython-310.pyc
 jod_robo.db
-robo_mae.py
+memory/conversations.jsonl
 robo_mae_api.py
-ui.html
+world_state.json
 ```
 
 ---
@@ -161,4 +159,4 @@ print(search_semantic('instagram post', limit=3))
 ```
 
 ---
-*Gerado automaticamente por update_context.sh — 2026-04-03 00:00:04*
+*Gerado automaticamente por update_context.sh — 2026-04-03 00:33:42*
