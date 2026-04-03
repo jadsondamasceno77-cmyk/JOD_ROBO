@@ -1,6 +1,0 @@
-fastapi
-uvicorn
-groq
-python-dotenv
-httpx
-pydantic

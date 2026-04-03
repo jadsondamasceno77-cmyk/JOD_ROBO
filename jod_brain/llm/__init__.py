@@ -66,7 +66,7 @@ def call_ollama(prompt: str, model: str = "llama3.2:1b", host: str = "http://127
             f"{host}/api/generate", data=payload,
             headers={"Content-Type": "application/json"}
         )
-        with urllib.request.urlopen(req, timeout=60) as r:
+        with urllib.request.urlopen(req, timeout=300) as r:
             result = json.load(r).get("response", "")
             logger.info("Ollama respondeu como fallback")
             return result
