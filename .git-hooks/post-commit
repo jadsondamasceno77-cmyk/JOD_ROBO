@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+/home/jod_robo/update_context.sh >> /tmp/update_context.log 2>&1
+echo "[hook] CONTEXT.md atualizado após commit"

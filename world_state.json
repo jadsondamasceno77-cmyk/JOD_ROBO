@@ -1,0 +1,949 @@
+{
+  "sessions": {
+    "slo_monitor": {
+      "turns": 90,
+      "squads": [
+        "c-level-squad",
+        "cybersecurity"
+      ],
+      "started": "2026-04-02T16:30:10.176875+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "t1": {
+      "turns": 1,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T16:30:36.663122+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "final": {
+      "turns": 1,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T17:04:15.894471+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "t2": {
+      "turns": 1,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T17:06:02.332017+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "test-001": {
+      "turns": 2,
+      "squads": [
+        "social-squad"
+      ],
+      "started": "2026-04-02T17:31:56.420891+00:00",
+      "last_squad": "social-squad"
+    },
+    "test-002": {
+      "turns": 1,
+      "squads": [
+        "social-squad"
+      ],
+      "started": "2026-04-02T17:35:56.241292+00:00",
+      "last_squad": "social-squad"
+    },
+    "demo-CLIENTET-145115": {
+      "turns": 4,
+      "squads": [
+        "social-squad",
+        "copy-squad"
+      ],
+      "started": "2026-04-02T17:51:16.868122+00:00",
+      "last_squad": "social-squad"
+    },
+    "gap1-test": {
+      "turns": 1,
+      "squads": [
+        "sandbox"
+      ],
+      "started": "2026-04-02T21:48:08.124541+00:00",
+      "last_squad": "sandbox"
+    },
+    "gap4-test": {
+      "turns": 1,
+      "squads": [
+        "tools"
+      ],
+      "started": "2026-04-02T21:48:11.215193+00:00",
+      "last_squad": "tools"
+    },
+    "gap5-test": {
+      "turns": 2,
+      "squads": [
+        "multi-squad"
+      ],
+      "started": "2026-04-02T21:48:12.157388+00:00",
+      "last_squad": "multi-squad"
+    },
+    "gap1-real": {
+      "turns": 1,
+      "squads": [
+        "sandbox"
+      ],
+      "started": "2026-04-02T21:49:47.243735+00:00",
+      "last_squad": "sandbox"
+    },
+    "gap1": {
+      "turns": 1,
+      "squads": [
+        "sandbox"
+      ],
+      "started": "2026-04-02T21:52:21.861774+00:00",
+      "last_squad": "sandbox"
+    },
+    "gap4": {
+      "turns": 1,
+      "squads": [
+        "tools"
+      ],
+      "started": "2026-04-02T21:52:22.428644+00:00",
+      "last_squad": "tools"
+    },
+    "gap5": {
+      "turns": 2,
+      "squads": [
+        "multi-squad"
+      ],
+      "started": "2026-04-02T21:52:23.141123+00:00",
+      "last_squad": "multi-squad"
+    },
+    "test": {
+      "turns": 2,
+      "squads": [
+        "copy-squad",
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T21:53:28.975282+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "test-sess": {
+      "turns": 1,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T22:21:21.423464+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "test-eval-sess": {
+      "turns": 4,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T22:25:27.751828+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "test-eval-sess2": {
+      "turns": 4,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T22:25:28.453997+00:00",
+      "last_squad": "c-level-squad"
+    },
+    "test-sess-save": {
+      "turns": 5,
+      "squads": [
+        "brand-squad"
+      ],
+      "started": "2026-04-02T22:43:08.935783+00:00",
+      "last_squad": "brand-squad"
+    },
+    "test-api-ok": {
+      "turns": 3,
+      "squads": [
+        "c-level-squad"
+      ],
+      "started": "2026-04-02T22:44:18.233826+00:00",
+      "last_squad": "c-level-squad"
+    }
+  },
+  "decisions": [
+    {
+      "ts": "2026-04-02T17:44:11.270027+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:46:08.590871+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:48:11.864395+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:50:09.906051+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:51:16.868139+00:00",
+      "session": "demo-CLIENTET-145115",
+      "squad": "social-squad",
+      "score": 7.0,
+      "summary": "crie um post para instagram de teste com foco em engajamento e hashtags relevantes"
+    },
+    {
+      "ts": "2026-04-02T17:51:16.878394+00:00",
+      "session": "demo-CLIENTET-145115",
+      "squad": "social-squad",
+      "score": 7.0,
+      "summary": "crie um post para instagram de teste com foco em engajamento e hashtags relevantes"
+    },
+    {
+      "ts": "2026-04-02T17:51:21.792146+00:00",
+      "session": "demo-CLIENTET-145115",
+      "squad": "copy-squad",
+      "score": 7.0,
+      "summary": "escreva uma copy curta de vendas para teste focada em transformação e resultado"
+    },
+    {
+      "ts": "2026-04-02T17:51:27.237509+00:00",
+      "session": "demo-CLIENTET-145115",
+      "squad": "social-squad",
+      "score": 7.0,
+      "summary": "crie uma legenda para stories do instagram de teste com call-to-action direto"
+    },
+    {
+      "ts": "2026-04-02T17:52:11.818764+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:54:11.485660+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:56:10.254044+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T17:58:10.805498+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:00:10.867159+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:02:11.386106+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:04:09.987633+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:06:12.229044+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:08:09.825313+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:10:09.997750+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:12:11.521653+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:14:10.300981+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:16:54.024901+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:18:11.042136+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:20:12.220647+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:22:11.088276+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:24:10.119797+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:26:12.023428+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:28:11.266747+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:30:12.207746+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:32:13.614029+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:34:12.396877+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:36:13.278622+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:38:11.858284+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:40:13.294943+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:42:13.773789+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:44:09.944459+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:46:12.737154+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:48:14.208874+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:50:14.815075+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:52:12.105853+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:55:10.289050+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:56:14.490541+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T18:58:09.505160+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:00:10.460200+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:02:13.571195+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:04:09.889987+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:06:14.592560+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:08:11.143232+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:10:11.690315+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:12:12.529153+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:14:12.629599+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:16:14.520570+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:18:11.705893+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:20:14.603147+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:22:13.540537+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:24:13.055397+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:26:15.457494+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:28:13.354590+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T19:38:05.991308+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T20:20:24.572895+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T21:04:07.898439+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7.0,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T21:46:07.660199+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T21:48:08.124578+00:00",
+      "session": "gap1-test",
+      "squad": "sandbox",
+      "score": 7.0,
+      "summary": "execute python\nprint(sum(range(10)))\nprint(\"gap1 ok\")"
+    },
+    {
+      "ts": "2026-04-02T21:48:11.215226+00:00",
+      "session": "gap4-test",
+      "squad": "tools",
+      "score": 7.0,
+      "summary": "envie webhook para https://httpbin.org/post"
+    },
+    {
+      "ts": "2026-04-02T21:48:12.157421+00:00",
+      "session": "gap5-test",
+      "squad": "multi-squad",
+      "score": 7.0,
+      "summary": "orquestre copy-squad e brand-squad: crie posicionamento para startup"
+    },
+    {
+      "ts": "2026-04-02T21:48:12.203368+00:00",
+      "session": "gap5-test",
+      "squad": "multi-squad",
+      "score": 7.0,
+      "summary": "orquestre copy-squad e brand-squad: crie posicionamento para startup"
+    },
+    {
+      "ts": "2026-04-02T21:49:47.243768+00:00",
+      "session": "gap1-real",
+      "squad": "sandbox",
+      "score": 7.0,
+      "summary": "execute python\nprint(sum(range(10)))\nprint(\"gap1 ok\")"
+    },
+    {
+      "ts": "2026-04-02T21:52:21.861804+00:00",
+      "session": "gap1",
+      "squad": "sandbox",
+      "score": 7.0,
+      "summary": "execute python\nprint(sum(range(10)))\nresult = 2**8\nprint(f\"2^8={result}\")"
+    },
+    {
+      "ts": "2026-04-02T21:52:22.428664+00:00",
+      "session": "gap4",
+      "squad": "tools",
+      "score": 7.0,
+      "summary": "envie webhook para https://httpbin.org/post"
+    },
+    {
+      "ts": "2026-04-02T21:52:23.141138+00:00",
+      "session": "gap5",
+      "squad": "multi-squad",
+      "score": 7.0,
+      "summary": "orquestre copy-squad e brand-squad: crie brand para fintech"
+    },
+    {
+      "ts": "2026-04-02T21:52:23.163216+00:00",
+      "session": "gap5",
+      "squad": "multi-squad",
+      "score": 7.0,
+      "summary": "orquestre copy-squad e brand-squad: crie brand para fintech"
+    },
+    {
+      "ts": "2026-04-02T21:53:28.975300+00:00",
+      "session": "test",
+      "squad": "copy-squad",
+      "score": 8.0,
+      "summary": "test msg"
+    },
+    {
+      "ts": "2026-04-02T22:21:21.423477+00:00",
+      "session": "test-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr"
+    },
+    {
+      "ts": "2026-04-02T22:25:27.751844+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga ola"
+    },
+    {
+      "ts": "2026-04-02T22:25:28.454010+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-02T22:30:25.418185+00:00",
+      "session": "test",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "olá"
+    },
+    {
+      "ts": "2026-04-02T22:33:02.710091+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:34:07.520546+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:36:07.399946+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:38:09.442863+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:40:07.045869+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:42:06.741623+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:43:08.935810+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-02T22:43:16.144811+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-02T22:44:07.967792+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-02T22:44:13.938592+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-02T22:44:16.411567+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-02T22:44:17.160787+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-02T22:44:18.233845+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-02T22:46:07.038379+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T02:56:45.806697+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T02:58:07.373318+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:00:07.859686+00:00",
+      "session": "slo_monitor",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "slo_probe"
+    },
+    {
+      "ts": "2026-04-03T03:00:17.885886+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T03:00:22.785347+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 0,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T03:00:42.360878+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 8,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T03:00:43.598407+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    },
+    {
+      "ts": "2026-04-03T03:01:16.634393+00:00",
+      "session": "test-sess-save",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "summary": "quero criar um brandbook"
+    },
+    {
+      "ts": "2026-04-03T03:01:19.035196+00:00",
+      "session": "test-eval-sess",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "diga olá"
+    },
+    {
+      "ts": "2026-04-03T03:01:19.623876+00:00",
+      "session": "test-eval-sess2",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia de negocio okr visao"
+    },
+    {
+      "ts": "2026-04-03T03:01:20.464305+00:00",
+      "session": "test-api-ok",
+      "squad": "c-level-squad",
+      "score": 7,
+      "summary": "estrategia okr ceo"
+    }
+  ],
+  "deliverables": [
+    {
+      "ts": "2026-04-02T21:53:28.975306+00:00",
+      "squad": "copy-squad",
+      "score": 8.0,
+      "preview": "test response"
+    },
+    {
+      "ts": "2026-04-02T22:43:08.935815+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-02T22:43:16.144822+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-02T22:44:13.938605+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T03:00:17.885901+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    },
+    {
+      "ts": "2026-04-03T03:00:42.360901+00:00",
+      "squad": "c-level-squad",
+      "score": 8,
+      "preview": "[Modo Offline] Resposta baseada em conhecimento local do c-level-squad:\n\nEstratégia executiva: defina OKRs claros, alinhe time em torno da visão, tome decisões com dados, pivote rápido quando necessár"
+    },
+    {
+      "ts": "2026-04-03T03:01:16.634410+00:00",
+      "squad": "brand-squad",
+      "score": 8.0,
+      "preview": "Brandbook com arquétipo e identidade visual"
+    }
+  ],
+  "squad_preferences": {
+    "c-level-squad": {
+      "calls": 104,
+      "avg_score": 6.9423076923076925
+    },
+    "cybersecurity": {
+      "calls": 2,
+      "avg_score": 7.0
+    },
+    "social-squad": {
+      "calls": 6,
+      "avg_score": 7.0
+    },
+    "copy-squad": {
+      "calls": 2,
+      "avg_score": 7.5
+    },
+    "sandbox": {
+      "calls": 3,
+      "avg_score": 7.0
+    },
+    "tools": {
+      "calls": 2,
+      "avg_score": 7.0
+    },
+    "multi-squad": {
+      "calls": 4,
+      "avg_score": 7.0
+    },
+    "brand-squad": {
+      "calls": 5,
+      "avg_score": 8.0
+    }
+  },
+  "created_at": "2026-04-02T16:30:10.176847+00:00",
+  "updated_at": "2026-04-03T03:01:20.464325+00:00"
+}
