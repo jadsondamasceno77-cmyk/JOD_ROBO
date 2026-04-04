@@ -87,4 +87,16 @@ JOD_ROBO/
 - **Fallback**: Ollama llama3.2:1b (lento, offline)
 
 ---
+
+## Troubleshooting OpenClaw
+
+If you experience "Unrecognized key: enabled" or "Waiting for agent reply" errors:
+
+1.  Refer to the [TROUBLESHOOTING.md](TROUBLESHOOTING.md) guide.
+2.  Run the automated fix script:
+    ```bash
+    chmod +x fix_openclaw.sh
+    ./fix_openclaw.sh
+    ```
+
 JOD_ROBO v3.0 — De 1.6/10 para 10/10.
